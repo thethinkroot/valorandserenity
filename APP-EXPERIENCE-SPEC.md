@@ -41,6 +41,8 @@ Beneath both: **"Free to start, either way. No payment is needed to build a comp
 
 The choice adjusts tone and framing only, never the underlying steps.
 
+**Above both doors, one small, optional link: "Already looking for someone? Search existing tributes first."** This is scoped honestly and only ever searches Community-tier tributes, the ones already public and discoverable by design. It never searches Private or Family and Friends tributes, since those are correctly unsearchable on purpose, and the search page states this plainly rather than implying it checked everything: "This searches public tributes only. A private or family tribute may already exist and simply not show up here." A real person looking at real names, dates, and branches is a better judge of whether a match is actually their own relative than any automated system, this exists to let them make that call themselves with real information, not to replace the check below.
+
 ---
 
 ## The Guiding Design Standard
@@ -81,6 +83,14 @@ Screen one: "What branch did they serve in?" Large, tappable tiles, never a drop
 Screen two: "What years did they serve?" Two large fields, from and to, with: "Not sure of exact dates? Your best guess is fine. You can always fix it later." The same gentle, non-blocking year and date-order validation from Step 1 applies here.
 
 This screen's answers, combined with the name and dates from Step 1, become the raw material Story Assist draws on in Step 4, and the branch selected here is what automatically determines the tribute's visual theme at Step 7.
+
+**A quiet, higher-precision duplicate check runs here, once branch and service years are known, not any earlier.** A match on name and birth year alone is too weak a signal to act on, especially for common names, waiting for branch and approximate service years turns a coincidence into a real signal worth surfacing. If nothing close exists, nothing happens, and the flow continues exactly as normal with zero added friction. If a plausible match on name, branch, and overlapping service years is found, one additional screen appears before Step 3: "It looks like there may already be a tribute for someone with this name, branch, and years of service. Want us to check with them, or continue on your own?" Two equally weighted choices, "Check with them" and "Continue on my own," neither framed as the wrong answer, since even this stronger match is never a certainty.
+
+If "Check with them" is chosen, an email is sent to the *existing* tribute's verified owner, using the same email-verification channel already used for publishing: "Someone may be trying to create a second tribute for a veteran with the same name, branch, and years of service as yours. If this might be the same person, you may want to reach out to them directly." The new person creating a tribute never sees the existing one's content, its visibility tier, or who owns it, this only connects two real people to sort it out themselves. This is a soft, unguaranteed path, not a resolution: it depends entirely on the existing owner actually reading and acting on that email, there is no way to force or confirm that happens, and the product should never imply otherwise. If "Continue on my own" is chosen, or if the person never responds, tribute creation proceeds exactly as normal, this is never a hard block.
+
+**This can never be made fully certain, and that is a real, permanent limit worth stating plainly rather than engineering around.** A truly bulletproof match would require a unique identifier, something like a Social Security number or DD-214 number, both of which this product has already and correctly ruled out collecting. Every version of this check is a matter of likelihood, never certainty, given that constraint.
+
+**For duplicates that already exist, unknowingly, before this check existed or because two people both chose to continue independently**, a simple, low-key "Think this might be a duplicate?" contact option on a published tribute routes to a real person for early stage, not an automated merge. Automatically merging two independently written tributes risks losing content or blending two families' words incorrectly; a human quietly helping two families sort it out by hand is the right scale of solution while volume is still small.
 
 ### Step 3, Photos and Recordings
 
