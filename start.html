@@ -453,6 +453,26 @@
   .resource-card p { font-size: 14.5px; color: var(--ink); line-height: 1.65; margin: 0 0 10px; }
   .resource-card a { font-weight: 700; color: var(--copper-text); }
 
+  /* ---- Tip callouts: visually subordinate asides, not the next required step ---- */
+  .tip-callout { max-width: 88%; margin-left: auto; margin-right: auto; }
+  .tip-callout.sa-context { font-size: 13.5px; padding: 14px 16px; }
+  .tip-callout.resource-card { padding: 14px 16px; }
+  details.tip-callout { cursor: default; }
+  details.tip-callout > summary {
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-weight: 700;
+  }
+  details.sa-context > summary { font-family: var(--font-body); font-size: 12.5px; letter-spacing: 0.04em; color: #E3C9A8; }
+  details.resource-card > summary { font-family: var(--font-body); font-size: 13px; color: var(--aubergine-deep); }
+  details.tip-callout > summary::-webkit-details-marker { display: none; }
+  details.tip-callout > summary::before { content: '▸'; font-size: 10px; transition: transform .15s ease; display: inline-block; }
+  details.tip-callout[open] > summary::before { transform: rotate(90deg); }
+  details.tip-callout[open] > summary { margin-bottom: 10px; }
+
   /* ---- Photo/upload mock ---- */
   .upload-box {
     border: 2px dashed #D8CFC0;
@@ -703,13 +723,13 @@
     <h2 class="question" id="step4choice-question">Tell their story</h2>
     <button class="choice-tile" data-action="goto" data-arg="step4write">Write it yourself</button>
     <button class="choice-tile" data-action="goto" data-arg="step4sa1">Get some help
-      <span class="sub">Just asks a few gentle questions to jog your memory. Nothing is added that you don't say yourself.</span>
+      <span class="sub">Just asks a few gentle questions to jog your memory. Nothing is added that you don't say yourself. These questions build on what you've already shared, not a fixed list.</span>
     </button>
-    <div class="sa-context" style="margin-top:4px;">
-      <strong>Here's a real example of what Story Assist can find</strong>
-      <span style="filter: blur(4px); user-select: none; display:block; margin-top:4px;">Did you know? Harry Truman was president. That same year, the Rochester Royals beat the Knicks for the NBA title, and the country's best-selling song was "How High the Moon."</span>
-    </div>
-    <p class="helper" style="font-size:14px; margin-top:10px;" id="step4choice-privacy-note">This is a real example from another family's tribute, shown so you can see how it works. Your own veteran's story stays completely private until you choose to publish it.</p>
+    <details class="sa-context tip-callout" style="margin-top:4px;">
+      <summary>See an example of what Story Assist can find</summary>
+      <p style="margin:0;" id="sa-example-tip">If you shared 1969, Story Assist might ask: "That was the year of the moon landing. Does that ring a bell for him?"</p>
+    </details>
+    <p class="helper" style="font-size:14px; margin-top:10px;" id="step4choice-privacy-note">This is just an illustration of how Story Assist works. Your own veteran's story stays completely private until you choose to publish it.</p>
     <p class="helper" style="font-size:15px; font-style:italic; text-align:center; margin-top:20px;">Most memorial pages only record what happened. This also shows you what the world was like when it happened, so more memories come back to you.</p>
     <button class="back-link" data-action="goto" data-arg="step3">Go back</button>
   </div>
@@ -758,7 +778,7 @@
     </div>
     <h1 class="eyebrow-title">Step 4 of 8 · Getting some help</h1>
     <p class="sa-ack">That's a wonderful detail.</p>
-    <div class="sa-context">
+    <div class="sa-context tip-callout">
       <strong>Did you know?</strong>
       <span id="context-text">You mentioned he was born in 1951. That same year, the Rochester Royals beat the New York Knicks for the NBA title, and Harry Truman was president. Does anything from that time sound familiar?</span>
     </div>
@@ -777,10 +797,11 @@
     </div>
     <h1 class="eyebrow-title">Step 5 of 8</h1>
     <h2 class="question" id="step5-question">Did they receive any medals or honors?</h2>
-    <div class="resource-card hidden" id="resource-card-living">
+    <details class="resource-card tip-callout hidden" id="resource-card-living">
+      <summary>A note about Pinning Ceremonies</summary>
       <p>Has your hospice team talked with you about a Pinning Ceremony? It's a quiet moment many programs offer, a certificate and a flag pin, formally thanking a veteran for their service, often with family present. If it hasn't happened yet, it's worth asking about.</p>
       <a href="help-for-families.html#pinning-ceremony">Learn more &rarr;</a>
-    </div>
+    </details>
     <button class="btn-secondary" style="margin-bottom:14px;" data-action="add-honor">+ Add one</button>
     <div id="honors-list"></div>
     <button class="choice-tile" style="margin-top: 6px;" data-action="goto" data-arg="step6">None, or not sure, and that's okay</button>
@@ -833,6 +854,9 @@
     <h1 class="eyebrow-title">Step 8 of 8</h1>
     <h2 class="question">One last step</h2>
     <p class="helper">We'll send a quick email to confirm it's really you, then your tribute goes live.</p>
+    <div class="field-row">
+      <input type="email" id="input-confirm-email" placeholder="Your email address">
+    </div>
     <button class="btn-primary" data-action="goto" data-arg="finalreveal">Send the confirmation</button>
     <button class="back-link" data-action="goto" data-arg="step7">Go back</button>
   </div>
@@ -847,11 +871,11 @@
       <p class="sentence">Beloved husband, father, and Soldier.</p>
     </div>
     <p id="final-thankyou">It's live. Thank you for taking the time to do this for him.</p>
-    <div class="resource-card hidden" id="resource-card-passed" style="text-align:left; margin-top:32px;">
-      <p style="font-weight:700; color:var(--aubergine-deep); margin:0 0 10px;">While you're here, a few practical things that might help</p>
+    <details class="resource-card tip-callout hidden" id="resource-card-passed" style="text-align:left; margin-top:32px;">
+      <summary>While you're here, a few practical things that might help</summary>
       <p>If you haven't already: locate their DD-214, order a few extra certified copies of the death certificate, and know that a Veteran Service Officer can help you navigate benefits at no cost. We've put together a fuller guide if it helps.</p>
       <a href="help-for-families.html">See the full guide &rarr;</a>
-    </div>
+    </details>
   </div>
 
 </div>
@@ -880,12 +904,13 @@
         step2bQuestion: "What years did they serve?",
         photoPrompt: "Where was this taken, and who's with him?",
         step4Question: "Tell their story",
-        privacyNote: "This is a real example from another family's tribute, shown so you can see how it works. Your own veteran's story stays completely private until you choose to publish it.",
+        privacyNote: "This is just an illustration of how Story Assist works. Your own veteran's story stays completely private until you choose to publish it.",
         prompt1: "What do you want people to know about him?",
         prompt3: "What did he care about most?",
         sa1Message: "What's one thing you remember him teaching you, that you can still hear him saying?",
         step5Question: "Did they receive any medals or honors?",
-        finalThankYou: "It's live. Thank you for taking the time to do this for him."
+        finalThankYou: "It's live. Thank you for taking the time to do this for him.",
+        saExampleTip: "If you shared 1969, Story Assist might ask: \"That was the year of the moon landing. Does that ring a bell for him?\""
       },
       living: {
         step1Question: "What is their name?",
@@ -895,12 +920,13 @@
         step2bQuestion: "What years did they serve?",
         photoPrompt: "Where was this taken, and who's with him?",
         step4Question: "Tell their story",
-        privacyNote: "This is a real example from another family's tribute, shown so you can see how it works. Your own veteran's story stays completely private until you choose to publish it.",
+        privacyNote: "This is just an illustration of how Story Assist works. Your own veteran's story stays completely private until you choose to publish it.",
         prompt1: "What do you want people to know about him?",
         prompt3: "What did he care about most?",
         sa1Message: "What's one thing you remember him teaching you, that you can still hear him saying?",
         step5Question: "Did they receive any medals or honors?",
-        finalThankYou: "It's live. Thank you for taking the time to do this for him."
+        finalThankYou: "It's live. Thank you for taking the time to do this for him.",
+        saExampleTip: "If you shared 1969, Story Assist might ask: \"That was the year of the moon landing. Does that ring a bell for him?\""
       },
       self: {
         step1Question: "What's your name?",
@@ -910,12 +936,13 @@
         step2bQuestion: "What years did you serve?",
         photoPrompt: "Where was this taken, and who's with you?",
         step4Question: "Tell your story",
-        privacyNote: "This is a real example from another family's tribute, shown so you can see how it works. Your story stays completely private until you choose to publish it.",
+        privacyNote: "This is just an illustration of how Story Assist works. Your story stays completely private until you choose to publish it.",
         prompt1: "What do you want people to know about you?",
         prompt3: "What do you care about most?",
         sa1Message: "What's one thing someone taught you, that you can still hear them saying?",
         step5Question: "Did you receive any medals or honors?",
-        finalThankYou: "It's live. Thank you for taking the time to put this into words."
+        finalThankYou: "It's live. Thank you for taking the time to put this into words.",
+        saExampleTip: "If you shared 1969, Story Assist might ask: \"That was the year of the moon landing. Does that ring a bell for you?\""
       }
     };
     var c = copy[subjectMode] || copy.passed;
@@ -932,6 +959,7 @@
     document.getElementById('sa1-message').textContent = c.sa1Message;
     document.getElementById('step5-question').textContent = c.step5Question;
     document.getElementById('final-thankyou').textContent = c.finalThankYou;
+    document.getElementById('sa-example-tip').textContent = c.saExampleTip;
 
     document.getElementById('resource-card-passed').classList.toggle('hidden', subjectMode !== 'passed');
     document.getElementById('resource-card-living').classList.toggle('hidden', subjectMode !== 'living');
