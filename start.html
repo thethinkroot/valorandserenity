@@ -459,7 +459,7 @@
   }
 
   /* ---- Final reveal ---- */
-  #screen-final-reveal {
+  #screen-finalreveal {
     max-width: 640px;
     text-align: center;
   }
@@ -484,6 +484,7 @@
     margin: 0 0 10px;
   }
   .tribute-card .dates { color: #C9B79A; margin-bottom: 20px; }
+  .written-line { font-size: 13px; font-style: italic; color: #C9B79A; margin: -14px 0 20px; }
   .tribute-card .sentence { font-style: italic; font-family: var(--font-display); font-size: 19px; }
   #final-thankyou {
     margin-top: 28px;
@@ -569,6 +570,7 @@
     <button class="choice-tile" data-action="select-subject" data-arg="passed">In memory of someone who has passed
       <span class="sub">Preserving what they meant to everyone who knew them.</span>
     </button>
+    <button class="back-link" data-action="goto" data-arg="opening">Go back</button>
   </div>
 
   <!-- ENTRY POINT -->
@@ -583,6 +585,7 @@
       <span class="sub">We'll ask early on who you'd like to invite, so they can start adding photos and memories right away too.</span>
     </button>
     <p class="helper" style="margin-top:8px; margin-bottom:0; font-size:14px;">Free to start, either way. No payment is needed to build a complete tribute.</p>
+    <button class="back-link" data-action="goto" data-arg="subject">Go back</button>
   </div>
 
   <!-- STEP 1: NAME AND DATES -->
@@ -602,16 +605,13 @@
       <div class="field-row">
         <input type="text" id="input-birth" placeholder="Born" data-check="year" data-note="birth-year-note">
       </div>
-      <div class="field-row">
+      <div class="field-row" id="passing-field-row">
         <input type="text" id="input-passing" placeholder="Passed" data-check="year-pair" data-pair-first="input-birth" data-pair-second="input-passing" data-note="birth-year-note">
       </div>
     </div>
     <p class="gentle-note hidden" id="birth-year-note">That doesn't look like a full year. Try something like 1951.</p>
-    <div class="resource-card hidden" id="resource-card-passed">
-      <p>If you haven't already: locate their DD-214, order a few extra certified copies of the death certificate, and know that a Veteran Service Officer can help you navigate benefits at no cost. We've put together a fuller guide if it helps.</p>
-      <a href="help-for-families.html">See the full guide &rarr;</a>
-    </div>
     <button class="btn-primary" data-action="goto" data-arg="step2a">Continue</button>
+    <button class="back-link" data-action="goto" data-arg="entry">Go back</button>
   </div>
 
   <!-- STEP 2A: BRANCH -->
@@ -802,6 +802,7 @@
       <div class="branch-line" id="preview-branch">United States Army</div>
       <h1 id="preview-name" style="font-size:34px;">Their Name</h1>
       <div class="dates" id="preview-dates">Born – Passed</div>
+      <p class="written-line hidden" id="preview-written-line"></p>
     </div>
     <p class="theme-note" id="preview-theme-note" style="font-style:italic; font-family:var(--font-display); font-size:15px; color:var(--aubergine); text-align:center; margin-top:16px;"></p>
     <button class="btn-primary" style="margin-top:12px;" data-action="goto" data-arg="step8">This looks right</button>
@@ -821,14 +822,20 @@
   </div>
 
   <!-- FINAL REVEAL -->
-  <div class="screen hidden" id="screen-final-reveal">
+  <div class="screen hidden" id="screen-finalreveal">
     <div class="tribute-card">
       <div class="branch-line" id="final-branch">United States Army</div>
       <h1 id="final-name">Their Name</h1>
       <div class="dates" id="final-dates">Born – Passed</div>
+      <p class="written-line hidden" id="final-written-line"></p>
       <p class="sentence">Beloved husband, father, and Soldier.</p>
     </div>
     <p id="final-thankyou">It's live. Thank you for taking the time to do this for him.</p>
+    <div class="resource-card hidden" id="resource-card-passed" style="text-align:left; margin-top:32px;">
+      <p style="font-weight:700; color:var(--aubergine-deep); margin:0 0 10px;">While you're here, a few practical things that might help</p>
+      <p>If you haven't already: locate their DD-214, order a few extra certified copies of the death certificate, and know that a Veteran Service Officer can help you navigate benefits at no cost. We've put together a fuller guide if it helps.</p>
+      <a href="help-for-families.html">See the full guide &rarr;</a>
+    </div>
   </div>
 
 </div>
@@ -867,7 +874,7 @@
       self: {
         step1Question: "What's your name?",
         step1Sub: "Your full name, exactly as you'd want it remembered.",
-        datesHelper: "When were you born, and when did you pass, if this changes later, you can always update it.",
+        datesHelper: "When were you born? Your best guess is fine.",
         step4Question: "Tell your story",
         prompt1: "What do you want people to know about you?",
         prompt3: "What do you care about most?"
@@ -883,6 +890,7 @@
 
     document.getElementById('resource-card-passed').classList.toggle('hidden', subjectMode !== 'passed');
     document.getElementById('resource-card-living').classList.toggle('hidden', subjectMode !== 'living');
+    document.getElementById('passing-field-row').classList.toggle('hidden', subjectMode === 'self');
   }
   applySubjectCopy();
 
@@ -902,16 +910,30 @@
     if (id === 'step7' || id === 'finalreveal') {
       const name = document.getElementById('input-name').value || 'Their Name';
       const born = document.getElementById('input-birth').value || 'Born';
-      const passed = document.getElementById('input-passing').value || 'Passed';
       const branchLabel = 'United States ' + selectedBranch;
+      let datesText, writtenText;
+      if (subjectMode === 'self') {
+        datesText = born;
+        writtenText = 'Written in ' + new Date().getFullYear();
+      } else {
+        const passed = document.getElementById('input-passing').value || 'Passed';
+        datesText = born + ' – ' + passed;
+        writtenText = '';
+      }
       if (id === 'step7') {
         document.getElementById('preview-name').textContent = name;
-        document.getElementById('preview-dates').textContent = born + ' – ' + passed;
+        document.getElementById('preview-dates').textContent = datesText;
+        const pw = document.getElementById('preview-written-line');
+        pw.textContent = writtenText;
+        pw.classList.toggle('hidden', !writtenText);
         applyPreviewTheme(selectedBranch);
       } else {
         document.getElementById('final-name').textContent = name;
-        document.getElementById('final-dates').textContent = born + ' – ' + passed;
+        document.getElementById('final-dates').textContent = datesText;
         document.getElementById('final-branch').textContent = branchLabel;
+        const fw = document.getElementById('final-written-line');
+        fw.textContent = writtenText;
+        fw.classList.toggle('hidden', !writtenText);
       }
     }
   }
