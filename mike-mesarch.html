@@ -43,6 +43,7 @@
   }
 
   * { box-sizing: border-box; }
+  * { transition: background-color .25s ease, color .25s ease, border-color .25s ease, box-shadow .25s ease; }
   html { scroll-behavior: smooth; }
   body {
     margin: 0;
@@ -401,6 +402,17 @@
   .contrast-switch[aria-checked="true"] .contrast-switch-track { background: var(--copper); border-color: var(--copper); }
   .contrast-switch[aria-checked="true"] .contrast-switch-knob { transform: translateX(19px); }
   .contrast-switch:focus-visible .contrast-switch-track { outline: 2px solid var(--copper-text); outline-offset: 2px; }
+  .a11y-group-label { color: #E3B78F; }
+  .a11y-group-label::before { content: ''; display: inline-block; width: 10px; height: 2px; background: var(--copper); margin-right: 8px; vertical-align: middle; }
+  @media (max-width: 560px) {
+    .a11y-bar { gap: 14px; }
+    .a11y-divider { display: none; }
+    .a11y-group { width: 100%; justify-content: center; }
+  }
+  body { transition: opacity .18s ease, background-color .25s ease, color .25s ease; }
+  body.zoom-transitioning { opacity: .45; }
+  .a11y-toast { position: fixed; left: 50%; bottom: 28px; transform: translateX(-50%) translateY(8px); background: var(--ink); color: var(--bone); font-family: var(--font-body); font-size: 13.5px; font-weight: 700; padding: 11px 20px; border-radius: 8px; box-shadow: 0 16px 32px -12px rgba(0,0,0,0.45); opacity: 0; pointer-events: none; z-index: 300; transition: opacity .25s ease, transform .25s ease; }
+  .a11y-toast.is-visible { opacity: 1; transform: translateX(-50%) translateY(0); }
   a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible { outline: 2px solid var(--copper-text); outline-offset: 2px; }
   body.high-contrast { --bone: #FFFFFF; --bone-warm: #FFFFFF; --bone-deep: #CCCCCC; --ink: #000000; --aubergine: #000000; --aubergine-deep: #000000; --copper: #7a3d18; --copper-deep: #5c2d12; --copper-text: #7a3d18; --tan-muted: #000000; }
 </style>
@@ -427,6 +439,7 @@
     </button>
   </div>
 </div>
+<div class="a11y-toast" id="a11yToast" role="status" aria-live="polite"></div>
 
 
 <header class="site-header">
@@ -1159,27 +1172,47 @@
     var root = document.documentElement;
     var zoomKey = 'vs_text_zoom';
     var sizeOptions = Array.prototype.slice.call(document.querySelectorAll('.text-size-option'));
-    function applyZoom(z){
-      root.style.zoom = z;
-      try { localStorage.setItem(zoomKey, z); } catch(e){}
-      sizeOptions.forEach(function(btn){
-        btn.setAttribute('aria-pressed', String(parseFloat(btn.getAttribute('data-zoom')) === parseFloat(z)));
-      });
+    var toastEl = document.getElementById('a11yToast');
+    var toastTimer;
+    function showToast(msg){
+      if (!toastEl) return;
+      toastEl.textContent = msg;
+      toastEl.classList.add('is-visible');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(function(){ toastEl.classList.remove('is-visible'); }, 1800);
+    }
+    function applyZoom(z, opts){
+      var announce = opts && opts.announce;
+      var doApply = function(){
+        root.style.zoom = z;
+        try { localStorage.setItem(zoomKey, z); } catch(e){}
+        sizeOptions.forEach(function(btn){
+          btn.setAttribute('aria-pressed', String(parseFloat(btn.getAttribute('data-zoom')) === parseFloat(z)));
+        });
+      };
+      if (!announce) { doApply(); return; }
+      document.body.classList.add('zoom-transitioning');
+      setTimeout(function(){
+        doApply();
+        requestAnimationFrame(function(){ document.body.classList.remove('zoom-transitioning'); });
+        showToast(parseFloat(z) === 1 ? 'Text size: default' : 'Text size updated');
+      }, 90);
     }
     sizeOptions.forEach(function(btn){
-      btn.addEventListener('click', function(){ applyZoom(btn.getAttribute('data-zoom')); });
+      btn.addEventListener('click', function(){ applyZoom(btn.getAttribute('data-zoom'), { announce: true }); });
     });
     var storedZoom = parseFloat(localStorage.getItem(zoomKey));
-    applyZoom(isNaN(storedZoom) ? 1 : storedZoom);
+    applyZoom(isNaN(storedZoom) ? 1 : storedZoom, { announce: false });
     var contrastKey = 'vs_high_contrast';
     var cbtn = document.getElementById('contrastToggle');
-    function setContrast(on){
+    function setContrast(on, announce){
       document.body.classList.toggle('high-contrast', on);
       cbtn.setAttribute('aria-checked', String(on));
       try { localStorage.setItem(contrastKey, on ? '1' : '0'); } catch(e){}
+      if (announce) showToast(on ? 'High contrast on' : 'High contrast off');
     }
-    cbtn.addEventListener('click', function(){ setContrast(!document.body.classList.contains('high-contrast')); });
-    setContrast(localStorage.getItem(contrastKey) === '1');
+    cbtn.addEventListener('click', function(){ setContrast(!document.body.classList.contains('high-contrast'), true); });
+    setContrast(localStorage.getItem(contrastKey) === '1', false);
   } catch(e) {}
 })();
 </script>
