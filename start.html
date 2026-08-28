@@ -8,6 +8,8 @@
 <meta name="description" content="Build a free, guided tribute for the veteran you love. This is an early preview of the guided experience.">
 <link rel="canonical" href="https://valorandserenity.com/start.html">
 <style>
+  .skip-link { position: absolute; left: -9999px; top: 0; z-index: 100; background: var(--copper); color: var(--bone); padding: 12px 20px; font-family: var(--font-body); font-weight: 700; font-size: 14px; border-radius: 0 0 3px 0; }
+  .skip-link:focus { left: 0; }
   :root {
     --bone: #FAF8F3; --bone-warm: #F0E9DC; --bone-deep: #E1D5C0; --ink: #1D1C1B;
     --aubergine: #69545F; --aubergine-deep: #29212B; --copper: #B66F4A; --copper-deep: #8B4E30; --copper-text: #9C5C3A;
@@ -504,7 +506,7 @@
 </style>
 </head>
 <body>
-<a href="#main-content" style="position:absolute; left:-9999px; top:0; z-index:100; background:var(--copper); color:var(--bone); padding:12px 20px; font-family:var(--font-body); font-weight:700; font-size:14px; border-radius:0 0 3px 0;" onfocus="this.style.left='0'" onblur="this.style.left='-9999px'">Skip to main content</a>
+<a href="#main-content" class="skip-link">Skip to main content</a>
 <div class="top-bar"></div>
 <div class="a11y-bar">
   <div class="a11y-group">
@@ -533,6 +535,7 @@
     <a href="about.html">Our Story</a>
     <a href="index.html#how-it-works">How It Works</a>
     <a href="story-assist.html">Story Assist</a>
+    <a href="pricing.html">Pricing</a>
     <a href="index.html#preview">Examples</a>
     <a href="partners.html">For Partners</a>
   </nav>
@@ -546,7 +549,7 @@
   <!-- OPENING STILLNESS -->
   <div class="screen" id="screen-opening">
     <p class="mission">No veteran's story should be lost to time, and no family should have to preserve it alone.</p>
-    <button class="btn-primary" id="opening-continue" onclick="goTo('entry')">Begin</button>
+    <button class="btn-primary" id="opening-continue" data-action="goto" data-arg="entry">Begin</button>
   </div>
 
   <!-- ENTRY POINT -->
@@ -554,10 +557,10 @@
     <h1 class="eyebrow-title">Let's get started</h1>
     <h2 class="question">How would you like to begin?</h2>
     <p class="helper">Both are exactly the same, step by step. This just helps us know who else might help along the way.</p>
-    <button class="choice-tile" onclick="goTo('step1')">Start on your own
+    <button class="choice-tile" data-action="goto" data-arg="step1">Start on your own
       <span class="sub">You go through each step yourself. You can invite family to help anytime later.</span>
     </button>
-    <button class="choice-tile" onclick="goTo('step1')">Start with family
+    <button class="choice-tile" data-action="goto" data-arg="step1">Start with family
       <span class="sub">We'll ask early on who you'd like to invite, so they can start adding photos and memories right away too.</span>
     </button>
     <p class="helper" style="margin-top:8px; margin-bottom:0; font-size:14px;">Free to start, either way. No payment is needed to build a complete tribute.</p>
@@ -572,20 +575,20 @@
     <h2 class="question">What was their name?</h2>
     <p class="helper">Their full name, exactly as they'd want it remembered.</p>
     <div class="field-row">
-      <input type="text" id="input-name" placeholder="e.g. Michael Mesarch" oninput="autosave()">
-      <button class="mic-icon" onclick="mockListen(this)">🎤</button>
+      <input type="text" id="input-name" placeholder="e.g. Michael Mesarch" >
+      <button class="mic-icon" data-action="mock-listen">🎤</button>
     </div>
     <p class="helper" style="margin-top:28px; margin-bottom:10px;">When were they born, and when did they pass, if you know?</p>
     <div class="date-row">
       <div class="field-row">
-        <input type="text" id="input-birth" placeholder="Born" oninput="autosave()" onblur="checkYear(this,'birth-year-note')">
+        <input type="text" id="input-birth" placeholder="Born" data-check="year" data-note="birth-year-note">
       </div>
       <div class="field-row">
-        <input type="text" id="input-passing" placeholder="Passed" oninput="autosave()" onblur="checkYearPair('input-birth','input-passing','birth-year-note')">
+        <input type="text" id="input-passing" placeholder="Passed" data-check="year-pair" data-pair-first="input-birth" data-pair-second="input-passing" data-note="birth-year-note">
       </div>
     </div>
     <p class="gentle-note hidden" id="birth-year-note">That doesn't look like a full year. Try something like 1951.</p>
-    <button class="btn-primary" onclick="goTo('step2a')">Continue</button>
+    <button class="btn-primary" data-action="goto" data-arg="step2a">Continue</button>
   </div>
 
   <!-- STEP 2A: BRANCH -->
@@ -596,15 +599,15 @@
     <h1 class="eyebrow-title">Step 2 of 8</h1>
     <h2 class="question">What branch did they serve in?</h2>
     <div class="tile-grid">
-      <button class="choice-tile" data-branch="Army" onclick="selectBranch(this)">Army</button>
-      <button class="choice-tile" data-branch="Navy" onclick="selectBranch(this)">Navy</button>
-      <button class="choice-tile" data-branch="Marine Corps" onclick="selectBranch(this)">Marine Corps</button>
-      <button class="choice-tile" data-branch="Air Force" onclick="selectBranch(this)">Air Force</button>
-      <button class="choice-tile" data-branch="Coast Guard" onclick="selectBranch(this)">Coast Guard</button>
-      <button class="choice-tile" data-branch="Space Force" onclick="selectBranch(this)">Space Force</button>
+      <button class="choice-tile" data-branch="Army" data-action="select-branch">Army</button>
+      <button class="choice-tile" data-branch="Navy" data-action="select-branch">Navy</button>
+      <button class="choice-tile" data-branch="Marine Corps" data-action="select-branch">Marine Corps</button>
+      <button class="choice-tile" data-branch="Air Force" data-action="select-branch">Air Force</button>
+      <button class="choice-tile" data-branch="Coast Guard" data-action="select-branch">Coast Guard</button>
+      <button class="choice-tile" data-branch="Space Force" data-action="select-branch">Space Force</button>
     </div>
-    <button class="btn-primary" id="branch-continue" disabled onclick="goTo('step2b')">Continue</button>
-    <button class="back-link" onclick="goTo('step1')">Go back</button>
+    <button class="btn-primary" id="branch-continue" disabled data-action="goto" data-arg="step2b">Continue</button>
+    <button class="back-link" data-action="goto" data-arg="step1">Go back</button>
   </div>
 
   <!-- STEP 2B: YEARS -->
@@ -616,12 +619,12 @@
     <h2 class="question">What years did they serve?</h2>
     <p class="helper">Not sure of exact dates? Your best guess is fine. You can always fix it later.</p>
     <div class="date-row">
-      <div class="field-row"><input type="text" id="input-svc-from" placeholder="From" oninput="autosave()" onblur="checkYear(this,'svc-year-note')"></div>
-      <div class="field-row"><input type="text" id="input-svc-to" placeholder="To" oninput="autosave()" onblur="checkYearPair('input-svc-from','input-svc-to','svc-year-note')"></div>
+      <div class="field-row"><input type="text" id="input-svc-from" placeholder="From" data-check="year" data-note="svc-year-note"></div>
+      <div class="field-row"><input type="text" id="input-svc-to" placeholder="To" data-check="year-pair" data-pair-first="input-svc-from" data-pair-second="input-svc-to" data-note="svc-year-note"></div>
     </div>
     <p class="gentle-note hidden" id="svc-year-note">That doesn't look like a full year. Try something like 1976.</p>
-    <button class="btn-primary" onclick="goTo('step3')">Continue</button>
-    <button class="back-link" onclick="goTo('step2a')">Go back</button>
+    <button class="btn-primary" data-action="goto" data-arg="step3">Continue</button>
+    <button class="back-link" data-action="goto" data-arg="step2a">Go back</button>
   </div>
 
   <!-- STEP 3: PHOTOS -->
@@ -632,24 +635,24 @@
     <h1 class="eyebrow-title">Step 3 of 8</h1>
     <h2 class="question">Add a photo</h2>
     <p class="helper">You can add more anytime. One is enough to start.</p>
-    <div class="upload-box" id="photo-box" onclick="mockUpload()">Tap to choose a photo</div>
-    <button class="back-link hidden" id="photo-remove-link" onclick="removePhoto()" style="margin-top:-10px;">Remove this photo</button>
+    <div class="upload-box" id="photo-box" data-action="mock-upload">Tap to choose a photo</div>
+    <button class="back-link hidden" id="photo-remove-link" data-action="remove-photo" style="margin-top:-10px;">Remove this photo</button>
     <div id="caption-row" class="hidden">
       <div class="field-row">
-        <input type="text" placeholder="What's happening in this photo?" oninput="autosave()">
-        <button class="mic-icon" onclick="mockListen(this)">🎤</button>
+        <input type="text" placeholder="What's happening in this photo?" >
+        <button class="mic-icon" data-action="mock-listen">🎤</button>
       </div>
-      <p class="sa-ack" id="photo-prompt-link" style="margin-top:-8px;">Not sure what to write? <a href="#" onclick="event.preventDefault(); showPhotoPrompt()" style="color:var(--copper);">Get a gentle prompt</a>.</p>
+      <p class="sa-ack" id="photo-prompt-link" style="margin-top:-8px;">Not sure what to write? <a href="#" data-action="show-photo-prompt" style="color:var(--copper);">Get a gentle prompt</a>.</p>
       <div class="sa-context hidden" id="photo-prompt-box" style="margin-top:12px;">
         <strong>A gentle prompt</strong>
         <span>Where was this taken, and who's with him?</span>
       </div>
     </div>
     <div id="video-option" class="hidden" style="margin-top: 20px;">
-      <button class="btn-secondary" onclick="document.getElementById('video-option').classList.add('hidden')">Add a voice or video memory, if you have one</button>
+      <button class="btn-secondary" data-action="hide-video-option">Add a voice or video memory, if you have one</button>
     </div>
-    <button class="btn-primary" style="margin-top:20px;" onclick="goTo('step4choice')">Continue</button>
-    <button class="back-link" onclick="goTo('step2b')">Go back</button>
+    <button class="btn-primary" style="margin-top:20px;" data-action="goto" data-arg="step4choice">Continue</button>
+    <button class="back-link" data-action="goto" data-arg="step2b">Go back</button>
   </div>
 
   <!-- STEP 4: THEIR STORY, CHOICE -->
@@ -659,8 +662,8 @@
     </div>
     <h1 class="eyebrow-title">Step 4 of 8</h1>
     <h2 class="question">Tell their story</h2>
-    <button class="choice-tile" onclick="goTo('step4write')">Write it yourself</button>
-    <button class="choice-tile" onclick="goTo('step4sa1')">Get some help
+    <button class="choice-tile" data-action="goto" data-arg="step4write">Write it yourself</button>
+    <button class="choice-tile" data-action="goto" data-arg="step4sa1">Get some help
       <span class="sub">Just asks a few gentle questions to jog your memory. Nothing is added that you don't say yourself.</span>
     </button>
     <div class="sa-context" style="margin-top:4px;">
@@ -669,7 +672,7 @@
     </div>
     <p class="helper" style="font-size:14px; margin-top:10px;">This is a real example from another family's tribute, shown so you can see how it works. Your own veteran's story stays completely private until you choose to publish it.</p>
     <p class="helper" style="font-size:15px; font-style:italic; text-align:center; margin-top:20px;">Most memorial pages only record what happened. This also shows you what the world was like when it happened, so more memories come back to you.</p>
-    <button class="back-link" onclick="goTo('step3')">Go back</button>
+    <button class="back-link" data-action="goto" data-arg="step3">Go back</button>
   </div>
 
   <!-- STEP 4: WRITE YOURSELF -->
@@ -679,19 +682,19 @@
     </div>
     <h1 class="eyebrow-title">Step 4 of 8</h1>
     <h2 class="question">In your own words</h2>
-    <p class="sa-ack" id="write-prompt-link">Need a place to start? <a href="#" onclick="event.preventDefault(); showWritePrompts()" style="color:var(--copper);">See a few ideas</a>.</p>
+    <p class="sa-ack" id="write-prompt-link">Need a place to start? <a href="#" data-action="show-write-prompts" style="color:var(--copper);">See a few ideas</a>.</p>
     <div class="hidden" id="write-prompts-box" style="margin-bottom:16px;">
-      <button class="btn-secondary" style="margin-bottom:8px; text-align:left; font-weight:400;" onclick="insertPrompt('What do you want people to know about him?')">What do you want people to know about him?</button>
-      <button class="btn-secondary" style="margin-bottom:8px; text-align:left; font-weight:400;" onclick="insertPrompt('What is a memory that still makes you smile?')">What is a memory that still makes you smile?</button>
-      <button class="btn-secondary" style="text-align:left; font-weight:400;" onclick="insertPrompt('What did he care about most?')">What did he care about most?</button>
+      <button class="btn-secondary" style="margin-bottom:8px; text-align:left; font-weight:400;" data-action="insert-prompt">What do you want people to know about him?</button>
+      <button class="btn-secondary" style="margin-bottom:8px; text-align:left; font-weight:400;" data-action="insert-prompt">What is a memory that still makes you smile?</button>
+      <button class="btn-secondary" style="text-align:left; font-weight:400;" data-action="insert-prompt">What did he care about most?</button>
     </div>
     <div class="field-row">
-      <textarea id="write-textarea" placeholder="Start writing..." oninput="autosave()"></textarea>
-      <button class="mic-icon" style="top:24px; transform:none;" onclick="mockListen(this)">🎤</button>
+      <textarea id="write-textarea" placeholder="Start writing..." ></textarea>
+      <button class="mic-icon" style="top:24px; transform:none;" data-action="mock-listen">🎤</button>
     </div>
-    <p class="helper" style="font-size:14px; margin-top:-14px;">Want more than a starting point? <a href="#" onclick="event.preventDefault(); goTo('step4sa1')" style="color:var(--copper);">Get gentle guidance from Story Assist</a> instead.</p>
-    <button class="btn-primary" onclick="goTo('step5')">Continue</button>
-    <button class="back-link" onclick="goTo('step4choice')">Go back</button>
+    <p class="helper" style="font-size:14px; margin-top:-14px;">Want more than a starting point? <a href="#" data-action="goto" data-arg="step4sa1" style="color:var(--copper);">Get gentle guidance from Story Assist</a> instead.</p>
+    <button class="btn-primary" data-action="goto" data-arg="step5">Continue</button>
+    <button class="back-link" data-action="goto" data-arg="step4choice">Go back</button>
   </div>
 
   <!-- STEP 4: STORY ASSIST Q1 -->
@@ -702,11 +705,11 @@
     <h1 class="eyebrow-title">Step 4 of 8 · Getting some help</h1>
     <div class="sa-message">What's one thing you remember him teaching you, that you can still hear him saying?</div>
     <div class="field-row">
-      <input type="text" placeholder="Type or tap the mic to speak" oninput="autosave()">
-      <button class="mic-icon" onclick="mockListen(this)">🎤</button>
+      <input type="text" placeholder="Type or tap the mic to speak" >
+      <button class="mic-icon" data-action="mock-listen">🎤</button>
     </div>
-    <button class="btn-primary" onclick="goTo('step4sa2')">Continue</button>
-    <button class="back-link" onclick="goTo('step4choice')">Go back</button>
+    <button class="btn-primary" data-action="goto" data-arg="step4sa2">Continue</button>
+    <button class="back-link" data-action="goto" data-arg="step4choice">Go back</button>
   </div>
 
   <!-- STEP 4: STORY ASSIST ACK + LIVE HISTORICAL CONTEXT + Q2 -->
@@ -721,11 +724,11 @@
       <span id="context-text">You mentioned he was born in 1951. That same year, the Rochester Royals beat the New York Knicks for the NBA title, and Harry Truman was president. Does anything from that time sound familiar?</span>
     </div>
     <div class="field-row" style="margin-top:20px;">
-      <input type="text" placeholder="Type or tap the mic to speak" oninput="autosave()">
-      <button class="mic-icon" onclick="mockListen(this)">🎤</button>
+      <input type="text" placeholder="Type or tap the mic to speak" >
+      <button class="mic-icon" data-action="mock-listen">🎤</button>
     </div>
-    <button class="btn-primary" onclick="goTo('step5')">Continue</button>
-    <button class="back-link" onclick="goTo('step4sa1')">Go back</button>
+    <button class="btn-primary" data-action="goto" data-arg="step5">Continue</button>
+    <button class="back-link" data-action="goto" data-arg="step4sa1">Go back</button>
   </div>
 
   <!-- STEP 5: HONORS -->
@@ -735,12 +738,12 @@
     </div>
     <h1 class="eyebrow-title">Step 5 of 8</h1>
     <h2 class="question">Did they receive any medals or honors?</h2>
-    <button class="btn-secondary" style="margin-bottom:14px;" onclick="addHonor()">+ Add one</button>
+    <button class="btn-secondary" style="margin-bottom:14px;" data-action="add-honor">+ Add one</button>
     <div id="honors-list"></div>
-    <button class="choice-tile" style="margin-top: 6px;" onclick="goTo('step6')">None, or not sure, and that's okay</button>
+    <button class="choice-tile" style="margin-top: 6px;" data-action="goto" data-arg="step6">None, or not sure, and that's okay</button>
     <p class="helper" style="margin-top:18px; margin-bottom:0;">Don't worry about remembering every one right now. You can always come back and add more, even after this is published.</p>
-    <button class="btn-primary" onclick="goTo('step6')">Continue</button>
-    <button class="back-link" onclick="goTo('step4choice')">Go back</button>
+    <button class="btn-primary" data-action="goto" data-arg="step6">Continue</button>
+    <button class="back-link" data-action="goto" data-arg="step4choice">Go back</button>
   </div>
 
   <!-- STEP 6: INVITE FAMILY -->
@@ -750,14 +753,14 @@
     </div>
     <h1 class="eyebrow-title">Step 6 of 8</h1>
     <h2 class="question">Would you like family to help add memories?</h2>
-    <button class="choice-tile" onclick="goTo('step7')">Not right now</button>
-    <button class="choice-tile" onclick="showInviteField()">Send an invite</button>
+    <button class="choice-tile" data-action="goto" data-arg="step7">Not right now</button>
+    <button class="choice-tile" data-action="show-invite-field">Send an invite</button>
     <div id="invite-field-row" class="hidden field-row" style="margin-top:12px;">
-      <input type="text" placeholder="Their email or phone number" oninput="autosave()">
+      <input type="text" placeholder="Their email or phone number" >
     </div>
     <p class="helper hidden" id="invite-privacy-note" style="margin-top:-8px; margin-bottom:16px; font-size:14px;">We'll only use this to send them one invite to help with this memorial. We won't add them to any mailing list, and we won't use it for anything else.</p>
-    <button id="invite-send-btn" class="btn-primary hidden" onclick="goTo('step7')">Send</button>
-    <button class="back-link" onclick="goTo('step5')">Go back</button>
+    <button id="invite-send-btn" class="btn-primary hidden" data-action="goto" data-arg="step7">Send</button>
+    <button class="back-link" data-action="goto" data-arg="step5">Go back</button>
   </div>
 
   <!-- STEP 7: PREVIEW -->
@@ -774,8 +777,8 @@
       <div class="dates" id="preview-dates">Born – Passed</div>
     </div>
     <p class="theme-note" id="preview-theme-note" style="font-style:italic; font-family:var(--font-display); font-size:15px; color:var(--aubergine); text-align:center; margin-top:16px;"></p>
-    <button class="btn-primary" style="margin-top:12px;" onclick="goTo('step8')">This looks right</button>
-    <button class="back-link" onclick="goTo('step6')">Go back and change something</button>
+    <button class="btn-primary" style="margin-top:12px;" data-action="goto" data-arg="step8">This looks right</button>
+    <button class="back-link" data-action="goto" data-arg="step6">Go back and change something</button>
   </div>
 
   <!-- STEP 8: PUBLISH -->
@@ -786,8 +789,8 @@
     <h1 class="eyebrow-title">Step 8 of 8</h1>
     <h2 class="question">One last step</h2>
     <p class="helper">We'll send a quick email to confirm it's really you, then your tribute goes live.</p>
-    <button class="btn-primary" onclick="goTo('finalreveal')">Send the confirmation</button>
-    <button class="back-link" onclick="goTo('step7')">Go back</button>
+    <button class="btn-primary" data-action="goto" data-arg="finalreveal">Send the confirmation</button>
+    <button class="back-link" data-action="goto" data-arg="step7">Go back</button>
   </div>
 
   <!-- FINAL REVEAL -->
@@ -944,14 +947,14 @@
     const otherOptions = ['Default', 'American Flag', selectedBranch].filter((v,i,a) => a.indexOf(v)===i && v !== themeName);
     const noteEl = document.getElementById('preview-theme-note');
     noteEl.innerHTML = 'Shown here in <strong>' + (themeName === 'Default' ? 'Default' : themeName) + '</strong> colors. View in ' +
-      otherOptions.map(o => '<a href="#" onclick="event.preventDefault(); applyPreviewTheme(\'' + o + '\')" style="color:var(--copper); border-bottom:1px dotted var(--copper);">' + o + '</a>').join(' or ') + ' instead.';
+      otherOptions.map(o => '<a href="#" data-action="apply-preview-theme" data-arg="' + o + '" style="color:var(--copper); border-bottom:1px dotted var(--copper);">' + o + '</a>').join(' or ') + ' instead.';
   }
 
   function addHonor() {
     honorCount++;
     const div = document.createElement('div');
     div.className = 'field-row';
-    div.innerHTML = '<input type="text" placeholder="Name of the medal or honor" oninput="autosave()">';
+    div.innerHTML = '<input type="text" placeholder="Name of the medal or honor" >';
     document.getElementById('honors-list').appendChild(div);
   }
 
@@ -983,6 +986,44 @@
       setTimeout(() => flash.classList.remove('show'), 1200);
     }, 500);
   }
+
+  document.addEventListener('click', function(e){
+    var el = e.target.closest('[data-action]');
+    if (!el) return;
+    if (el.tagName === 'A') e.preventDefault();
+    var action = el.getAttribute('data-action');
+    var arg = el.getAttribute('data-arg');
+    switch (action) {
+      case 'goto': goTo(arg); break;
+      case 'select-branch': selectBranch(el); break;
+      case 'mock-listen': mockListen(el); break;
+      case 'mock-upload': mockUpload(); break;
+      case 'remove-photo': removePhoto(); break;
+      case 'show-photo-prompt': showPhotoPrompt(); break;
+      case 'hide-video-option': document.getElementById('video-option').classList.add('hidden'); break;
+      case 'insert-prompt': insertPrompt(el.textContent); break;
+      case 'show-write-prompts': showWritePrompts(); break;
+      case 'add-honor': addHonor(); break;
+      case 'show-invite-field': showInviteField(); break;
+      case 'apply-preview-theme': applyPreviewTheme(arg); break;
+    }
+  });
+
+  document.addEventListener('input', function(e){
+    if (e.target.matches('input, textarea')) autosave();
+  });
+
+  document.addEventListener('focusout', function(e){
+    var el = e.target;
+    var check = el.getAttribute && el.getAttribute('data-check');
+    if (!check) return;
+    var note = el.getAttribute('data-note');
+    if (check === 'year') {
+      checkYear(el, note);
+    } else if (check === 'year-pair') {
+      checkYearPair(el.getAttribute('data-pair-first'), el.getAttribute('data-pair-second'), note);
+    }
+  });
 </script>
 
 <script src="js/nav-toggle.js" defer></script>

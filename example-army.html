@@ -14,6 +14,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Lato:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
 
 <style>
+  .skip-link { position: absolute; left: -9999px; top: 0; z-index: 100; background: var(--copper); color: var(--bone); padding: 12px 20px; font-family: var(--font-body); font-weight: 700; font-size: 14px; border-radius: 0 0 3px 0; }
+  .skip-link:focus { left: 0; }
   :root {
     --bone: #FAF8F3;
     --bone-warm: #F0E9DC;
@@ -202,7 +204,7 @@
 </style>
 </head>
 <body data-theme="army">
-<a href="#main-content" style="position:absolute; left:-9999px; top:0; z-index:100; background:var(--copper); color:var(--bone); padding:12px 20px; font-family:var(--font-body); font-weight:700; font-size:14px; border-radius:0 0 3px 0;" onfocus="this.style.left='0'" onblur="this.style.left='-9999px'">Skip to main content</a>
+<a href="#main-content" class="skip-link">Skip to main content</a>
 
 <div class="top-bar"></div>
 <div class="a11y-bar">
@@ -233,6 +235,7 @@
     <a href="about.html">Our Story</a>
     <a href="index.html#how-it-works">How It Works</a>
     <a href="story-assist.html">Story Assist</a>
+    <a href="pricing.html">Pricing</a>
     <a href="example-marine-corps.html">Examples</a>
     <a href="index.html#partners">For Partners</a>
   </nav>
@@ -364,6 +367,7 @@
         <ul class="footer-links">
           <li><a href="index.html#start">Start a Tribute</a></li>
           <li><a href="index.html#how-it-works">How It Works</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
           <li><a href="mike-mesarch.html">Example Page</a></li>
         </ul>
       </div>

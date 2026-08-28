@@ -8,6 +8,8 @@
 <meta name="description" content="A complete tribute is free, always. Story Assist and the Legacy Vault are optional, one-time or annual additions.">
 <link rel="canonical" href="https://valorandserenity.com/pricing.html">
 <style>
+  .skip-link { position: absolute; left: -9999px; top: 0; z-index: 100; background: var(--copper); color: var(--bone); padding: 12px 20px; font-family: var(--font-body); font-weight: 700; font-size: 14px; border-radius: 0 0 3px 0; }
+  .skip-link:focus { left: 0; }
   :root {
     --bone: #FAF8F3; --bone-warm: #F0E9DC; --bone-deep: #E1D5C0; --ink: #1D1C1B;
     --aubergine: #69545F; --aubergine-deep: #29212B; --copper: #B66F4A; --copper-deep: #8B4E30; --copper-text: #9C5C3A;
@@ -159,7 +161,7 @@
 </style>
 </head>
 <body>
-<a href="#main-content" style="position:absolute; left:-9999px; top:0; z-index:100; background:var(--copper); color:var(--bone); padding:12px 20px; font-family:var(--font-body); font-weight:700; font-size:14px; border-radius:0 0 3px 0;" onfocus="this.style.left='0'" onblur="this.style.left='-9999px'">Skip to main content</a>
+<a href="#main-content" class="skip-link">Skip to main content</a>
 <div class="top-bar"></div>
 <div class="a11y-bar">
   <div class="a11y-group">
@@ -188,6 +190,7 @@
     <a href="about.html">Our Story</a>
     <a href="index.html#how-it-works">How It Works</a>
     <a href="story-assist.html">Story Assist</a>
+    <a href="pricing.html" class="current">Pricing</a>
     <a href="index.html#preview">Examples</a>
     <a href="partners.html">For Partners</a>
   </nav>

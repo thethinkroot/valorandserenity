@@ -13,6 +13,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Lato:ital,wght@0,300;0,400;0,700;0,900;1,400&display=swap" rel="stylesheet">
 
 <style>
+  .skip-link { position: absolute; left: -9999px; top: 0; z-index: 100; background: var(--copper); color: var(--bone); padding: 12px 20px; font-family: var(--font-body); font-weight: 700; font-size: 14px; border-radius: 0 0 3px 0; }
+  .skip-link:focus { left: 0; }
   :root {
     --bone: #FAF8F3; --bone-warm: #F0E9DC; --bone-deep: #E1D5C0; --bone-line: #ECE3D3; --bone-line-2: #E7DCC7;
     --ink: #1D1C1B; --aubergine: #69545F; --aubergine-deep: #29212B;
@@ -221,7 +223,7 @@
 </style>
 </head>
 <body>
-<a href="#main-content" style="position:absolute; left:-9999px; top:0; z-index:100; background:var(--copper); color:var(--bone); padding:12px 20px; font-family:var(--font-body); font-weight:700; font-size:14px; border-radius:0 0 3px 0;" onfocus="this.style.left='0'" onblur="this.style.left='-9999px'">Skip to main content</a>
+<a href="#main-content" class="skip-link">Skip to main content</a>
 <div class="top-bar"></div>
 <div class="a11y-bar">
   <div class="a11y-group">
@@ -250,6 +252,7 @@
     <a href="about.html">Our Story</a>
     <a href="#how-it-works">How It Works</a>
     <a href="story-assist.html">Story Assist</a>
+    <a href="pricing.html">Pricing</a>
     <a href="#preview">Examples</a>
     <a href="partners.html">For Partners</a>
   </nav>
@@ -490,6 +493,7 @@
           <li><a href="#how-it-works">How It Works</a></li>
           <li><a href="about.html">Our Story</a></li>
           <li><a href="story-assist.html">Story Assist</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
           <li><a href="mike-mesarch.html">Example Page</a></li>
           <li><a href="index.html#preview">See This in Other Themes</a></li>
         </ul>
