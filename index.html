@@ -82,8 +82,8 @@
   .keepsakes-text h2 { text-align: left; }
   .keepsakes-text p { font-family: var(--font-body); font-size: 16.5px; color: var(--aubergine); line-height: 1.7; margin: 0; max-width: 460px; }
   .keepsakes-photo-wrap { flex: 1 1 380px; min-width: 300px; display: flex; justify-content: center; }
-  .keepsakes-photo { width: 100%; max-width: 420px; aspect-ratio: 4/5; transform: rotate(-1.4deg); box-shadow: 0 28px 55px -15px rgba(29,20,15,0.3); border-radius: 3px; overflow: hidden; background: var(--bone-deep); background-image: repeating-linear-gradient(45deg, var(--bone-warm), var(--bone-warm) 10px, var(--bone-deep) 10px, var(--bone-deep) 20px); display: flex; align-items: center; justify-content: center; }
-  .keepsakes-photo span { font-family: var(--font-body); font-size: 12.5px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--aubergine); background: var(--bone-warm); padding: 8px 14px; border-radius: 3px; }
+  .keepsakes-photo { width: 100%; max-width: 420px; aspect-ratio: 4/5; transform: rotate(-1.4deg); box-shadow: 0 28px 55px -15px rgba(29,20,15,0.3); border-radius: 3px; overflow: hidden; background: var(--bone-deep); }
+  .keepsakes-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
   #preview { background: var(--bone); }
   .preview-lede { margin-bottom: 64px; }
@@ -233,7 +233,7 @@
       <p>Upload the letters and notes only they could write. Valor &amp; Serenity keeps every keepsake exactly as it was. Nothing smoothed over, nothing lost.</p>
     </div>
     <div class="keepsakes-photo-wrap">
-      <div class="keepsakes-photo"><span>Photo: Handwritten Letter</span></div>
+      <div class="keepsakes-photo"><img src="images/letter.png" alt="A handwritten letter kept as a family keepsake"></div>
     </div>
   </div>
 </section>
