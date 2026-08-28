@@ -4,7 +4,7 @@ X-Frame-Options: SAMEORIGIN
 Referrer-Policy: strict-origin-when-cross-origin
 Permissions-Policy: geolocation=(), microphone=(), camera=()
 Strict-Transport-Security: max-age=31536000; includeSubDomains
-Content-Security-Policy: default-src 'self'; base-uri 'self'; object-src 'none'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https://media.valorandserenity.com; script-src 'self';
+Content-Security-Policy: default-src 'self'; base-uri 'self'; object-src 'none'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self'; script-src 'self' 'sha256-6SMYxdZvjKdYEwbB5MGh8a/KuPAsQUka27ZCLXA/mL0=' 'sha256-lXxDGi9yyCaLWc2BiXiqMnQpv48UbrKUnPKgq6sj2+I=' 'sha256-CRyuF2q+RlIvDBCuy6+XGmXYenXyRdgmREEWP25NuTE=' 'sha256-jfnwdDcvG8UDNYz+J9CwwZk0P+4ZJNlqpIISaCHMZpw=' 'sha256-18HpGtpbMdJ5SfXNsjfDcddJhaZ9BGwPkO6QVrGFnY0=' 'sha256-nvGfnzqvH2cMZZ8/rT+R9esU8abju95G4k9OguXxoWg=' 'sha256-jnje9mn8mGuWqEgDnXVq5yuHdXYBds1KMErsmPW2blQ=' 'sha256-MMkspJIf6KIQjsX75sYTUZJAPKR27GkYCSiahhii69o=';
 
 /*.html
 Cache-Control: public, max-age=3600, must-revalidate
