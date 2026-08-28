@@ -888,7 +888,13 @@
 <div id="start-over-footnote" class="hidden"><a href="#" data-action="start-over">Start over and clear everything you've entered</a></div>
 
 <script>
-  let selectedBranch = "Army";
+  // No default branch. A default like "Army" would let restoreDraft() (or
+  // anything else) silently mark a tile selected and enable Continue on
+  // Step 2 for someone who never actually chose one, fabricating a choice
+  // they didn't make. Step 2 itself can't be passed without a real
+  // selection (its Continue button starts disabled in the markup), so
+  // this stays null until a real click sets it.
+  let selectedBranch = null;
   let honorCount = 0;
   let subjectMode = "passed";
 
@@ -1030,11 +1036,22 @@
   }
 
   function selectBranch(btn) {
-    document.querySelectorAll('#screen-step2a .choice-tile').forEach(t => t.classList.remove('selected'));
-    btn.classList.add('selected');
     selectedBranch = btn.getAttribute('data-branch');
-    document.getElementById('branch-continue').disabled = false;
+    applyBranchSelection();
     saveDraft();
+  }
+
+  // Re-applies the visual selected tile and enables Continue for whatever
+  // selectedBranch currently is. Used both by a live click and by
+  // restoreDraft(), so a restored branch is not just remembered in a
+  // variable but actually visible and functional again, the same gap
+  // last session's restore fix had for the field values.
+  function applyBranchSelection() {
+    if (!selectedBranch) return;
+    document.querySelectorAll('#screen-step2a .choice-tile').forEach(t => t.classList.remove('selected'));
+    const tile = document.querySelector('#screen-step2a [data-branch="' + selectedBranch + '"]');
+    if (tile) tile.classList.add('selected');
+    document.getElementById('branch-continue').disabled = false;
   }
 
   function mockListen(btn) {
@@ -1246,7 +1263,8 @@
     if (!state || state.v !== 1) return false;
 
     subjectMode = state.subjectMode || 'passed';
-    selectedBranch = state.selectedBranch || 'Army';
+    selectedBranch = state.selectedBranch || null;
+    applyBranchSelection();
 
     Object.keys(state.fields || {}).forEach(function(id) {
       const el = document.getElementById(id);
