@@ -3,13 +3,10 @@ main = "src/index.js"
 compatibility_date = "2024-09-23"
 compatibility_flags = ["nodejs_compat"]
 
-# The real database_id must be created with
-# `wrangler d1 create valor-and-serenity-tributes` before this Worker is
-# actually deployed. The placeholder below is enough for local dev and for
-# the test suite, which runs against a real, ephemeral SQLite-backed D1
-# instance provisioned per test run, not a mock.
+# Real D1 database, created in the Cloudflare account tied to the
+# valorandserenity.com zone.
 [[d1_databases]]
 binding = "DB"
-database_name = "valor-and-serenity-tributes"
-database_id = "REPLACE_WITH_REAL_D1_DATABASE_ID"
+database_name = "valorandserenity-tributes"
+database_id = "1a09bbc8-2d2b-446d-aad1-1d46ab6503e1"
 migrations_dir = "migrations"
