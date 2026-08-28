@@ -419,6 +419,21 @@
   }
   #help-footnote a:hover { opacity: 1; color: var(--copper-text); }
 
+  /* ---- Persistent start-over footnote ---- */
+  #start-over-footnote {
+    text-align: center;
+    margin: 10px auto 0;
+    font-size: 12.5px;
+  }
+  #start-over-footnote a {
+    color: var(--aubergine);
+    opacity: 0.7;
+    text-decoration: underline;
+    text-decoration-style: dotted;
+    text-underline-offset: 3px;
+  }
+  #start-over-footnote a:hover { opacity: 1; color: var(--copper-text); }
+
   /* ---- Story Assist conversation ---- */
   .sa-message {
     background: var(--aubergine-deep);
@@ -691,7 +706,7 @@
     <button class="back-link hidden" id="photo-remove-link" data-action="remove-photo" style="margin-top:-10px;">Remove this photo</button>
     <div id="caption-row" class="hidden">
       <div class="field-row">
-        <input type="text" placeholder="What's happening in this photo?" >
+        <input type="text" id="input-photo-caption" placeholder="What's happening in this photo?" >
         <button class="mic-icon" data-action="mock-listen">🎤</button>
       </div>
       <p class="sa-ack" id="photo-prompt-link" style="margin-top:-8px;">Not sure what to write? <a href="#" data-action="show-photo-prompt" style="color:var(--copper);">Get a gentle prompt</a>.</p>
@@ -757,7 +772,7 @@
     <h1 class="eyebrow-title">Step 4 of 8 · Getting some help</h1>
     <div class="sa-message" id="sa1-message">What's one thing you remember him teaching you, that you can still hear him saying?</div>
     <div class="field-row">
-      <input type="text" placeholder="Type or tap the mic to speak" >
+      <input type="text" id="input-sa1-answer" placeholder="Type or tap the mic to speak" >
       <button class="mic-icon" data-action="mock-listen">🎤</button>
     </div>
     <button class="btn-primary" data-action="goto" data-arg="step4sa2">Continue</button>
@@ -772,11 +787,11 @@
     <h1 class="eyebrow-title">Step 4 of 8 · Getting some help</h1>
     <p class="sa-ack">That's a wonderful detail.</p>
     <div class="sa-context tip-callout">
-      <strong>Did you know?</strong>
+      <strong id="context-heading">Did you know?</strong>
       <span id="context-text">You mentioned he was born in 1951. That same year, the Rochester Royals beat the New York Knicks for the NBA title, and Harry Truman was president. Does anything from that time sound familiar?</span>
     </div>
     <div class="field-row" style="margin-top:20px;">
-      <input type="text" placeholder="Type or tap the mic to speak" >
+      <input type="text" id="input-sa2-answer" placeholder="Type or tap the mic to speak" >
       <button class="mic-icon" data-action="mock-listen">🎤</button>
     </div>
     <button class="btn-primary" data-action="goto" data-arg="step5">Continue</button>
@@ -813,7 +828,7 @@
     <button class="choice-tile" data-action="goto" data-arg="step7">Not right now</button>
     <button class="choice-tile" data-action="show-invite-field">Send an invite</button>
     <div id="invite-field-row" class="hidden field-row" style="margin-top:12px;">
-      <input type="text" placeholder="Their email or phone number" >
+      <input type="text" id="input-invite-contact" placeholder="Their email or phone number" >
     </div>
     <p class="helper hidden" id="invite-privacy-note" style="margin-top:-8px; margin-bottom:16px; font-size:14px;">We'll only use this to send them one invite to help with this memorial. We won't add them to any mailing list, and we won't use it for anything else.</p>
     <button id="invite-send-btn" class="btn-primary hidden" data-action="goto" data-arg="step7">Send</button>
@@ -868,8 +883,9 @@
 
 </div>
 
-<div id="autosave-flash">Saved</div>
+<div id="autosave-flash">Saved on this device</div>
 <div id="help-footnote" class="hidden"><a href="help-for-families.html">Need help with next steps?</a></div>
+<div id="start-over-footnote" class="hidden"><a href="#" data-action="start-over">Start over and clear everything you've entered</a></div>
 
 <script>
   let selectedBranch = "Army";
@@ -949,7 +965,6 @@
     document.getElementById('resource-card-living').classList.toggle('hidden', subjectMode !== 'living');
     document.getElementById('passing-field-row').classList.toggle('hidden', subjectMode !== 'passed');
   }
-  applySubjectCopy();
 
   const HELP_FOOTNOTE_SCREENS = ['step1','step2a','step2b','step3','step4choice','step4write','step4sa1','step4sa2','step5','step6','step7','step8'];
 
@@ -963,6 +978,7 @@
     window.scrollTo(0,0);
 
     document.getElementById('help-footnote').classList.toggle('hidden', !(subjectMode === 'passed' && HELP_FOOTNOTE_SCREENS.includes(id)));
+    document.getElementById('start-over-footnote').classList.toggle('hidden', id === 'opening');
 
     if (id === 'step4sa2') {
       buildContextText();
@@ -995,6 +1011,8 @@
       const email = document.getElementById('input-confirm-email').value.trim();
       document.getElementById('confirm-email-display').textContent = email;
     }
+
+    saveDraft();
   }
 
   function submitEmailConfirmation() {
@@ -1016,6 +1034,7 @@
     btn.classList.add('selected');
     selectedBranch = btn.getAttribute('data-branch');
     document.getElementById('branch-continue').disabled = false;
+    saveDraft();
   }
 
   function mockListen(btn) {
@@ -1126,36 +1145,138 @@
     div.className = 'field-row';
     div.innerHTML = '<input type="text" placeholder="Name of the medal or honor" >';
     document.getElementById('honors-list').appendChild(div);
+    saveDraft();
   }
 
   function showInviteField() {
     document.getElementById('invite-field-row').classList.remove('hidden');
     document.getElementById('invite-privacy-note').classList.remove('hidden');
     document.getElementById('invite-send-btn').classList.remove('hidden');
+    saveDraft();
   }
+
+  // Only years with an actual, sourced fact behind them go in this table.
+  // This mock has no real research pipeline (see STORY-ASSIST-RESEARCH-PIPELINE.md,
+  // backend-scoped, not built here), so the honest move is to decline for
+  // every year not in this short, genuinely-verified list rather than
+  // generate a plausible-sounding guess. 1951 reuses the same real, sourced
+  // facts already used elsewhere on the site for Mike's own tribute.
+  const VERIFIED_HISTORICAL_FACTS = {
+    '1951': 'Harry Truman was president, the Rochester Royals beat the New York Knicks to win the NBA Finals, and "How High the Moon" by Les Paul and Mary Ford was the country\'s best-selling record.'
+  };
 
   function buildContextText() {
     const birth = document.getElementById('input-birth').value.trim();
     const svcFrom = document.getElementById('input-svc-from').value.trim();
     const el = document.getElementById('context-text');
+    const heading = document.getElementById('context-heading');
     const wasBorn = subjectMode === 'self' ? 'you were born' : 'he was born';
     const svcBegan = subjectMode === 'self' ? 'your service began' : 'his service began';
-    const svcBranch = subjectMode === 'self' ? 'your branch was doing' : 'his branch was doing';
     const birthYearMatch = birth.match(/\d{4}/);
     const svcFromYearMatch = svcFrom.match(/\d{4}/);
-    if (birthYearMatch) {
-      el.textContent = 'You mentioned ' + wasBorn + ' in ' + birthYearMatch[0] + '. We looked up what was happening in the world that year, who was president, what was on the radio. Does anything from that time sound familiar?';
-    } else if (svcFromYearMatch) {
-      el.textContent = 'You mentioned ' + svcBegan + ' around ' + svcFromYearMatch[0] + '. We looked up what ' + svcBranch + ' in that era. Does anything from that time sound familiar?';
-    } else {
+
+    let year = null, phrase = null, connector = 'in';
+    if (birthYearMatch) { year = birthYearMatch[0]; phrase = wasBorn; connector = 'in'; }
+    else if (svcFromYearMatch) { year = svcFromYearMatch[0]; phrase = svcBegan; connector = 'around'; }
+
+    if (!year) {
+      heading.textContent = 'Did you know?';
       el.textContent = 'Once you add a birth year or service date, we can show you what was happening in the world at that time, and ask if it sounds familiar.';
+      return;
     }
+
+    const fact = VERIFIED_HISTORICAL_FACTS[year];
+    if (fact) {
+      heading.textContent = 'Did you know?';
+      el.textContent = 'You mentioned ' + phrase + ' ' + connector + ' ' + year + '. That year, ' + fact + ' Does anything from that time sound familiar?';
+    } else {
+      heading.textContent = 'Worth being honest about';
+      el.textContent = "We don't have anything verified for " + year + " yet, so we're not going to guess. Nothing is lost by us not having this one, feel free to keep going.";
+    }
+  }
+
+  // ---- Real, same-device autosave ----
+  // Everything below writes to localStorage on this browser only. There is
+  // no backend behind this prototype (see the spec-vs-reality inventory),
+  // so this cannot recover a draft on a different device, only the one it
+  // was written on. The toast copy says so plainly rather than implying more.
+  const AUTOSAVE_KEY = 'vs_start_draft_v1';
+  const AUTOSAVE_FIELD_IDS = [
+    'input-name', 'input-birth', 'input-passing', 'input-svc-from', 'input-svc-to',
+    'write-textarea', 'input-photo-caption', 'input-sa1-answer', 'input-sa2-answer',
+    'input-invite-contact', 'input-confirm-email'
+  ];
+
+  function currentScreenId() {
+    const el = document.querySelector('.screen:not(.hidden)');
+    return el ? el.id.replace(/^screen-/, '') : 'opening';
+  }
+
+  function serializeDraft() {
+    const fields = {};
+    AUTOSAVE_FIELD_IDS.forEach(function(id) {
+      const el = document.getElementById(id);
+      if (el) fields[id] = el.value;
+    });
+    const honors = Array.from(document.querySelectorAll('#honors-list input')).map(function(i) { return i.value; });
+    return {
+      v: 1,
+      screenId: currentScreenId(),
+      subjectMode: subjectMode,
+      selectedBranch: selectedBranch,
+      fields: fields,
+      honors: honors,
+      photoAdded: document.getElementById('photo-box').classList.contains('filled'),
+      inviteShown: !document.getElementById('invite-field-row').classList.contains('hidden')
+    };
+  }
+
+  function saveDraft() {
+    try {
+      localStorage.setItem(AUTOSAVE_KEY, JSON.stringify(serializeDraft()));
+    } catch (e) {}
+  }
+
+  function restoreDraft() {
+    let raw;
+    try { raw = localStorage.getItem(AUTOSAVE_KEY); } catch (e) { return false; }
+    if (!raw) return false;
+    let state;
+    try { state = JSON.parse(raw); } catch (e) { return false; }
+    if (!state || state.v !== 1) return false;
+
+    subjectMode = state.subjectMode || 'passed';
+    selectedBranch = state.selectedBranch || 'Army';
+
+    Object.keys(state.fields || {}).forEach(function(id) {
+      const el = document.getElementById(id);
+      if (el) el.value = state.fields[id];
+    });
+
+    if (state.photoAdded) mockUpload();
+    if (state.inviteShown) showInviteField();
+
+    (state.honors || []).forEach(function() { addHonor(); });
+    const honorInputs = document.querySelectorAll('#honors-list input');
+    (state.honors || []).forEach(function(val, i) {
+      if (honorInputs[i]) honorInputs[i].value = val;
+    });
+
+    applySubjectCopy();
+    goTo(state.screenId || 'opening');
+    return true;
+  }
+
+  function startOver() {
+    try { localStorage.removeItem(AUTOSAVE_KEY); } catch (e) {}
+    location.reload();
   }
 
   let saveTimer;
   function autosave() {
     clearTimeout(saveTimer);
     saveTimer = setTimeout(() => {
+      saveDraft();
       const flash = document.getElementById('autosave-flash');
       flash.classList.add('show');
       setTimeout(() => flash.classList.remove('show'), 1200);
@@ -1183,6 +1304,7 @@
       case 'show-invite-field': showInviteField(); break;
       case 'apply-preview-theme': applyPreviewTheme(arg); break;
       case 'submit-email': submitEmailConfirmation(); break;
+      case 'start-over': startOver(); break;
     }
   });
 
@@ -1201,6 +1323,15 @@
       checkYearPair(el.getAttribute('data-pair-first'), el.getAttribute('data-pair-second'), note);
     }
   });
+
+  // Runs last, after every function and const above it exists: restoreDraft()
+  // (and the goTo() it calls internally) reference things declared throughout
+  // this whole script, so attempting this any earlier risks a temporal-dead-
+  // zone error partway through, which would silently abort everything after
+  // it, including the event listeners just above.
+  if (!restoreDraft()) {
+    applySubjectCopy();
+  }
 </script>
 
 <script src="js/nav-toggle.js" defer></script>
