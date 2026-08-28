@@ -404,6 +404,21 @@
   }
   #autosave-flash.show { opacity: 0.92; }
 
+  /* ---- Persistent help footnote (passed mode only) ---- */
+  #help-footnote {
+    text-align: center;
+    margin: 28px auto 0;
+    font-size: 12.5px;
+  }
+  #help-footnote a {
+    color: var(--aubergine);
+    opacity: 0.7;
+    text-decoration: underline;
+    text-decoration-style: dotted;
+    text-underline-offset: 3px;
+  }
+  #help-footnote a:hover { opacity: 1; color: var(--copper-text); }
+
   /* ---- Story Assist conversation ---- */
   .sa-message {
     background: var(--aubergine-deep);
@@ -842,6 +857,7 @@
 </div>
 
 <div id="autosave-flash">Saved</div>
+<div id="help-footnote" class="hidden"><a href="help-for-families.html">Need help with next steps?</a></div>
 
 <script>
   let selectedBranch = "Army";
@@ -923,6 +939,8 @@
   }
   applySubjectCopy();
 
+  const HELP_FOOTNOTE_SCREENS = ['step1','step2a','step2b','step3','step4choice','step4write','step4sa1','step4sa2','step5','step6','step7','step8'];
+
   function goTo(id) {
     document.querySelectorAll('.screen').forEach(s => s.classList.add('hidden'));
     const el = document.getElementById('screen-' + id);
@@ -931,6 +949,8 @@
     void el.offsetWidth;
     el.style.animation = '';
     window.scrollTo(0,0);
+
+    document.getElementById('help-footnote').classList.toggle('hidden', !(subjectMode === 'passed' && HELP_FOOTNOTE_SCREENS.includes(id)));
 
     if (id === 'step4sa2') {
       buildContextText();

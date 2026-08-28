@@ -203,15 +203,31 @@
   .footer-bottom { max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between; padding: 24px 0; border-top: 1px solid rgba(250,248,243,0.15); }
   .footer-bottom span { font-size: 13px; color: rgba(240,233,220,0.7); }
 
-  .template-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 28px; margin-top: 48px; text-align: left; }
-  .template-card { display: block; background: var(--bone); border-radius: 4px; overflow: hidden; box-shadow: 0 20px 44px -24px rgba(29,20,15,0.28); transition: transform .3s ease, box-shadow .3s ease; text-decoration: none; }
-  .template-card:hover { transform: translateY(-4px); box-shadow: 0 28px 56px -22px rgba(29,20,15,0.36); text-decoration: none; }
-  .template-thumb { position: relative; height: 168px; display: flex; align-items: flex-end; padding: 18px; }
-  .template-badge { position: absolute; top: 14px; left: 14px; background: rgba(0,0,0,0.55); color: var(--bone); font-size: 10.5px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; padding: 5px 10px; border-radius: 3px; }
-  .template-thumb-label { font-family: var(--font-display); font-size: 22px; color: var(--bone); font-weight: 500; }
-  .template-info { padding: 18px 20px 22px; }
-  .template-branch { font-family: var(--font-body); font-weight: 700; font-size: 15px; color: var(--ink); margin: 0 0 4px; }
-  .template-note { font-family: var(--font-body); font-size: 13.5px; color: var(--aubergine); margin: 0; }
+  .featured-tribute-intro { text-align: center; margin-bottom: 22px; }
+  .featured-tribute-label { display: inline-block; font-family: var(--font-body); font-weight: 700; font-size: 14.5px; color: var(--copper-text); letter-spacing: 0.03em; }
+  .featured-card { display: flex; background: var(--bone); border-radius: 6px; overflow: hidden; box-shadow: 0 32px 64px -26px rgba(29,20,15,0.34); text-decoration: none; margin-bottom: 68px; border: 1.5px solid var(--copper); transition: transform .3s ease, box-shadow .3s ease; }
+  .featured-card:hover { transform: translateY(-4px); box-shadow: 0 40px 76px -24px rgba(29,20,15,0.4); text-decoration: none; }
+  .featured-thumb { position: relative; flex: 0 0 44%; min-height: 260px; display: flex; align-items: flex-end; padding: 30px; }
+  .featured-badge { position: absolute; top: 20px; left: 20px; background: var(--copper); color: var(--bone); font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; padding: 6px 12px; border-radius: 3px; }
+  .featured-thumb-label { font-family: var(--font-display); font-size: 30px; color: var(--bone); font-weight: 500; }
+  .featured-info { padding: 36px 42px; display: flex; flex-direction: column; justify-content: center; }
+  .featured-branch { font-family: var(--font-display); font-weight: 500; font-size: 27px; color: var(--ink); margin: 0 0 10px; }
+  .featured-note { font-family: var(--font-body); font-size: 15.5px; color: var(--aubergine); margin: 0; line-height: 1.6; }
+  @media (max-width: 720px) { .featured-card { flex-direction: column; } .featured-thumb { min-height: 180px; } }
+
+  .theme-tier-intro { text-align: center; margin: 0 0 26px; padding-top: 8px; border-top: 1px solid rgba(29,28,27,0.08); }
+  .theme-tier-label { font-family: var(--font-body); font-weight: 700; font-size: 16px; color: var(--ink); margin: 24px 0 4px; }
+  .theme-tier-sub { font-family: var(--font-body); font-size: 13px; color: var(--tan-muted); margin: 0; }
+
+  .template-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 20px; text-align: left; }
+  .template-card { display: block; background: var(--bone); border-radius: 4px; overflow: hidden; box-shadow: 0 14px 30px -18px rgba(29,20,15,0.24); transition: transform .3s ease, box-shadow .3s ease; text-decoration: none; }
+  .template-card:hover { transform: translateY(-3px); box-shadow: 0 20px 40px -18px rgba(29,20,15,0.32); text-decoration: none; }
+  .template-thumb { position: relative; height: 124px; display: flex; align-items: flex-end; padding: 14px; }
+  .template-badge { position: absolute; top: 10px; left: 10px; background: rgba(0,0,0,0.55); color: var(--bone); font-size: 9.5px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; padding: 4px 8px; border-radius: 3px; }
+  .template-thumb-label { font-family: var(--font-display); font-size: 17px; color: var(--bone); font-weight: 500; }
+  .template-info { padding: 14px 16px 18px; }
+  .template-branch { font-family: var(--font-body); font-weight: 700; font-size: 13.5px; color: var(--ink); margin: 0 0 3px; }
+  .template-note { font-family: var(--font-body); font-size: 12px; color: var(--aubergine); margin: 0; }
   .flag-thumb { background: #0A3161; flex-direction: column; align-items: stretch; justify-content: flex-start; padding: 0; }
   .flag-thumb-blue { flex: 0 0 64%; display: flex; align-items: center; justify-content: center; position: relative; }
   .flag-thumb-stars { display: flex; gap: 10px; }
@@ -315,18 +331,27 @@
     <div class="rule"></div>
     <p class="eyebrow">See It In Action</p>
     <h2>See It in Every Theme</h2>
-    <p class="section-lede preview-lede">Every family's tribute takes on their branch's colors and character, quietly. Here's a real one, and six illustrative examples.</p>
+    <p class="section-lede preview-lede">Every family's tribute takes on their branch's colors and character, quietly.</p>
 
+    <div class="featured-tribute-intro">
+      <span class="featured-tribute-label">Here's a real one</span>
+    </div>
+    <a class="featured-card" href="mike-mesarch.html">
+      <div class="featured-thumb" style="background: var(--aubergine-deep);">
+        <span class="featured-badge">A Real Tribute</span>
+        <span class="featured-thumb-label">Default</span>
+      </div>
+      <div class="featured-info">
+        <p class="featured-branch">Major Mike Mesarch</p>
+        <p class="featured-note">A real, complete tribute, built with Valor &amp; Serenity. The Default theme, our flagship example, and the clearest proof of what this looks like once it's finished.</p>
+      </div>
+    </a>
+
+    <div class="theme-tier-intro">
+      <p class="theme-tier-label">See it in your branch's colors</p>
+      <p class="theme-tier-sub">Seven illustrative examples, styled but not real people.</p>
+    </div>
     <div class="template-grid">
-      <a class="template-card" href="mike-mesarch.html">
-        <div class="template-thumb" style="background: var(--aubergine-deep);">
-          <span class="template-thumb-label">Default</span>
-        </div>
-        <div class="template-info">
-          <p class="template-branch">Major Mike Mesarch</p>
-          <p class="template-note">A real, complete tribute. The Default theme, our flagship example.</p>
-        </div>
-      </a>
       <a class="template-card" href="example-marine-corps.html">
         <div class="template-thumb" style="background: linear-gradient(160deg, #1C1C1C 0%, #A0182A 100%);">
           <span class="template-badge">Illustrative Example. Not a Real Person.</span>
