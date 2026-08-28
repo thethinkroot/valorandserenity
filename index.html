@@ -162,6 +162,24 @@
   .footer-links a:hover { color: var(--bone); }
   .footer-bottom { max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between; padding: 24px 0; border-top: 1px solid rgba(250,248,243,0.15); }
   .footer-bottom span { font-size: 13px; color: rgba(240,233,220,0.7); }
+
+  .template-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 28px; margin-top: 48px; text-align: left; }
+  .template-card { display: block; background: var(--bone); border-radius: 4px; overflow: hidden; box-shadow: 0 20px 44px -24px rgba(29,20,15,0.28); transition: transform .3s ease, box-shadow .3s ease; text-decoration: none; }
+  .template-card:hover { transform: translateY(-4px); box-shadow: 0 28px 56px -22px rgba(29,20,15,0.36); text-decoration: none; }
+  .template-thumb { position: relative; height: 168px; display: flex; align-items: flex-end; padding: 18px; }
+  .template-badge { position: absolute; top: 14px; left: 14px; background: rgba(0,0,0,0.55); color: var(--bone); font-size: 10.5px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; padding: 5px 10px; border-radius: 3px; }
+  .template-thumb-label { font-family: var(--font-display); font-size: 22px; color: var(--bone); font-weight: 500; }
+  .template-info { padding: 18px 20px 22px; }
+  .template-branch { font-family: var(--font-body); font-weight: 700; font-size: 15px; color: var(--ink); margin: 0 0 4px; }
+  .template-note { font-family: var(--font-body); font-size: 13.5px; color: var(--aubergine); margin: 0; }
+  .flag-thumb { background: #0A3161; flex-direction: column; align-items: stretch; justify-content: flex-start; padding: 0; }
+  .flag-thumb-blue { flex: 0 0 64%; display: flex; align-items: center; justify-content: center; position: relative; }
+  .flag-thumb-stars { display: flex; gap: 10px; }
+  .flag-thumb-stars span { width: 14px; height: 14px; background: var(--bone); clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); }
+  .flag-thumb-divider { height: 3px; background: var(--bone); }
+  .flag-thumb-red { flex: 1; background: #B31942; }
+  @media (max-width: 900px) { .template-grid { grid-template-columns: repeat(2,1fr); } }
+  @media (max-width: 560px) { .template-grid { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
@@ -239,56 +257,97 @@
 </section>
 
 <section id="preview">
-  <div class="section-inner">
+  <div class="section-inner" style="max-width:1040px;">
     <div class="rule"></div>
     <p class="eyebrow">See It In Action</p>
-    <h2>One Page. A Lifetime of Meaning.</h2>
-    <p class="section-lede preview-lede">Every tribute takes its own shape. Here's the idea of it.</p>
+    <h2>See It in Every Theme</h2>
+    <p class="section-lede preview-lede">Every family's tribute takes on their branch's colors and character, quietly. Here's a real one, and six illustrative examples.</p>
 
-    <div class="preview-card">
-      <span class="preview-sample-badge">Sample</span>
-      <div class="preview-head">
-        <div class="preview-flag-thumb"><img src="images/flag.png" alt=""></div>
-        <div>
-          <div class="preview-head-name">[ Full Name ]</div>
-          <div class="preview-head-meta">[ Branch ] &middot; [ Years of Service ]</div>
+    <div class="template-grid">
+      <a class="template-card" href="mike-mesarch.html">
+        <div class="template-thumb" style="background: var(--aubergine-deep);">
+          <span class="template-thumb-label">Default</span>
         </div>
-      </div>
-      <div class="preview-tabs" id="previewTabs">
-        <button type="button" class="preview-tab active" data-tab="life">Life &amp; Service</button>
-        <button type="button" class="preview-tab" data-tab="photos">Photos &amp; Keepsakes</button>
-        <button type="button" class="preview-tab" data-tab="messages">Messages from Family</button>
-      </div>
-      <div class="preview-body">
-        <div class="preview-panel active" data-panel="life">
-          <p class="preview-life-line">This is where their story lives. Childhood, service, career, family. Written by whoever knew them best.</p>
-          <div class="preview-skeleton-line" style="width:92%;"></div>
-          <div class="preview-skeleton-line" style="width:78%;"></div>
-          <div class="preview-skeleton-line" style="width:85%; margin-bottom:0;"></div>
+        <div class="template-info">
+          <p class="template-branch">Major Mike Mesarch</p>
+          <p class="template-note">A real, complete tribute. The Default theme, our flagship example.</p>
         </div>
-        <div class="preview-panel" data-panel="photos">
-          <div class="preview-photos-grid">
-            <div class="preview-photo-tile"><span>photo</span></div>
-            <div class="preview-photo-tile"><span>photo</span></div>
-            <div class="preview-photo-tile"><span>photo</span></div>
-            <div class="preview-photo-tile"><span>photo</span></div>
-            <div class="preview-photo-tile"><span>photo</span></div>
-            <div class="preview-photo-tile"><span>photo</span></div>
+      </a>
+      <a class="template-card" href="example-marine-corps.html">
+        <div class="template-thumb" style="background: linear-gradient(160deg, #1C1C1C 0%, #A0182A 100%);">
+          <span class="template-badge">Illustrative Example. Not a Real Person.</span>
+          <span class="template-thumb-label">Marine Corps</span>
+        </div>
+        <div class="template-info">
+          <p class="template-branch">Marine Corps Theme</p>
+          <p class="template-note">Scarlet and gold, John Doe example.</p>
+        </div>
+      </a>
+      <a class="template-card" href="example-navy.html">
+        <div class="template-thumb" style="background: linear-gradient(160deg, #00205B 0%, #001433 100%);">
+          <span class="template-badge">Illustrative Example. Not a Real Person.</span>
+          <span class="template-thumb-label">Navy</span>
+        </div>
+        <div class="template-info">
+          <p class="template-branch">Navy Theme</p>
+          <p class="template-note">Navy blue and gold, Jane Doe example.</p>
+        </div>
+      </a>
+      <a class="template-card" href="example-army.html">
+        <div class="template-thumb" style="background: linear-gradient(160deg, #1C1C1C 0%, #3A3A28 100%);">
+          <span class="template-badge">Illustrative Example. Not a Real Person.</span>
+          <span class="template-thumb-label">Army</span>
+        </div>
+        <div class="template-info">
+          <p class="template-branch">Army Theme</p>
+          <p class="template-note">Black and olive-gold, John Doe example.</p>
+        </div>
+      </a>
+      <a class="template-card" href="example-air-force.html">
+        <div class="template-thumb" style="background: linear-gradient(160deg, #00308F 0%, #4A6B8A 100%);">
+          <span class="template-badge">Illustrative Example. Not a Real Person.</span>
+          <span class="template-thumb-label">Air Force</span>
+        </div>
+        <div class="template-info">
+          <p class="template-branch">Air Force Theme</p>
+          <p class="template-note">Ultramarine blue and silver, Jane Doe example.</p>
+        </div>
+      </a>
+      <a class="template-card" href="example-coast-guard.html">
+        <div class="template-thumb" style="background: linear-gradient(160deg, #003087 0%, #CE1126 100%);">
+          <span class="template-badge">Illustrative Example. Not a Real Person.</span>
+          <span class="template-thumb-label">Coast Guard</span>
+        </div>
+        <div class="template-info">
+          <p class="template-branch">Coast Guard Theme</p>
+          <p class="template-note">Coast Guard blue and red, John Doe example.</p>
+        </div>
+      </a>
+      <a class="template-card" href="example-space-force.html">
+        <div class="template-thumb" style="background: linear-gradient(160deg, #0B1F3A 0%, #66748A 100%);">
+          <span class="template-badge">Illustrative Example. Not a Real Person.</span>
+          <span class="template-thumb-label">Space Force</span>
+        </div>
+        <div class="template-info">
+          <p class="template-branch">Space Force Theme</p>
+          <p class="template-note">Deep space blue and platinum, Jane Doe example.</p>
+        </div>
+      </a>
+      <a class="template-card" href="example-flag.html">
+        <div class="template-thumb flag-thumb">
+          <span class="template-badge">Illustrative Example. Not a Real Person.</span>
+          <div class="flag-thumb-blue">
+            <div class="flag-thumb-stars"><span></span><span></span><span></span></div>
           </div>
+          <div class="flag-thumb-divider"></div>
+          <div class="flag-thumb-red"></div>
         </div>
-        <div class="preview-panel" data-panel="messages" style="display:flex; flex-direction:column; gap:22px;">
-          <div class="preview-message-row">
-            <div class="preview-message-avatar"></div>
-            <div style="flex:1;"><p class="preview-message-text">A message from someone who loved them</p><div class="preview-message-bar" style="width:70%;"></div></div>
-          </div>
-          <div class="preview-message-row">
-            <div class="preview-message-avatar"></div>
-            <div style="flex:1;"><p class="preview-message-text">A memory shared by family</p><div class="preview-message-bar" style="width:55%;"></div></div>
-          </div>
+        <div class="template-info">
+          <p class="template-branch">American Flag Theme</p>
+          <p class="template-note">Old Glory blue and red, for any branch, Jamie Doe example.</p>
         </div>
-      </div>
+      </a>
     </div>
-    <p class="preview-note">A sample layout. Yours will hold their story, not this one.</p>
   </div>
 </section>
 
