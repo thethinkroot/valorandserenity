@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Story Assist: What It Is, and Why It's Worth Using | Valor & Serenity</title>
+<meta name="description" content="How Story Assist helps families write a complete, sourced tribute: the right questions, real historical context, and never a detail it wasn't given.">
+<link rel="canonical" href="https://valorandserenity.com/story-assist.html">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Lato:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bone: #FAF8F3; --bone-warm: #F0E9DC; --bone-deep: #E1D5C0; --ink: #1D1C1B;
+    --aubergine: #69545F; --aubergine-deep: #29212B; --copper: #B66F4A; --copper-deep: #8B4E30; --copper-text: #9C5C3A;
+    --font-display: 'Cinzel', serif; --font-body: 'Lato', sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--bone); color: var(--ink); font-family: var(--font-body); -webkit-font-smoothing: antialiased; }
+  a { color: var(--copper-text); text-decoration: none; }
+  a:hover { color: var(--aubergine-deep); text-decoration: underline; }
+  .top-bar { height: 4px; width: 100%; background: var(--copper); }
+  .site-header { position: sticky; top: 0; z-index: 50; background: var(--bone); border-bottom: 1px solid rgba(29,28,27,0.09); display: flex; align-items: center; justify-content: space-between; padding: 20px clamp(24px,5vw,64px); gap: 28px; }
+  .wordmark { font-family: var(--font-display); font-size: 19px; font-weight: 600; letter-spacing: 0.1em; color: var(--ink); display: flex; align-items: baseline; gap: 7px; white-space: nowrap; }
+  .wordmark .amp { color: var(--copper); }
+  .primary-nav { display: flex; align-items: center; gap: 30px; }
+  .primary-nav a { color: var(--ink); font-weight: 600; font-size: 15px; }
+  .primary-nav a.current { color: var(--copper-text); text-decoration: underline; }
+  .btn { display: inline-block; font-family: var(--font-body); font-weight: 700; font-size: 15px; padding: 15px 30px; border-radius: 2px; border: none; cursor: pointer; }
+  .btn-primary { background: var(--copper); color: var(--bone); }
+  .btn-primary:hover { background: var(--copper-deep); }
+  .btn-secondary { background: var(--bone-warm); color: var(--ink); border: 1px solid var(--bone-deep); }
+  .btn-secondary:hover { background: var(--bone-deep); text-decoration: none; }
+  @media (max-width: 900px) { .primary-nav { display: none !important; } }
+
+  section { padding: 90px clamp(24px,5vw,64px); }
+  .inner { max-width: 720px; margin: 0 auto; }
+  .rule { width: 32px; height: 2px; background: var(--copper); margin: 0 0 20px; }
+  .rule.centered { margin: 0 auto 20px; }
+  .eyebrow { font-size: 13px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--copper-text); margin: 0 0 18px; }
+  h1 { font-family: var(--font-display); font-size: clamp(30px,4vw,46px); font-weight: 500; color: var(--ink); margin: 0 0 22px; line-height: 1.2; text-align: center; }
+  h2 { font-family: var(--font-display); font-size: clamp(22px,2.6vw,28px); font-weight: 500; color: var(--ink); margin: 0 0 22px; }
+  .hero-lede { font-size: 17px; color: var(--aubergine); text-align: center; max-width: 600px; margin: 0 auto; line-height: 1.65; }
+  #story-hero { text-align: center; padding-bottom: 40px; }
+  p.body-copy { font-size: 16.5px; color: var(--ink); line-height: 1.8; margin: 0 0 24px; }
+  p.body-copy:last-child { margin-bottom: 0; }
+
+  #what-it-does { background: var(--aubergine-deep); }
+  #what-it-does h2 { color: var(--bone); text-align: center; }
+  #what-it-does .rule { background: var(--copper); margin: 0 auto 20px; }
+  #what-it-does .eyebrow { text-align: center; color: var(--copper); }
+  .job-callout { background: rgba(250,248,243,0.06); border-radius: 6px; padding: 32px 34px; margin-bottom: 20px; }
+  .job-callout:last-child { margin-bottom: 0; }
+  .job-callout-title { font-family: var(--font-body); font-weight: 700; font-size: 15.5px; color: var(--copper); margin: 0 0 12px; letter-spacing: 0.01em; }
+  .job-callout p { font-family: var(--font-body); font-size: 15px; color: var(--bone-warm); line-height: 1.75; margin: 0; }
+
+  #see-it-action { background: var(--bone-warm); text-align: center; }
+  #see-it-action .rule { margin: 0 auto 20px; }
+  #see-it-action .eyebrow { text-align: center; }
+  #see-it-action h2 { text-align: center; }
+  .cta-row { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-top: 32px; }
+
+  #never-do { background: var(--bone); }
+  #final-cta { text-align: center; background: var(--bone-warm); }
+  #final-cta .rule { margin: 0 auto 20px; }
+
+  footer { background: var(--aubergine); padding: 96px clamp(24px,5vw,64px) 0; }
+  .footer-quote-wrap { max-width: 760px; margin: 0 auto; text-align: center; padding: 0 24px 72px; }
+  .footer-quote { font-family: var(--font-display); font-size: clamp(20px,2.2vw,26px); font-weight: 500; color: var(--bone); line-height: 1.55; margin: 0; }
+  .footer-cols { max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 64px; justify-content: space-between; padding-bottom: 64px; }
+  .footer-brand { flex: 1 1 280px; max-width: 340px; }
+  .footer-brand .wordmark { color: var(--bone); font-size: 18px; margin-bottom: 14px; }
+  .footer-brand .tagline { font-style: italic; font-size: 15px; color: var(--bone-warm); margin: 0; line-height: 1.6; }
+  .footer-groups { display: flex; gap: 64px; flex-wrap: wrap; }
+  .footer-group-title { font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--copper); margin-bottom: 18px; }
+  .footer-links { display: flex; flex-direction: column; gap: 12px; list-style: none; margin: 0; padding: 0; }
+  .footer-links a { color: var(--bone-warm); font-size: 15px; }
+  .footer-links a:hover { color: var(--bone); }
+  .footer-bottom { max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between; padding: 24px 0; border-top: 1px solid rgba(250,248,243,0.15); }
+  .footer-bottom span { font-size: 13px; color: rgba(240,233,220,0.7); }
+
+  [data-reveal] { transition: opacity .8s ease, transform .8s ease; }
+  [data-reveal].reveal-pending { opacity: 0; transform: translateY(22px); }
+  [data-reveal].in-view { opacity: 1; transform: translateY(0); }
+
+  .a11y-bar { display: flex; align-items: center; justify-content: center; gap: 18px; flex-wrap: wrap; background: var(--ink); padding: 10px 20px; }
+  .a11y-bar button { background: none; border: 1px solid rgba(250,248,243,0.4); color: var(--bone); font-family: var(--font-body); font-size: 12.5px; font-weight: 700; padding: 6px 12px; border-radius: 3px; cursor: pointer; }
+  .a11y-bar button:hover, .a11y-bar button:focus-visible, .a11y-bar button[aria-pressed="true"] { background: var(--copper); border-color: var(--copper); }
+  a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible { outline: 2px solid var(--copper-text); outline-offset: 2px; }
+  body.high-contrast { --bone: #FFFFFF; --bone-warm: #FFFFFF; --bone-deep: #CCCCCC; --ink: #000000; --aubergine: #000000; --aubergine-deep: #000000; --copper: #7a3d18; --copper-deep: #5c2d12; --copper-text: #7a3d18; --tan-muted: #000000; }
+  .try-demo { background: var(--aubergine-deep); border-radius: 8px; padding: 40px 36px; margin: 32px 0; }
+  .try-demo-label { font-family: var(--font-body); font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(240,233,220,0.55); margin: 0 0 18px; }
+  .try-demo-q { background: rgba(250,248,243,0.08); border-radius: 8px; padding: 20px 22px; color: var(--bone-warm); font-size: 16px; line-height: 1.6; margin-bottom: 18px; }
+  .try-demo-input-row { display: flex; gap: 10px; margin-bottom: 18px; }
+  .try-demo-input-row input { flex: 1; padding: 13px 16px; border-radius: 6px; border: 1px solid rgba(250,248,243,0.25); background: rgba(250,248,243,0.06); color: var(--bone); font-family: var(--font-body); font-size: 15px; }
+  .try-demo-input-row input::placeholder { color: rgba(240,233,220,0.5); }
+  .try-demo-input-row button { padding: 13px 22px; border-radius: 6px; border: none; background: var(--copper); color: var(--bone); font-weight: 700; font-family: var(--font-body); cursor: pointer; white-space: nowrap; }
+  .try-demo-input-row button:hover { background: var(--copper-deep); }
+  .try-demo-ack { font-style: italic; color: rgba(240,233,220,0.75); font-size: 14.5px; margin-bottom: 16px; display: none; }
+  .try-demo-context { background: rgba(0,0,0,0.2); border-left: 3px solid var(--copper); border-radius: 6px; padding: 18px 20px; display: none; }
+  .try-demo-context strong { display: block; font-family: var(--font-display); font-size: 12.5px; letter-spacing: 0.06em; color: #E3C9A8; margin-bottom: 8px; }
+  .try-demo-context p { color: var(--bone-warm); font-size: 14.5px; line-height: 1.65; margin: 0; }
+  .try-demo-note { font-size: 13px; font-style: italic; color: rgba(240,233,220,0.5); margin-top: 18px; }
+</style>
+</head>
+<body>
+<a href="#main-content" style="position:absolute; left:-9999px; top:0; z-index:100; background:var(--copper); color:var(--bone); padding:12px 20px; font-family:var(--font-body); font-weight:700; font-size:14px; border-radius:0 0 3px 0;" onfocus="this.style.left='0'" onblur="this.style.left='-9999px'">Skip to main content</a>
+
+<div class="top-bar"></div>
+<div class="a11y-bar">
+  <span style="color:rgba(250,248,243,0.6); font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.06em;">Display</span>
+  <button type="button" id="textSmaller" aria-label="Decrease text size">A&minus;</button>
+  <button type="button" id="textReset" aria-label="Reset text size">A</button>
+  <button type="button" id="textLarger" aria-label="Increase text size">A+</button>
+  <button type="button" id="contrastToggle" aria-pressed="false">High Contrast</button>
+</div>
+
+
+<header class="site-header">
+  <a href="index.html" class="wordmark"><span>VALOR</span><span class="amp">&amp;</span><span>SERENITY</span></a>
+  <nav class="primary-nav" aria-label="Primary">
+    <a href="about.html">Our Story</a>
+    <a href="index.html#how-it-works">How It Works</a>
+    <a href="story-assist.html" class="current">Story Assist</a>
+    <a href="index.html#preview">Examples</a>
+    <a href="partners.html">For Partners</a>
+  </nav>
+  <a href="start.html" class="btn btn-primary">Start a Tribute</a>
+</header>
+
+<main id="main-content">
+
+<section id="story-hero">
+  <div class="inner">
+    <div class="rule centered"></div>
+    <p class="eyebrow" style="text-align:center;">Story Assist</p>
+    <h1>What It Is, and Why It's Worth Using</h1>
+    <p class="hero-lede">A closer look at the optional feature that helps families turn memories into a finished story, grounded in real history.</p>
+  </div>
+</section>
+
+<section id="the-problem">
+  <div class="inner">
+    <h2>The Problem It Solves</h2>
+    <p class="body-copy" data-reveal>Most of what we know about someone we love was never written down. It lived in conversation. A story told once at a holiday dinner. A detail mentioned in passing that nobody thought to ask more about. When someone is gone, those details go with them unless someone else remembers to ask, and remembers to write it down.</p>
+    <p class="body-copy" data-reveal>Story Assist exists because staring at a blank box that says "tell their story" is one of the hardest ways to start. Most people freeze. Not because they have nothing to say, but because they have too much, and no place to begin.</p>
+  </div>
+</section>
+
+<section id="what-it-does">
+  <div class="inner">
+    <div class="rule"></div>
+    <p class="eyebrow">What It Actually Does</p>
+    <h2>Story Assist Has Three Specific Jobs</h2>
+    <div class="job-callout" data-reveal>
+      <p class="job-callout-title">It asks the right questions.</p>
+      <p>Not a generic list. Questions built around what you have already told us about your veteran. If you mentioned his unit, it might ask if he ever talked about a specific training base. If you mentioned an era, it might ask about something that would have shaped him at the time. The goal is to jog a memory you did not know you still had.</p>
+    </div>
+    <div class="job-callout" data-reveal>
+      <p class="job-callout-title">It shapes what you already have into a finished story.</p>
+      <p>A few lines, a half remembered story, a line from an old letter. Story Assist turns fragments into something readable, in your own words, not replaced by anything artificial. It never adds a detail you did not give it.</p>
+    </div>
+    <div class="job-callout" data-reveal>
+      <p class="job-callout-title">It places every major milestone inside real history.</p>
+      <p>Not just their service. The day they were born. The day they married. The day they came home. For any date you add, Story Assist can show you who was president, what song was on the radio, what the country was talking about that day. Using verified records, not guesses. If a detail is not reliably documented for that exact day, it says so honestly rather than offering something that sounds right but is not confirmed. The goal is a real, sourced piece of context that might bring back a memory. Not a plausible-sounding fact standing in for a real one.</p>
+    </div>
+  </div>
+</section>
+
+<section id="why-worth-it">
+  <div class="inner">
+    <h2>Why This Is Worth the Price</h2>
+    <p class="body-copy" data-reveal>Story Assist costs $99, once. Not a subscription.</p>
+    <p class="body-copy" data-reveal>Compare that to the alternatives. A professional biographer or videographer for a similar project can run into the hundreds or low thousands of dollars, and takes weeks. A blank page and good intentions can take even longer, and often ends with nothing written down at all.</p>
+    <p class="body-copy" data-reveal>There is also this. A basic tribute is free for every family, and it always will be. That only works because families who choose Story Assist help cover the cost of keeping it free for everyone else. When you use Story Assist, you are not just getting help with your own story. You are helping make sure the next family, one that may not be able to pay for anything at all, still gets a place to remember their veteran.</p>
+    <p class="body-copy" data-reveal>Story Assist is built to close the exact gap that costs families the most: the memories that were never asked about while there was still time. That is not a feature. That is the actual value.</p>
+  </div>
+</section>
+
+<section id="see-it-action">
+  <div class="inner">
+    <div class="rule"></div>
+    <p class="eyebrow">See It In Action</p>
+    <h2>Try It Yourself</h2>
+    <p class="body-copy" data-reveal>This is a real, already-verified example, drawn from Major Mike Mesarch's actual tribute, not a preview of your own veteran's story. Type anything below to see how the conversation feels.</p>
+    <div class="try-demo">
+      <p class="try-demo-label">Story Assist</p>
+      <div class="try-demo-q">What's one thing you remember him teaching you, that you can still hear him saying?</div>
+      <div class="try-demo-input-row">
+        <input type="text" id="tryDemoInput" placeholder="Type anything, or just click Continue">
+        <button type="button" id="tryDemoBtn">Continue</button>
+      </div>
+      <p class="try-demo-ack" id="tryDemoAck">That's a wonderful detail.</p>
+      <div class="try-demo-context" id="tryDemoContext">
+        <strong>Did you know?</strong>
+        <p>You mentioned he was born in 1951. That same year, Harry Truman was president, the Rochester Royals beat the New York Knicks to win the NBA Finals, and "How High the Moon" by Les Paul and Mary Ford was the country's best-selling record. Does anything from that time sound familiar?</p>
+      </div>
+      <p class="try-demo-note">This demo always shows Mike's real, verified facts. A real tribute researches your own veteran's actual dates.</p>
+    </div>
+    <div class="cta-row" data-reveal>
+      <a href="mike-mesarch.html#story-assist-demo" class="btn btn-primary">View Mike's Full Tribute</a>
+    </div>
+  </div>
+</section>
+
+<section id="never-do">
+  <div class="inner">
+    <h2>What It Will Never Do</h2>
+    <p class="body-copy" data-reveal>Story Assist works with your words and your memories only. It never invents a detail you did not provide. It never states a personal fact about your veteran as certain unless you confirmed it. It never generates a voice, an image, or a video of someone who is gone. What you type is used only to help shape your story, then discarded. It is never stored to train AI, by us or by anyone else.</p>
+  </div>
+</section>
+
+<section id="final-cta">
+  <div class="inner">
+    <div class="rule"></div>
+    <div class="cta-row">
+      <a href="start.html" class="btn btn-primary">Start a Tribute, Free</a>
+      <a href="start.html" class="btn btn-secondary">Learn About Pricing</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="footer-quote-wrap">
+    <div class="rule centered"></div>
+    <p class="footer-quote">No veteran's story should be lost to time, and no family should have to preserve it alone.</p>
+  </div>
+  <div class="footer-cols">
+    <div class="footer-brand">
+      <div class="wordmark"><span>VALOR</span><span class="amp">&amp;</span><span>SERENITY</span></div>
+      <p class="tagline">Built to honor. Built to last.</p>
+      <p style="font-size:13px; color:var(--bone-warm); line-height:1.6; margin:14px 0 0;">Chad Corriveau<br>1835 S Centre City Pkwy, Ste A #5026<br>Escondido, CA 92025<br>Based in San Diego County</p>
+    </div>
+    <div class="footer-groups">
+      <div>
+        <div class="footer-group-title">For Families</div>
+        <ul class="footer-links">
+          <li><a href="start.html">Start a Tribute</a></li>
+          <li><a href="index.html#how-it-works">How It Works</a></li>
+          <li><a href="story-assist.html">Story Assist</a></li>
+          <li><a href="mike-mesarch.html">Example Page</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-group-title">Partners &amp; Contact</div>
+        <ul class="footer-links">
+          <li><a href="partners.html">Partner Info</a></li>
+          <li><a href="mailto:hello@valorandserenity.com">Contact Us</a></li>
+          <li><a href="tel:+17603004555">760-300-4555</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2026 Valor &amp; Serenity.</span>
+    <span>For veterans and the families who love them.</span>
+    <span>Built by <a href="https://thinkroot.io" style="color:inherit;">ThinkRoot</a></span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  try {
+    var reveals = document.querySelectorAll('[data-reveal]');
+    if ('IntersectionObserver' in window && reveals.length) {
+      reveals.forEach(function(el){ el.classList.add('reveal-pending'); });
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){ if (entry.isIntersecting) { entry.target.classList.add('in-view'); io.unobserve(entry.target); } });
+      }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+      reveals.forEach(function(el){ io.observe(el); });
+    }
+  } catch (e) {}
+
+  try {
+    var root = document.documentElement;
+    var STEP = 0.0625, MIN = 0.85, MAX = 1.4;
+    var sizeKey = 'vs_text_scale';
+    function getScale(){ var v = parseFloat(localStorage.getItem(sizeKey)); return isNaN(v) ? 1 : v; }
+    function setScale(v){ v = Math.max(MIN, Math.min(MAX, v)); root.style.fontSize = (v * 100) + '%'; try { localStorage.setItem(sizeKey, v); } catch(e){} }
+    document.getElementById('textSmaller').addEventListener('click', function(){ setScale(getScale() - STEP); });
+    document.getElementById('textLarger').addEventListener('click', function(){ setScale(getScale() + STEP); });
+    document.getElementById('textReset').addEventListener('click', function(){ setScale(1); });
+    setScale(getScale());
+    var contrastKey = 'vs_high_contrast';
+    var cbtn = document.getElementById('contrastToggle');
+    function setContrast(on){
+      document.body.classList.toggle('high-contrast', on);
+      cbtn.setAttribute('aria-pressed', on ? 'true' : 'false');
+      try { localStorage.setItem(contrastKey, on ? '1' : '0'); } catch(e){}
+    }
+    cbtn.addEventListener('click', function(){ setContrast(!document.body.classList.contains('high-contrast')); });
+    setContrast(localStorage.getItem(contrastKey) === '1');
+  } catch(e) {}
+})();
+</script>
+<script>
+(function(){
+  var btn = document.getElementById('tryDemoBtn');
+  if (!btn) return;
+  var done = false;
+  btn.addEventListener('click', function(){
+    if (done) return;
+    done = true;
+    document.getElementById('tryDemoAck').style.display = 'block';
+    var ctx = document.getElementById('tryDemoContext');
+    setTimeout(function(){ ctx.style.display = 'block'; }, 350);
+    btn.textContent = 'Continue';
+    btn.disabled = true;
+    btn.style.opacity = '0.6';
+  });
+})();
+</script>
+</body>
+</html>

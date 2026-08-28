@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Start a Tribute: Valor &amp; Serenity</title>
+<meta name="description" content="Build a free, guided tribute for the veteran you love. This is an early preview of the guided experience.">
+<link rel="canonical" href="https://valorandserenity.com/start.html">
+<style>
+  :root {
+    --bone: #FAF8F3; --bone-warm: #F0E9DC; --bone-deep: #E1D5C0; --ink: #1D1C1B;
+    --aubergine: #69545F; --aubergine-deep: #29212B; --copper: #B66F4A; --copper-deep: #8B4E30; --copper-text: #9C5C3A;
+    --font-display: 'Cinzel', serif; --font-body: 'Lato', sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--bone); color: var(--ink); font-family: var(--font-body); -webkit-font-smoothing: antialiased; }
+  a { color: var(--copper-text); text-decoration: none; }
+  a:hover { color: var(--aubergine-deep); text-decoration: underline; }
+  .top-bar { height: 4px; width: 100%; background: var(--copper); }
+  .site-header { position: sticky; top: 0; z-index: 50; background: var(--bone); border-bottom: 1px solid rgba(29,28,27,0.09); display: flex; align-items: center; justify-content: space-between; padding: 20px clamp(24px,5vw,64px); gap: 28px; }
+  .wordmark { font-family: var(--font-display); font-size: 19px; font-weight: 600; letter-spacing: 0.1em; color: var(--ink); display: flex; align-items: baseline; gap: 7px; white-space: nowrap; }
+  .wordmark .amp { color: var(--copper); }
+  .primary-nav { display: flex; align-items: center; gap: 30px; }
+  .primary-nav a { color: var(--ink); font-weight: 600; font-size: 15px; }
+  .primary-nav a.current { color: var(--copper-text); text-decoration: underline; }
+  .btn { display: inline-block; font-family: var(--font-body); font-weight: 700; font-size: 15px; padding: 15px 30px; border-radius: 2px; border: none; cursor: pointer; }
+  .btn-primary { background: var(--copper); color: var(--bone); }
+  .btn-primary:hover { background: var(--copper-deep); }
+  .btn-secondary { background: var(--bone-warm); color: var(--ink); border: 1px solid var(--bone-deep); }
+  .btn-secondary:hover { background: var(--bone-deep); text-decoration: none; }
+  @media (max-width: 900px) { .primary-nav { display: none !important; } }
+
+  section { padding: 90px clamp(24px,5vw,64px); }
+  .inner { max-width: 720px; margin: 0 auto; }
+  .rule { width: 32px; height: 2px; background: var(--copper); margin: 0 0 20px; }
+  .rule.centered { margin: 0 auto 20px; }
+  .eyebrow { font-size: 13px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--copper-text); margin: 0 0 18px; }
+  h1 { font-family: var(--font-display); font-size: clamp(30px,4vw,46px); font-weight: 500; color: var(--ink); margin: 0 0 22px; line-height: 1.2; text-align: center; }
+  h2 { font-family: var(--font-display); font-size: clamp(22px,2.6vw,28px); font-weight: 500; color: var(--ink); margin: 0 0 22px; }
+  .hero-lede { font-size: 17px; color: var(--aubergine); text-align: center; max-width: 600px; margin: 0 auto; line-height: 1.65; }
+  #story-hero { text-align: center; padding-bottom: 40px; }
+  p.body-copy { font-size: 16.5px; color: var(--ink); line-height: 1.8; margin: 0 0 24px; }
+  p.body-copy:last-child { margin-bottom: 0; }
+
+  #what-it-does { background: var(--aubergine-deep); }
+  #what-it-does h2 { color: var(--bone); text-align: center; }
+  #what-it-does .rule { background: var(--copper); margin: 0 auto 20px; }
+  #what-it-does .eyebrow { text-align: center; color: var(--copper); }
+  .job-callout { background: rgba(250,248,243,0.06); border-radius: 6px; padding: 32px 34px; margin-bottom: 20px; }
+  .job-callout:last-child { margin-bottom: 0; }
+  .job-callout-title { font-family: var(--font-body); font-weight: 700; font-size: 15.5px; color: var(--copper); margin: 0 0 12px; letter-spacing: 0.01em; }
+  .job-callout p { font-family: var(--font-body); font-size: 15px; color: var(--bone-warm); line-height: 1.75; margin: 0; }
+
+  #see-it-action { background: var(--bone-warm); text-align: center; }
+  #see-it-action .rule { margin: 0 auto 20px; }
+  #see-it-action .eyebrow { text-align: center; }
+  #see-it-action h2 { text-align: center; }
+  .cta-row { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-top: 32px; }
+
+  #never-do { background: var(--bone); }
+  #final-cta { text-align: center; background: var(--bone-warm); }
+  #final-cta .rule { margin: 0 auto 20px; }
+
+  footer { background: var(--aubergine); padding: 96px clamp(24px,5vw,64px) 0; }
+  .footer-quote-wrap { max-width: 760px; margin: 0 auto; text-align: center; padding: 0 24px 72px; }
+  .footer-quote { font-family: var(--font-display); font-size: clamp(20px,2.2vw,26px); font-weight: 500; color: var(--bone); line-height: 1.55; margin: 0; }
+  .footer-cols { max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 64px; justify-content: space-between; padding-bottom: 64px; }
+  .footer-brand { flex: 1 1 280px; max-width: 340px; }
+  .footer-brand .wordmark { color: var(--bone); font-size: 18px; margin-bottom: 14px; }
+  .footer-brand .tagline { font-style: italic; font-size: 15px; color: var(--bone-warm); margin: 0; line-height: 1.6; }
+  .footer-groups { display: flex; gap: 64px; flex-wrap: wrap; }
+  .footer-group-title { font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--copper); margin-bottom: 18px; }
+  .footer-links { display: flex; flex-direction: column; gap: 12px; list-style: none; margin: 0; padding: 0; }
+  .footer-links a { color: var(--bone-warm); font-size: 15px; }
+  .footer-links a:hover { color: var(--bone); }
+  .footer-bottom { max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between; padding: 24px 0; border-top: 1px solid rgba(250,248,243,0.15); }
+  .footer-bottom span { font-size: 13px; color: rgba(240,233,220,0.7); }
+
+  [data-reveal] { transition: opacity .8s ease, transform .8s ease; }
+  [data-reveal].reveal-pending { opacity: 0; transform: translateY(22px); }
+  [data-reveal].in-view { opacity: 1; transform: translateY(0); }
+
+  .a11y-bar { display: flex; align-items: center; justify-content: center; gap: 18px; flex-wrap: wrap; background: var(--ink); padding: 10px 20px; }
+  .a11y-bar button { background: none; border: 1px solid rgba(250,248,243,0.4); color: var(--bone); font-family: var(--font-body); font-size: 12.5px; font-weight: 700; padding: 6px 12px; border-radius: 3px; cursor: pointer; }
+  .a11y-bar button:hover, .a11y-bar button:focus-visible, .a11y-bar button[aria-pressed="true"] { background: var(--copper); border-color: var(--copper); }
+  a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible { outline: 2px solid var(--copper-text); outline-offset: 2px; }
+  body.high-contrast { --bone: #FFFFFF; --bone-warm: #FFFFFF; --bone-deep: #CCCCCC; --ink: #000000; --aubergine: #000000; --aubergine-deep: #000000; --copper: #7a3d18; --copper-deep: #5c2d12; --copper-text: #7a3d18; --tan-muted: #000000; }
+  .try-demo { background: var(--aubergine-deep); border-radius: 8px; padding: 40px 36px; margin: 32px 0; }
+  .try-demo-label { font-family: var(--font-body); font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(240,233,220,0.55); margin: 0 0 18px; }
+  .try-demo-q { background: rgba(250,248,243,0.08); border-radius: 8px; padding: 20px 22px; color: var(--bone-warm); font-size: 16px; line-height: 1.6; margin-bottom: 18px; }
+  .try-demo-input-row { display: flex; gap: 10px; margin-bottom: 18px; }
+  .try-demo-input-row input { flex: 1; padding: 13px 16px; border-radius: 6px; border: 1px solid rgba(250,248,243,0.25); background: rgba(250,248,243,0.06); color: var(--bone); font-family: var(--font-body); font-size: 15px; }
+  .try-demo-input-row input::placeholder { color: rgba(240,233,220,0.5); }
+  .try-demo-input-row button { padding: 13px 22px; border-radius: 6px; border: none; background: var(--copper); color: var(--bone); font-weight: 700; font-family: var(--font-body); cursor: pointer; white-space: nowrap; }
+  .try-demo-input-row button:hover { background: var(--copper-deep); }
+  .try-demo-ack { font-style: italic; color: rgba(240,233,220,0.75); font-size: 14.5px; margin-bottom: 16px; display: none; }
+  .try-demo-context { background: rgba(0,0,0,0.2); border-left: 3px solid var(--copper); border-radius: 6px; padding: 18px 20px; display: none; }
+  .try-demo-context strong { display: block; font-family: var(--font-display); font-size: 12.5px; letter-spacing: 0.06em; color: #E3C9A8; margin-bottom: 8px; }
+  .try-demo-context p { color: var(--bone-warm); font-size: 14.5px; line-height: 1.65; margin: 0; }
+  .try-demo-note { font-size: 13px; font-style: italic; color: rgba(240,233,220,0.5); margin-top: 18px; }
+
+  #pricing-hero { text-align: center; padding-top: 80px; }
+  .pricing-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 28px; max-width: 1040px; margin: 56px auto 0; text-align: left; }
+  .price-card { background: var(--bone-warm); border-radius: 10px; padding: 36px 30px; border: 1.5px solid var(--bone-deep); }
+  .price-card.featured { border-color: var(--copper); background: var(--bone); box-shadow: 0 24px 48px -28px rgba(29,20,15,0.3); }
+  .price-tier-name { font-family: var(--font-display); font-size: 22px; color: var(--ink); margin: 0 0 6px; }
+  .price-amount { font-family: var(--font-body); font-weight: 700; font-size: 30px; color: var(--copper-text); margin: 0 0 18px; }
+  .price-amount span { font-size: 14px; font-weight: 400; color: var(--aubergine); }
+  .price-features { list-style: none; padding: 0; margin: 0 0 26px; }
+  .price-features li { font-size: 14.5px; color: var(--aubergine); line-height: 1.7; padding-left: 20px; position: relative; margin-bottom: 8px; }
+  .price-features li::before { content: '✓'; position: absolute; left: 0; color: var(--copper-text); font-weight: 700; }
+  .price-cta { display: block; text-align: center; padding: 13px; border-radius: 6px; font-weight: 700; font-family: var(--font-body); font-size: 14.5px; }
+  .price-cta.primary { background: var(--copper); color: var(--bone); }
+  .price-cta.primary:hover { background: var(--copper-deep); color: var(--bone); text-decoration: none; }
+  .price-cta.secondary { background: transparent; border: 1.5px solid var(--bone-deep); color: var(--ink); }
+  .price-cta.secondary:hover { border-color: var(--copper); text-decoration: none; }
+  .scaffold-note { font-size: 12.5px; color: var(--tan-muted); text-align: center; margin-top: 12px; font-style: italic; }
+  @media (max-width: 860px) { .pricing-grid { grid-template-columns: 1fr; } }
+
+  @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Lato:ital,wght@0,400;0,700;1,400&display=swap');
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--bone-warm);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: var(--text-size);
+    line-height: 1.6;
+    height: 100%;
+  }
+
+  #app {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 24px;
+  }
+
+  .screen {
+    width: 100%;
+    max-width: 560px;
+    opacity: 0;
+    transform: translateY(12px);
+    animation: riseIn 0.6s ease forwards;
+  }
+
+  @keyframes riseIn {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ---- Opening stillness ---- */
+  #screen-opening {
+    text-align: center;
+    max-width: 480px;
+  }
+  #screen-opening p.mission {
+    font-family: var(--font-display);
+    font-size: 24px;
+    line-height: 1.5;
+    color: var(--aubergine-deep);
+    opacity: 0;
+    animation: fadeInSlow 1.8s ease forwards;
+  }
+  @keyframes fadeInSlow {
+    to { opacity: 1; }
+  }
+  #opening-continue {
+    opacity: 0;
+    animation: fadeInSlow 1.2s ease 1.6s forwards;
+    margin-top: 40px;
+  }
+
+  /* ---- Typography ---- */
+  h1.eyebrow-title {
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.06em;
+    color: var(--aubergine);
+    text-transform: none;
+    margin: 0 0 8px;
+  }
+  h2.question {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 32px;
+    color: var(--aubergine-deep);
+    margin: 0 0 14px;
+    line-height: 1.3;
+  }
+  p.helper {
+    color: var(--aubergine);
+    font-size: 16px;
+    margin: 0 0 28px;
+  }
+
+  /* ---- Inputs ---- */
+  .field-row {
+    position: relative;
+    margin-bottom: 20px;
+  }
+  input[type=text], input[type=number], textarea {
+    width: 100%;
+    font-family: var(--font-body);
+    font-size: 19px;
+    padding: 16px 52px 16px 18px;
+    border: 1.5px solid #D8CFC0;
+    border-radius: 10px;
+    background: white;
+    color: var(--ink);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  input[type=text]:focus, input[type=number]:focus, textarea:focus {
+    border-color: var(--copper);
+  }
+  textarea { min-height: 160px; resize: vertical; font-family: var(--font-body); }
+
+  .mic-icon {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: var(--bone-warm);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    color: var(--aubergine);
+    transition: background 0.2s, color 0.2s;
+  }
+  .mic-icon:hover { background: var(--copper); color: white; }
+  .mic-icon.listening { background: var(--copper); color: white; animation: pulse 1s infinite; }
+  @keyframes pulse { 50% { transform: translateY(-50%) scale(1.08); } }
+
+  .date-row { display: flex; gap: 12px; }
+  .date-row .field-row { flex: 1; }
+
+  /* ---- Buttons ---- */
+  .btn-primary {
+    display: block;
+    width: 100%;
+    padding: 18px 24px;
+    background: var(--copper);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background 0.2s;
+    margin-top: 8px;
+  }
+  .btn-primary:hover { background: #a15e3b; }
+  .btn-primary:disabled { background: #D8CFC0; cursor: not-allowed; }
+
+  .btn-secondary {
+    display: block;
+    width: 100%;
+    padding: 16px 24px;
+    background: transparent;
+    color: var(--aubergine-deep);
+    border: 1.5px solid #D8CFC0;
+    border-radius: 10px;
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 17px;
+    cursor: pointer;
+    transition: border-color 0.2s;
+  }
+  .btn-secondary:hover { border-color: var(--copper); }
+
+  .choice-tile {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 22px 22px;
+    background: white;
+    border: 1.5px solid #D8CFC0;
+    border-radius: 12px;
+    font-family: var(--font-body);
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--aubergine-deep);
+    cursor: pointer;
+    margin-bottom: 12px;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .choice-tile .sub {
+    display: block;
+    font-weight: 400;
+    font-size: 15px;
+    color: var(--aubergine);
+    margin-top: 4px;
+  }
+  .choice-tile:hover { border-color: var(--copper); background: #FFFDFA; }
+  .choice-tile.selected { border-color: var(--copper); background: var(--bone-warm); }
+
+  .tile-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .tile-grid .choice-tile { margin-bottom: 0; text-align: center; }
+
+  /* ---- Back link / undo ---- */
+  .back-link {
+    display: inline-block;
+    margin-top: 22px;
+    color: var(--aubergine);
+    font-size: 15px;
+    text-decoration: none;
+    border-bottom: 1px dotted var(--aubergine);
+    cursor: pointer;
+    background: none;
+    border-top: none; border-left: none; border-right: none;
+    font-family: var(--font-body);
+  }
+  .back-link:hover { color: var(--copper); border-color: var(--copper); }
+
+  /* ---- Progress, calm not a bar ---- */
+  .progress-dots {
+    display: flex;
+    justify-content: center;
+    gap: 7px;
+    margin-bottom: 36px;
+  }
+  .progress-dots span {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: #D8CFC0;
+  }
+  .progress-dots span.done { background: var(--copper); }
+  .progress-dots span.current { background: var(--aubergine-deep); }
+
+  /* ---- Autosave whisper ---- */
+  #autosave-flash {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--aubergine-deep);
+    color: var(--bone-warm);
+    padding: 8px 18px;
+    border-radius: 20px;
+    font-size: 13px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s;
+  }
+  #autosave-flash.show { opacity: 0.92; }
+
+  /* ---- Story Assist conversation ---- */
+  .sa-message {
+    background: var(--aubergine-deep);
+    color: var(--bone-warm);
+    padding: 20px 22px;
+    border-radius: 14px;
+    font-size: 17px;
+    line-height: 1.6;
+    margin-bottom: 18px;
+    opacity: 0;
+    animation: fadeInSlow 0.7s ease forwards;
+  }
+  .sa-ack {
+    color: var(--aubergine);
+    font-style: italic;
+    font-size: 15px;
+    margin-bottom: 18px;
+  }
+  .sa-context {
+    background: var(--aubergine-deep);
+    color: var(--bone-warm);
+    padding: 18px 20px;
+    border-radius: 12px;
+    font-size: 15px;
+    line-height: 1.6;
+    margin-top: 20px;
+    border-left: 3px solid var(--copper);
+  }
+  .sa-context strong { display: block; font-family: var(--font-display); font-size: 13px; letter-spacing: 0.06em; margin-bottom: 8px; color: #E3C9A8; }
+
+  /* ---- Photo/upload mock ---- */
+  .upload-box {
+    border: 2px dashed #D8CFC0;
+    border-radius: 12px;
+    padding: 48px 20px;
+    text-align: center;
+    color: var(--aubergine);
+    cursor: pointer;
+    margin-bottom: 20px;
+    transition: border-color 0.2s;
+  }
+  .upload-box:hover { border-color: var(--copper); }
+  .upload-box.filled {
+    border-style: solid;
+    border-color: var(--copper);
+    background: var(--bone-warm);
+    color: var(--aubergine-deep);
+    font-weight: 700;
+  }
+
+  /* ---- Final reveal ---- */
+  #screen-final-reveal {
+    max-width: 640px;
+    text-align: center;
+  }
+  .tribute-card {
+    background: var(--aubergine-deep);
+    color: var(--bone-warm);
+    border-radius: 16px;
+    padding: 56px 36px;
+    opacity: 0;
+    animation: fadeInSlow 1.6s ease forwards;
+  }
+  .tribute-card .branch-line {
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #C9B79A;
+    margin-bottom: 10px;
+  }
+  .tribute-card h1 {
+    font-family: var(--font-display);
+    font-size: 44px;
+    margin: 0 0 10px;
+  }
+  .tribute-card .dates { color: #C9B79A; margin-bottom: 20px; }
+  .tribute-card .sentence { font-style: italic; font-family: var(--font-display); font-size: 19px; }
+  #final-thankyou {
+    margin-top: 28px;
+    color: var(--aubergine);
+    font-size: 17px;
+    opacity: 0;
+    animation: fadeInSlow 1.2s ease 1.8s forwards;
+  }
+
+  .gentle-note {
+    color: var(--copper);
+    font-size: 14px;
+    margin: -10px 0 20px;
+  }
+
+  .hidden { display: none !important; }
+
+  .required-star { color: var(--copper); }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation-duration: 0.01ms !important; }
+  }
+  .flow-wrap { max-width: 720px; margin: 40px auto 100px; padding: 0 24px; }
+</style>
+</head>
+<body>
+<a href="#main-content" style="position:absolute; left:-9999px; top:0; z-index:100; background:var(--copper); color:var(--bone); padding:12px 20px; font-family:var(--font-body); font-weight:700; font-size:14px; border-radius:0 0 3px 0;" onfocus="this.style.left='0'" onblur="this.style.left='-9999px'">Skip to main content</a>
+<div class="top-bar"></div>
+<div class="a11y-bar">
+  <span style="color:rgba(250,248,243,0.6); font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.06em;">Display</span>
+  <button type="button" id="textSmaller" aria-label="Decrease text size">A&minus;</button>
+  <button type="button" id="textReset" aria-label="Reset text size">A</button>
+  <button type="button" id="textLarger" aria-label="Increase text size">A+</button>
+  <button type="button" id="contrastToggle" aria-pressed="false">High Contrast</button>
+</div>
+
+<header class="site-header">
+  <a href="index.html" class="wordmark"><span>VALOR</span><span class="amp">&amp;</span><span>SERENITY</span></a>
+  <nav class="primary-nav" aria-label="Primary">
+    <a href="about.html">Our Story</a>
+    <a href="index.html#how-it-works">How It Works</a>
+    <a href="story-assist.html">Story Assist</a>
+    <a href="index.html#preview">Examples</a>
+    <a href="partners.html">For Partners</a>
+  </nav>
+  <a href="index.html" class="btn btn-outline" style="border:1px solid var(--bone-deep); color:var(--ink);">Back Home</a>
+</header>
+
+<main id="main-content">
+<div class="flow-wrap">
+<div id="app">
+
+  <!-- OPENING STILLNESS -->
+  <div class="screen" id="screen-opening">
+    <p class="mission">No veteran's story should be lost to time, and no family should have to preserve it alone.</p>
+    <button class="btn-primary" id="opening-continue" onclick="goTo('entry')">Begin</button>
+  </div>
+
+  <!-- ENTRY POINT -->
+  <div class="screen hidden" id="screen-entry">
+    <h1 class="eyebrow-title">Let's get started</h1>
+    <h2 class="question">How would you like to begin?</h2>
+    <p class="helper">Both are exactly the same, step by step. This just helps us know who else might help along the way.</p>
+    <button class="choice-tile" onclick="goTo('step1')">Start on your own
+      <span class="sub">You go through each step yourself. You can invite family to help anytime later.</span>
+    </button>
+    <button class="choice-tile" onclick="goTo('step1')">Start with family
+      <span class="sub">We'll ask early on who you'd like to invite, so they can start adding photos and memories right away too.</span>
+    </button>
+    <p class="helper" style="margin-top:8px; margin-bottom:0; font-size:14px;">Free to start, either way. No payment is needed to build a complete tribute.</p>
+  </div>
+
+  <!-- STEP 1: NAME AND DATES -->
+  <div class="screen hidden" id="screen-step1">
+    <div class="progress-dots">
+      <span class="current"></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+    </div>
+    <h1 class="eyebrow-title">Step 1 of 8</h1>
+    <h2 class="question">What was their name?</h2>
+    <p class="helper">Their full name, exactly as they'd want it remembered.</p>
+    <div class="field-row">
+      <input type="text" id="input-name" placeholder="e.g. Michael Mesarch" oninput="autosave()">
+      <button class="mic-icon" onclick="mockListen(this)">🎤</button>
+    </div>
+    <p class="helper" style="margin-top:28px; margin-bottom:10px;">When were they born, and when did they pass, if you know?</p>
+    <div class="date-row">
+      <div class="field-row">
+        <input type="text" id="input-birth" placeholder="Born" oninput="autosave()" onblur="checkYear(this,'birth-year-note')">
+      </div>
+      <div class="field-row">
+        <input type="text" id="input-passing" placeholder="Passed" oninput="autosave()" onblur="checkYearPair('input-birth','input-passing','birth-year-note')">
+      </div>
+    </div>
+    <p class="gentle-note hidden" id="birth-year-note">That doesn't look like a full year. Try something like 1951.</p>
+    <button class="btn-primary" onclick="goTo('step2a')">Continue</button>
+  </div>
+
+  <!-- STEP 2A: BRANCH -->
+  <div class="screen hidden" id="screen-step2a">
+    <div class="progress-dots">
+      <span class="done"></span><span class="current"></span><span></span><span></span><span></span><span></span><span></span><span></span>
+    </div>
+    <h1 class="eyebrow-title">Step 2 of 8</h1>
+    <h2 class="question">What branch did they serve in?</h2>
+    <div class="tile-grid">
+      <button class="choice-tile" data-branch="Army" onclick="selectBranch(this)">Army</button>
+      <button class="choice-tile" data-branch="Navy" onclick="selectBranch(this)">Navy</button>
+      <button class="choice-tile" data-branch="Marine Corps" onclick="selectBranch(this)">Marine Corps</button>
+      <button class="choice-tile" data-branch="Air Force" onclick="selectBranch(this)">Air Force</button>
+      <button class="choice-tile" data-branch="Coast Guard" onclick="selectBranch(this)">Coast Guard</button>
+      <button class="choice-tile" data-branch="Space Force" onclick="selectBranch(this)">Space Force</button>
+    </div>
+    <button class="btn-primary" id="branch-continue" disabled onclick="goTo('step2b')">Continue</button>
+    <button class="back-link" onclick="goTo('step1')">Go back</button>
+  </div>
+
+  <!-- STEP 2B: YEARS -->
+  <div class="screen hidden" id="screen-step2b">
+    <div class="progress-dots">
+      <span class="done"></span><span class="current"></span><span></span><span></span><span></span><span></span><span></span><span></span>
+    </div>
+    <h1 class="eyebrow-title">Step 2 of 8</h1>
+    <h2 class="question">What years did they serve?</h2>
+    <p class="helper">Not sure of exact dates? Your best guess is fine. You can always fix it later.</p>
+    <div class="date-row">
+      <div class="field-row"><input type="text" id="input-svc-from" placeholder="From" oninput="autosave()" onblur="checkYear(this,'svc-year-note')"></div>
+      <div class="field-row"><input type="text" id="input-svc-to" placeholder="To" oninput="autosave()" onblur="checkYearPair('input-svc-from','input-svc-to','svc-year-note')"></div>
+    </div>
+    <p class="gentle-note hidden" id="svc-year-note">That doesn't look like a full year. Try something like 1976.</p>
+    <button class="btn-primary" onclick="goTo('step3')">Continue</button>
+    <button class="back-link" onclick="goTo('step2a')">Go back</button>
+  </div>
+
+  <!-- STEP 3: PHOTOS -->
+  <div class="screen hidden" id="screen-step3">
+    <div class="progress-dots">
+      <span class="done"></span><span class="done"></span><span class="current"></span><span></span><span></span><span></span><span></span><span></span>
+    </div>
+    <h1 class="eyebrow-title">Step 3 of 8</h1>
+    <h2 class="question">Add a photo</h2>
+    <p class="helper">You can add more anytime. One is enough to start.</p>
+    <div class="upload-box" id="photo-box" onclick="mockUpload()">Tap to choose a photo</div>
+    <button class="back-link hidden" id="photo-remove-link" onclick="removePhoto()" style="margin-top:-10px;">Remove this photo</button>
+    <div id="caption-row" class="hidden">
+      <div class="field-row">
+        <input type="text" placeholder="What's happening in this photo?" oninput="autosave()">
+        <button class="mic-icon" onclick="mockListen(this)">🎤</button>
+      </div>
+      <p class="sa-ack" id="photo-prompt-link" style="margin-top:-8px;">Not sure what to write? <a href="#" onclick="event.preventDefault(); showPhotoPrompt()" style="color:var(--copper);">Get a gentle prompt</a>.</p>
+      <div class="sa-context hidden" id="photo-prompt-box" style="margin-top:12px;">
+        <strong>A gentle prompt</strong>
+        <span>Where was this taken, and who's with him?</span>
+      </div>
+    </div>
+    <div id="video-option" class="hidden" style="margin-top: 20px;">
+      <button class="btn-secondary" onclick="document.getElementById('video-option').classList.add('hidden')">Add a voice or video memory, if you have one</button>
+    </div>
+    <button class="btn-primary" style="margin-top:20px;" onclick="goTo('step4choice')">Continue</button>
+    <button class="back-link" onclick="goTo('step2b')">Go back</button>
+  </div>
+
+  <!-- STEP 4: THEIR STORY, CHOICE -->
+  <div class="screen hidden" id="screen-step4choice">
+    <div class="progress-dots">
+      <span class="done"></span><span class="done"></span><span class="done"></span><span class="current"></span><span></span><span></span><span></span><span></span>
+    </div>
+    <h1 class="eyebrow-title">Step 4 of 8</h1>
+    <h2 class="question">Tell their story</h2>
+    <button class="choice-tile" onclick="goTo('step4write')">Write it yourself</button>
+    <button class="choice-tile" onclick="goTo('step4sa1')">Get some help
+      <span class="sub">Just asks a few gentle questions to jog your memory. Nothing is added that you don't say yourself.</span>
+    </button>
+    <div class="sa-context" style="margin-top:4px;">
+      <strong>Here's a real example of what Story Assist can find</strong>
+      <span style="filter: blur(4px); user-select: none; display:block; margin-top:4px;">Did you know? Harry Truman was president. That same year, the Rochester Royals beat the Knicks for the NBA title, and the country's best-selling song was "How High the Moon."</span>
+    </div>
+    <p class="helper" style="font-size:14px; margin-top:10px;">This is a real example from another family's tribute, shown so you can see how it works. Your own veteran's story stays completely private until you choose to publish it.</p>
+    <p class="helper" style="font-size:15px; font-style:italic; text-align:center; margin-top:20px;">Most memorial pages only record what happened. This also shows you what the world was like when it happened, so more memories come back to you.</p>
+    <button class="back-link" onclick="goTo('step3')">Go back</button>
+  </div>
+
+  <!-- STEP 4: WRITE YOURSELF -->
+  <div class="screen hidden" id="screen-step4write">
+    <div class="progress-dots">
+      <span class="done"></span><span class="done"></span><span class="done"></span><span class="current"></span><span></span><span></span><span></span><span></span>
+    </div>
+    <h1 class="eyebrow-title">Step 4 of 8</h1>
+    <h2 class="question">In your own words</h2>
+    <p class="sa-ack" id="write-prompt-link">Need a place to start? <a href="#" onclick="event.preventDefault(); showWritePrompts()" style="color:var(--copper);">See a few ideas</a>.</p>
+    <div class="hidden" id="write-prompts-box" style="margin-bottom:16px;">
+      <button class="btn-secondary" style="margin-bottom:8px; text-align:left; font-weight:400;" onclick="insertPrompt('What do you want people to know about him?')">What do you want people to know about him?</button>
+      <button class="btn-secondary" style="margin-bottom:8px; text-align:left; font-weight:400;" onclick="insertPrompt('What is a memory that still makes you smile?')">What is a memory that still makes you smile?</button>
+      <button class="btn-secondary" style="text-align:left; font-weight:400;" onclick="insertPrompt('What did he care about most?')">What did he care about most?</button>
+    </div>
+    <div class="field-row">
+      <textarea id="write-textarea" placeholder="Start writing..." oninput="autosave()"></textarea>
+      <button class="mic-icon" style="top:24px; transform:none;" onclick="mockListen(this)">🎤</button>
+    </div>
+    <p class="helper" style="font-size:14px; margin-top:-14px;">Want more than a starting point? <a href="#" onclick="event.preventDefault(); goTo('step4sa1')" style="color:var(--copper);">Get gentle guidance from Story Assist</a> instead.</p>
+    <button class="btn-primary" onclick="goTo('step5')">Continue</button>
+    <button class="back-link" onclick="goTo('step4choice')">Go back</button>
+  </div>
+
+  <!-- STEP 4: STORY ASSIST Q1 -->
+  <div class="screen hidden" id="screen-step4sa1">
+    <div class="progress-dots">
+      <span class="done"></span><span class="done"></span><span class="done"></span><span class="current"></span><span></span><span></span><span></span><span></span>
+    </div>
+    <h1 class="eyebrow-title">Step 4 of 8 · Getting some help</h1>
+    <div class="sa-message">What's one thing you remember him teaching you, that you can still hear him saying?</div>
+    <div class="field-row">
+      <input type="text" placeholder="Type or tap the mic to speak" oninput="autosave()">
+      <button class="mic-icon" onclick="mockListen(this)">🎤</button>
+    </div>
+    <button class="btn-primary" onclick="goTo('step4sa2')">Continue</button>
+    <button class="back-link" onclick="goTo('step4choice')">Go back</button>
+  </div>
+
+  <!-- STEP 4: STORY ASSIST ACK + LIVE HISTORICAL CONTEXT + Q2 -->
+  <div class="screen hidden" id="screen-step4sa2">
+    <div class="progress-dots">
+      <span class="done"></span><span class="done"></span><span class="done"></span><span class="current"></span><span></span><span></span><span></span><span></span>
+    </div>
+    <h1 class="eyebrow-title">Step 4 of 8 · Getting some help</h1>
+    <p class="sa-ack">That's a wonderful detail.</p>
+    <div class="sa-context">
+      <strong>Did you know?</strong>
+      <span id="context-text">You mentioned he was born in 1951. That same year, the Rochester Royals beat the New York Knicks for the NBA title, and Harry Truman was president. Does anything from that time sound familiar?</span>
+    </div>
+    <div class="field-row" style="margin-top:20px;">
+      <input type="text" placeholder="Type or tap the mic to speak" oninput="autosave()">
+      <button class="mic-icon" onclick="mockListen(this)">🎤</button>
+    </div>
+    <button class="btn-primary" onclick="goTo('step5')">Continue</button>
+    <button class="back-link" onclick="goTo('step4sa1')">Go back</button>
+  </div>
+
+  <!-- STEP 5: HONORS -->
+  <div class="screen hidden" id="screen-step5">
+    <div class="progress-dots">
+      <span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="current"></span><span></span><span></span><span></span>
+    </div>
+    <h1 class="eyebrow-title">Step 5 of 8</h1>
+    <h2 class="question">Did they receive any medals or honors?</h2>
+    <button class="btn-secondary" style="margin-bottom:14px;" onclick="addHonor()">+ Add one</button>
+    <div id="honors-list"></div>
+    <button class="choice-tile" style="margin-top: 6px;" onclick="goTo('step6')">None, or not sure, and that's okay</button>
+    <p class="helper" style="margin-top:18px; margin-bottom:0;">Don't worry about remembering every one right now. You can always come back and add more, even after this is published.</p>
+    <button class="btn-primary" onclick="goTo('step6')">Continue</button>
+    <button class="back-link" onclick="goTo('step4choice')">Go back</button>
+  </div>
+
+  <!-- STEP 6: INVITE FAMILY -->
+  <div class="screen hidden" id="screen-step6">
+    <div class="progress-dots">
+      <span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="current"></span><span></span><span></span>
+    </div>
+    <h1 class="eyebrow-title">Step 6 of 8</h1>
+    <h2 class="question">Would you like family to help add memories?</h2>
+    <button class="choice-tile" onclick="goTo('step7')">Not right now</button>
+    <button class="choice-tile" onclick="showInviteField()">Send an invite</button>
+    <div id="invite-field-row" class="hidden field-row" style="margin-top:12px;">
+      <input type="text" placeholder="Their email or phone number" oninput="autosave()">
+    </div>
+    <p class="helper hidden" id="invite-privacy-note" style="margin-top:-8px; margin-bottom:16px; font-size:14px;">We'll only use this to send them one invite to help with this memorial. We won't add them to any mailing list, and we won't use it for anything else.</p>
+    <button id="invite-send-btn" class="btn-primary hidden" onclick="goTo('step7')">Send</button>
+    <button class="back-link" onclick="goTo('step5')">Go back</button>
+  </div>
+
+  <!-- STEP 7: PREVIEW -->
+  <div class="screen hidden" id="screen-step7">
+    <div class="progress-dots">
+      <span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="current"></span><span></span>
+    </div>
+    <h1 class="eyebrow-title">Step 7 of 8</h1>
+    <h2 class="question">Here's how it looks</h2>
+    <p class="helper">This is exactly what visitors will see.</p>
+    <div class="tribute-card" id="preview-card" style="animation:none; opacity:1; padding: 40px 28px;">
+      <div class="branch-line" id="preview-branch">United States Army</div>
+      <h1 id="preview-name" style="font-size:34px;">Their Name</h1>
+      <div class="dates" id="preview-dates">Born – Passed</div>
+    </div>
+    <p class="theme-note" id="preview-theme-note" style="font-style:italic; font-family:var(--font-display); font-size:15px; color:var(--aubergine); text-align:center; margin-top:16px;"></p>
+    <button class="btn-primary" style="margin-top:12px;" onclick="goTo('step8')">This looks right</button>
+    <button class="back-link" onclick="goTo('step6')">Go back and change something</button>
+  </div>
+
+  <!-- STEP 8: PUBLISH -->
+  <div class="screen hidden" id="screen-step8">
+    <div class="progress-dots">
+      <span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="current"></span>
+    </div>
+    <h1 class="eyebrow-title">Step 8 of 8</h1>
+    <h2 class="question">One last step</h2>
+    <p class="helper">We'll send a quick email to confirm it's really you, then your tribute goes live.</p>
+    <button class="btn-primary" onclick="goTo('finalreveal')">Send the confirmation</button>
+    <button class="back-link" onclick="goTo('step7')">Go back</button>
+  </div>
+
+  <!-- FINAL REVEAL -->
+  <div class="screen hidden" id="screen-final-reveal">
+    <div class="tribute-card">
+      <div class="branch-line" id="final-branch">United States Army</div>
+      <h1 id="final-name">Their Name</h1>
+      <div class="dates" id="final-dates">Born – Passed</div>
+      <p class="sentence">Beloved husband, father, and Soldier.</p>
+    </div>
+    <p id="final-thankyou">It's live. Thank you for taking the time to do this for him.</p>
+  </div>
+
+</div>
+
+<div id="autosave-flash">Saved</div>
+
+<script>
+  let selectedBranch = "Army";
+  let honorCount = 0;
+
+  function goTo(id) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.add('hidden'));
+    const el = document.getElementById('screen-' + id);
+    el.classList.remove('hidden');
+    el.style.animation = 'none';
+    void el.offsetWidth;
+    el.style.animation = '';
+    window.scrollTo(0,0);
+
+    if (id === 'step4sa2') {
+      buildContextText();
+    }
+
+    if (id === 'step7' || id === 'finalreveal') {
+      const name = document.getElementById('input-name').value || 'Their Name';
+      const born = document.getElementById('input-birth').value || 'Born';
+      const passed = document.getElementById('input-passing').value || 'Passed';
+      const branchLabel = 'United States ' + selectedBranch;
+      if (id === 'step7') {
+        document.getElementById('preview-name').textContent = name;
+        document.getElementById('preview-dates').textContent = born + ' – ' + passed;
+        applyPreviewTheme(selectedBranch);
+      } else {
+        document.getElementById('final-name').textContent = name;
+        document.getElementById('final-dates').textContent = born + ' – ' + passed;
+        document.getElementById('final-branch').textContent = branchLabel;
+      }
+    }
+  }
+
+  function selectBranch(btn) {
+    document.querySelectorAll('#screen-step2a .choice-tile').forEach(t => t.classList.remove('selected'));
+    btn.classList.add('selected');
+    selectedBranch = btn.getAttribute('data-branch');
+    document.getElementById('branch-continue').disabled = false;
+  }
+
+  function mockListen(btn) {
+    btn.classList.add('listening');
+    btn.textContent = '●';
+    setTimeout(() => {
+      btn.classList.remove('listening');
+      btn.textContent = '🎤';
+    }, 1400);
+  }
+
+  function mockUpload() {
+    const box = document.getElementById('photo-box');
+    box.classList.add('filled');
+    box.textContent = '✓ Photo added';
+    document.getElementById('caption-row').classList.remove('hidden');
+    document.getElementById('video-option').classList.remove('hidden');
+    document.getElementById('photo-remove-link').classList.remove('hidden');
+    autosave();
+  }
+
+  function removePhoto() {
+    const box = document.getElementById('photo-box');
+    box.classList.remove('filled');
+    box.textContent = 'Tap to choose a photo';
+    document.getElementById('caption-row').classList.add('hidden');
+    document.getElementById('video-option').classList.add('hidden');
+    document.getElementById('photo-remove-link').classList.add('hidden');
+    document.getElementById('photo-prompt-box').classList.add('hidden');
+    autosave();
+  }
+
+  function showPhotoPrompt() {
+    document.getElementById('photo-prompt-box').classList.remove('hidden');
+  }
+
+  function showWritePrompts() {
+    document.getElementById('write-prompts-box').classList.remove('hidden');
+    document.getElementById('write-prompt-link').classList.add('hidden');
+  }
+
+  function insertPrompt(text) {
+    const ta = document.getElementById('write-textarea');
+    if (!ta.value.trim()) {
+      ta.value = text + '\n\n';
+      ta.focus();
+      ta.setSelectionRange(ta.value.length, ta.value.length);
+    } else {
+      ta.focus();
+    }
+  }
+
+  function checkYear(input, noteId) {
+    const val = input.value.trim();
+    const note = document.getElementById(noteId);
+    if (val === '') { note.classList.add('hidden'); return; }
+    const isPlausibleYear = /^\d{4}$/.test(val) && Number(val) >= 1900 && Number(val) <= 2026;
+    note.classList.toggle('hidden', isPlausibleYear);
+  }
+
+  function checkYearPair(firstId, secondId, noteId) {
+    checkYear(document.getElementById(secondId), noteId);
+    const note = document.getElementById(noteId);
+    if (!note.classList.contains('hidden')) return; // already flagged as not a real year
+    const first = document.getElementById(firstId).value.trim();
+    const second = document.getElementById(secondId).value.trim();
+    if (/^\d{4}$/.test(first) && /^\d{4}$/.test(second) && Number(second) < Number(first)) {
+      note.textContent = 'That second year comes before the first. Mind double-checking?';
+      note.classList.remove('hidden');
+    } else {
+      note.textContent = "That doesn't look like a full year. Try a four-digit year.";
+    }
+  }
+
+  const branchThemes = {
+    'Army':         { bg: '#1C1C1C', accent: '#A8842A', label: 'United States Army' },
+    'Navy':         { bg: '#00205B', accent: '#9C8737', label: 'United States Navy' },
+    'Marine Corps': { bg: '#1C1C1C', accent: '#A0182A', label: 'United States Marine Corps' },
+    'Air Force':    { bg: '#00308F', accent: '#4A6B8A', label: 'United States Air Force' },
+    'Coast Guard':  { bg: '#003087', accent: '#CE1126', label: 'United States Coast Guard' },
+    'Space Force':  { bg: '#0B1F3A', accent: '#66748A', label: 'United States Space Force' },
+    'Default':      { bg: '#29212B', accent: '#B66F4A', label: '' },
+    'American Flag':{ bg: '#0A3161', accent: '#B31942', label: '' }
+  };
+  let previewTheme = null;
+
+  function applyPreviewTheme(themeName) {
+    previewTheme = themeName;
+    const t = branchThemes[themeName];
+    const card = document.getElementById('preview-card');
+    card.style.background = t.bg;
+    card.style.setProperty('--accent', t.accent);
+    document.getElementById('preview-branch').style.color = t.accent;
+    document.getElementById('preview-dates').style.color = t.accent;
+    const label = t.label || ('United States ' + selectedBranch);
+    document.getElementById('preview-branch').textContent = label;
+
+    const otherOptions = ['Default', 'American Flag', selectedBranch].filter((v,i,a) => a.indexOf(v)===i && v !== themeName);
+    const noteEl = document.getElementById('preview-theme-note');
+    noteEl.innerHTML = 'Shown here in <strong>' + (themeName === 'Default' ? 'Default' : themeName) + '</strong> colors. View in ' +
+      otherOptions.map(o => '<a href="#" onclick="event.preventDefault(); applyPreviewTheme(\'' + o + '\')" style="color:var(--copper); border-bottom:1px dotted var(--copper);">' + o + '</a>').join(' or ') + ' instead.';
+  }
+
+  function addHonor() {
+    honorCount++;
+    const div = document.createElement('div');
+    div.className = 'field-row';
+    div.innerHTML = '<input type="text" placeholder="Name of the medal or honor" oninput="autosave()">';
+    document.getElementById('honors-list').appendChild(div);
+  }
+
+  function showInviteField() {
+    document.getElementById('invite-field-row').classList.remove('hidden');
+    document.getElementById('invite-privacy-note').classList.remove('hidden');
+    document.getElementById('invite-send-btn').classList.remove('hidden');
+  }
+
+  function buildContextText() {
+    const birth = document.getElementById('input-birth').value.trim();
+    const svcFrom = document.getElementById('input-svc-from').value.trim();
+    const el = document.getElementById('context-text');
+    if (/^\d{4}$/.test(birth)) {
+      el.textContent = 'You mentioned he was born in ' + birth + '. We looked up what was happening in the world that year, who was president, what was on the radio. Does anything from that time sound familiar?';
+    } else if (/^\d{4}$/.test(svcFrom)) {
+      el.textContent = 'You mentioned his service began around ' + svcFrom + '. We looked up what his branch was doing in that era. Does anything from that time sound familiar?';
+    } else {
+      el.textContent = 'Once you add a birth year or service date, we can show you what was happening in the world at that time, and ask if it sounds familiar.';
+    }
+  }
+
+  let saveTimer;
+  function autosave() {
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(() => {
+      const flash = document.getElementById('autosave-flash');
+      flash.classList.add('show');
+      setTimeout(() => flash.classList.remove('show'), 1200);
+    }, 500);
+  }
+</script>
+
+</body>
+</html>
+
+</div>
+</main>
+
+<footer>
+  <div class="footer-quote-wrap">
+    <div class="rule"></div>
+    <p class="footer-quote">No veteran's story should be lost to time, and no family should have to preserve it alone.</p>
+    <p style="font-size:13px; color:var(--bone-warm); line-height:1.6; margin:14px 0 0;">This is an early preview of the guided tribute experience. Nothing you enter here is saved.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  try {
+    var sizeKey = 'vs_text_scale';
+    var root = document.documentElement;
+    function applyScale(s){ root.style.fontSize = s + 'px'; try{localStorage.setItem(sizeKey, s);}catch(e){} }
+    var current = parseInt(localStorage.getItem(sizeKey)) || 16;
+    applyScale(current);
+    document.getElementById('textSmaller').addEventListener('click', function(){ current = Math.max(13, current-1); applyScale(current); });
+    document.getElementById('textReset').addEventListener('click', function(){ current = 16; applyScale(current); });
+    document.getElementById('textLarger').addEventListener('click', function(){ current = Math.min(22, current+1); applyScale(current); });
+    var contrastKey = 'vs_high_contrast';
+    var cbtn = document.getElementById('contrastToggle');
+    function setContrast(on){
+      document.body.classList.toggle('high-contrast', on);
+      cbtn.setAttribute('aria-pressed', on ? 'true' : 'false');
+      try { localStorage.setItem(contrastKey, on ? '1' : '0'); } catch(e){}
+    }
+    cbtn.addEventListener('click', function(){ setContrast(!document.body.classList.contains('high-contrast')); });
+    setContrast(localStorage.getItem(contrastKey) === '1');
+  } catch(e) {}
+})();
+</script>
+</body></html>

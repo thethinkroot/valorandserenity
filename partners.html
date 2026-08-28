@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Hospice and Funeral Home Partners: Valor &amp; Serenity</title>
+<meta name="description" content="A genuine aftercare resource for the families you serve, at no cost. Built to be clear on compliance from the start.">
+<link rel="canonical" href="https://valorandserenity.com/partners.html">
+<style>
+  :root {
+    --bone: #FAF8F3; --bone-warm: #F0E9DC; --bone-deep: #E1D5C0; --ink: #1D1C1B;
+    --aubergine: #69545F; --aubergine-deep: #29212B; --copper: #B66F4A; --copper-deep: #8B4E30; --copper-text: #9C5C3A;
+    --font-display: 'Cinzel', serif; --font-body: 'Lato', sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--bone); color: var(--ink); font-family: var(--font-body); -webkit-font-smoothing: antialiased; }
+  a { color: var(--copper-text); text-decoration: none; }
+  a:hover { color: var(--aubergine-deep); text-decoration: underline; }
+  .top-bar { height: 4px; width: 100%; background: var(--copper); }
+  .site-header { position: sticky; top: 0; z-index: 50; background: var(--bone); border-bottom: 1px solid rgba(29,28,27,0.09); display: flex; align-items: center; justify-content: space-between; padding: 20px clamp(24px,5vw,64px); gap: 28px; }
+  .wordmark { font-family: var(--font-display); font-size: 19px; font-weight: 600; letter-spacing: 0.1em; color: var(--ink); display: flex; align-items: baseline; gap: 7px; white-space: nowrap; }
+  .wordmark .amp { color: var(--copper); }
+  .primary-nav { display: flex; align-items: center; gap: 30px; }
+  .primary-nav a { color: var(--ink); font-weight: 600; font-size: 15px; }
+  .primary-nav a.current { color: var(--copper-text); text-decoration: underline; }
+  .btn { display: inline-block; font-family: var(--font-body); font-weight: 700; font-size: 15px; padding: 15px 30px; border-radius: 2px; border: none; cursor: pointer; }
+  .btn-primary { background: var(--copper); color: var(--bone); }
+  .btn-primary:hover { background: var(--copper-deep); }
+  .btn-secondary { background: var(--bone-warm); color: var(--ink); border: 1px solid var(--bone-deep); }
+  .btn-secondary:hover { background: var(--bone-deep); text-decoration: none; }
+  @media (max-width: 900px) { .primary-nav { display: none !important; } }
+
+  section { padding: 90px clamp(24px,5vw,64px); }
+  .inner { max-width: 720px; margin: 0 auto; }
+  .rule { width: 32px; height: 2px; background: var(--copper); margin: 0 0 20px; }
+  .rule.centered { margin: 0 auto 20px; }
+  .eyebrow { font-size: 13px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--copper-text); margin: 0 0 18px; }
+  h1 { font-family: var(--font-display); font-size: clamp(30px,4vw,46px); font-weight: 500; color: var(--ink); margin: 0 0 22px; line-height: 1.2; text-align: center; }
+  h2 { font-family: var(--font-display); font-size: clamp(22px,2.6vw,28px); font-weight: 500; color: var(--ink); margin: 0 0 22px; }
+  .hero-lede { font-size: 17px; color: var(--aubergine); text-align: center; max-width: 600px; margin: 0 auto; line-height: 1.65; }
+  #story-hero { text-align: center; padding-bottom: 40px; }
+  p.body-copy { font-size: 16.5px; color: var(--ink); line-height: 1.8; margin: 0 0 24px; }
+  p.body-copy:last-child { margin-bottom: 0; }
+
+  #what-it-does { background: var(--aubergine-deep); }
+  #what-it-does h2 { color: var(--bone); text-align: center; }
+  #what-it-does .rule { background: var(--copper); margin: 0 auto 20px; }
+  #what-it-does .eyebrow { text-align: center; color: var(--copper); }
+  .job-callout { background: rgba(250,248,243,0.06); border-radius: 6px; padding: 32px 34px; margin-bottom: 20px; }
+  .job-callout:last-child { margin-bottom: 0; }
+  .job-callout-title { font-family: var(--font-body); font-weight: 700; font-size: 15.5px; color: var(--copper); margin: 0 0 12px; letter-spacing: 0.01em; }
+  .job-callout p { font-family: var(--font-body); font-size: 15px; color: var(--bone-warm); line-height: 1.75; margin: 0; }
+
+  #see-it-action { background: var(--bone-warm); text-align: center; }
+  #see-it-action .rule { margin: 0 auto 20px; }
+  #see-it-action .eyebrow { text-align: center; }
+  #see-it-action h2 { text-align: center; }
+  .cta-row { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-top: 32px; }
+
+  #never-do { background: var(--bone); }
+  #final-cta { text-align: center; background: var(--bone-warm); }
+  #final-cta .rule { margin: 0 auto 20px; }
+
+  footer { background: var(--aubergine); padding: 96px clamp(24px,5vw,64px) 0; }
+  .footer-quote-wrap { max-width: 760px; margin: 0 auto; text-align: center; padding: 0 24px 72px; }
+  .footer-quote { font-family: var(--font-display); font-size: clamp(20px,2.2vw,26px); font-weight: 500; color: var(--bone); line-height: 1.55; margin: 0; }
+  .footer-cols { max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 64px; justify-content: space-between; padding-bottom: 64px; }
+  .footer-brand { flex: 1 1 280px; max-width: 340px; }
+  .footer-brand .wordmark { color: var(--bone); font-size: 18px; margin-bottom: 14px; }
+  .footer-brand .tagline { font-style: italic; font-size: 15px; color: var(--bone-warm); margin: 0; line-height: 1.6; }
+  .footer-groups { display: flex; gap: 64px; flex-wrap: wrap; }
+  .footer-group-title { font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--copper); margin-bottom: 18px; }
+  .footer-links { display: flex; flex-direction: column; gap: 12px; list-style: none; margin: 0; padding: 0; }
+  .footer-links a { color: var(--bone-warm); font-size: 15px; }
+  .footer-links a:hover { color: var(--bone); }
+  .footer-bottom { max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between; padding: 24px 0; border-top: 1px solid rgba(250,248,243,0.15); }
+  .footer-bottom span { font-size: 13px; color: rgba(240,233,220,0.7); }
+
+  [data-reveal] { transition: opacity .8s ease, transform .8s ease; }
+  [data-reveal].reveal-pending { opacity: 0; transform: translateY(22px); }
+  [data-reveal].in-view { opacity: 1; transform: translateY(0); }
+
+  .a11y-bar { display: flex; align-items: center; justify-content: center; gap: 18px; flex-wrap: wrap; background: var(--ink); padding: 10px 20px; }
+  .a11y-bar button { background: none; border: 1px solid rgba(250,248,243,0.4); color: var(--bone); font-family: var(--font-body); font-size: 12.5px; font-weight: 700; padding: 6px 12px; border-radius: 3px; cursor: pointer; }
+  .a11y-bar button:hover, .a11y-bar button:focus-visible, .a11y-bar button[aria-pressed="true"] { background: var(--copper); border-color: var(--copper); }
+  a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible { outline: 2px solid var(--copper-text); outline-offset: 2px; }
+  body.high-contrast { --bone: #FFFFFF; --bone-warm: #FFFFFF; --bone-deep: #CCCCCC; --ink: #000000; --aubergine: #000000; --aubergine-deep: #000000; --copper: #7a3d18; --copper-deep: #5c2d12; --copper-text: #7a3d18; --tan-muted: #000000; }
+  .try-demo { background: var(--aubergine-deep); border-radius: 8px; padding: 40px 36px; margin: 32px 0; }
+  .try-demo-label { font-family: var(--font-body); font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(240,233,220,0.55); margin: 0 0 18px; }
+  .try-demo-q { background: rgba(250,248,243,0.08); border-radius: 8px; padding: 20px 22px; color: var(--bone-warm); font-size: 16px; line-height: 1.6; margin-bottom: 18px; }
+  .try-demo-input-row { display: flex; gap: 10px; margin-bottom: 18px; }
+  .try-demo-input-row input { flex: 1; padding: 13px 16px; border-radius: 6px; border: 1px solid rgba(250,248,243,0.25); background: rgba(250,248,243,0.06); color: var(--bone); font-family: var(--font-body); font-size: 15px; }
+  .try-demo-input-row input::placeholder { color: rgba(240,233,220,0.5); }
+  .try-demo-input-row button { padding: 13px 22px; border-radius: 6px; border: none; background: var(--copper); color: var(--bone); font-weight: 700; font-family: var(--font-body); cursor: pointer; white-space: nowrap; }
+  .try-demo-input-row button:hover { background: var(--copper-deep); }
+  .try-demo-ack { font-style: italic; color: rgba(240,233,220,0.75); font-size: 14.5px; margin-bottom: 16px; display: none; }
+  .try-demo-context { background: rgba(0,0,0,0.2); border-left: 3px solid var(--copper); border-radius: 6px; padding: 18px 20px; display: none; }
+  .try-demo-context strong { display: block; font-family: var(--font-display); font-size: 12.5px; letter-spacing: 0.06em; color: #E3C9A8; margin-bottom: 8px; }
+  .try-demo-context p { color: var(--bone-warm); font-size: 14.5px; line-height: 1.65; margin: 0; }
+  .try-demo-note { font-size: 13px; font-style: italic; color: rgba(240,233,220,0.5); margin-top: 18px; }
+
+  #pricing-hero { text-align: center; padding-top: 80px; }
+  .pricing-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 28px; max-width: 1040px; margin: 56px auto 0; text-align: left; }
+  .price-card { background: var(--bone-warm); border-radius: 10px; padding: 36px 30px; border: 1.5px solid var(--bone-deep); }
+  .price-card.featured { border-color: var(--copper); background: var(--bone); box-shadow: 0 24px 48px -28px rgba(29,20,15,0.3); }
+  .price-tier-name { font-family: var(--font-display); font-size: 22px; color: var(--ink); margin: 0 0 6px; }
+  .price-amount { font-family: var(--font-body); font-weight: 700; font-size: 30px; color: var(--copper-text); margin: 0 0 18px; }
+  .price-amount span { font-size: 14px; font-weight: 400; color: var(--aubergine); }
+  .price-features { list-style: none; padding: 0; margin: 0 0 26px; }
+  .price-features li { font-size: 14.5px; color: var(--aubergine); line-height: 1.7; padding-left: 20px; position: relative; margin-bottom: 8px; }
+  .price-features li::before { content: '✓'; position: absolute; left: 0; color: var(--copper-text); font-weight: 700; }
+  .price-cta { display: block; text-align: center; padding: 13px; border-radius: 6px; font-weight: 700; font-family: var(--font-body); font-size: 14.5px; }
+  .price-cta.primary { background: var(--copper); color: var(--bone); }
+  .price-cta.primary:hover { background: var(--copper-deep); color: var(--bone); text-decoration: none; }
+  .price-cta.secondary { background: transparent; border: 1.5px solid var(--bone-deep); color: var(--ink); }
+  .price-cta.secondary:hover { border-color: var(--copper); text-decoration: none; }
+  .scaffold-note { font-size: 12.5px; color: var(--tan-muted); text-align: center; margin-top: 12px; font-style: italic; }
+  @media (max-width: 860px) { .pricing-grid { grid-template-columns: 1fr; } }
+
+  .partner-hero { text-align: center; padding-top: 80px; }
+  .compliance-box { background: var(--aubergine-deep); border-radius: 10px; padding: 40px 40px; margin: 48px auto; max-width: 780px; }
+  .compliance-box h3 { font-family: var(--font-display); font-size: 20px; color: var(--copper); margin: 0 0 16px; }
+  .compliance-box p { color: var(--bone-warm); font-size: 15px; line-height: 1.75; margin: 0 0 14px; }
+  .compliance-box p:last-child { margin-bottom: 0; }
+  .compliance-box .fine { font-size: 13px; font-style: italic; color: rgba(240,233,220,0.6); }
+  .path-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; max-width: 900px; margin: 48px auto 0; text-align: left; }
+  .path-card { background: var(--bone-warm); border-radius: 10px; padding: 32px 30px; border: 1.5px solid var(--bone-deep); }
+  .path-card h3 { font-family: var(--font-display); font-size: 19px; color: var(--ink); margin: 0 0 12px; }
+  .path-card p { font-size: 14.5px; color: var(--aubergine); line-height: 1.7; margin: 0; }
+  .step-mini { display: flex; gap: 16px; align-items: flex-start; max-width: 720px; margin: 20px auto; text-align: left; }
+  .step-mini-num { font-family: var(--font-display); font-size: 22px; color: var(--copper-text); flex-shrink: 0; width: 32px; }
+  .step-mini p { margin: 0; font-size: 15px; color: var(--aubergine); line-height: 1.6; }
+  @media (max-width: 760px) { .path-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<a href="#main-content" style="position:absolute; left:-9999px; top:0; z-index:100; background:var(--copper); color:var(--bone); padding:12px 20px; font-family:var(--font-body); font-weight:700; font-size:14px; border-radius:0 0 3px 0;" onfocus="this.style.left='0'" onblur="this.style.left='-9999px'">Skip to main content</a>
+<div class="top-bar"></div>
+<div class="a11y-bar">
+  <span style="color:rgba(250,248,243,0.6); font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.06em;">Display</span>
+  <button type="button" id="textSmaller" aria-label="Decrease text size">A&minus;</button>
+  <button type="button" id="textReset" aria-label="Reset text size">A</button>
+  <button type="button" id="textLarger" aria-label="Increase text size">A+</button>
+  <button type="button" id="contrastToggle" aria-pressed="false">High Contrast</button>
+</div>
+
+<header class="site-header">
+  <a href="index.html" class="wordmark"><span>VALOR</span><span class="amp">&amp;</span><span>SERENITY</span></a>
+  <nav class="primary-nav" aria-label="Primary">
+    <a href="about.html">Our Story</a>
+    <a href="index.html#how-it-works">How It Works</a>
+    <a href="story-assist.html">Story Assist</a>
+    <a href="index.html#preview">Examples</a>
+    <a href="partners.html" class="current">For Partners</a>
+  </nav>
+  <a href="start.html" class="btn btn-primary">Start a Tribute</a>
+</header>
+
+<main id="main-content">
+
+<section class="partner-hero">
+  <div class="inner">
+    <div class="rule"></div>
+    <p class="eyebrow">For Hospice and Funeral Home Partners</p>
+    <h2>A Real Answer to a Requirement You Already Have</h2>
+    <p class="body-copy" style="max-width:640px; margin:0 auto;">Medicare-certified hospices are required to provide bereavement follow-up for up to thirteen months after a death. Most of that is fulfilled with a phone call schedule or a mailed pamphlet. This is something families would actually want to sit with, offered at no cost to your organization, and no cost to the families you serve.</p>
+  </div>
+</section>
+
+<section>
+  <div class="inner" style="max-width: 780px;">
+    <div class="step-mini">
+      <p class="step-mini-num">01</p>
+      <p>You get a simple link and a printed card with a QR code, nothing to install, nothing to log into.</p>
+    </div>
+    <div class="step-mini">
+      <p class="step-mini-num">02</p>
+      <p>Your staff hand it to a family at the moment aftercare conversations already happen. No training required, no new workflow to learn.</p>
+    </div>
+    <div class="step-mini">
+      <p class="step-mini-num">03</p>
+      <p>The family builds their own tribute, on their own time, guided step by step. Your organization's part ends at the handoff.</p>
+    </div>
+  </div>
+</section>
+
+<section style="background: var(--bone-warm);">
+  <div class="inner">
+    <div class="compliance-box">
+      <h3>On Compliance, Stated Plainly</h3>
+      <p>We do not pay hospices, funeral homes, or any healthcare provider for referring families to us, and we never will. There is no per-referral fee, no commission, and no arrangement tied to individual patients. This is intentional, not an oversight, referral payments to a Medicare-certified hospice can raise real Anti-Kickback Statute concerns, and we built this partnership to avoid that question entirely rather than navigate around it.</p>
+      <p>What we offer instead is either a straightforward goodwill relationship, your organization gets a genuinely good resource to offer, at no cost, full stop, or a flat annual arrangement for a co-branded version offered uniformly to every family you serve, priced as a standard service fee, never tied to referral volume or outcomes.</p>
+      <p class="fine">We are not a law firm, and this is not legal advice. Any organization considering a formal partnership should have its own compliance or legal counsel review the arrangement, we're glad to answer questions plainly along the way.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="inner" style="max-width: 900px;">
+    <div class="rule"></div>
+    <p class="eyebrow">Two Paths</p>
+    <div class="path-grid">
+      <div class="path-card">
+        <h3>Hospices</h3>
+        <p>A goodwill referral relationship. No payment in either direction, ever. Your organization gets a real, thoughtful aftercare resource to offer as part of the follow-up you're already required to provide.</p>
+      </div>
+      <div class="path-card">
+        <h3>Funeral Homes</h3>
+        <p>The same goodwill option is always available, and since funeral homes aren't regulated the same way hospices are, there's more room to discuss a co-branded arrangement if that's of interest. We'll always tell you plainly which conversation we're having.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="background: var(--aubergine-deep);">
+  <div class="inner">
+    <p class="eyebrow" style="color: var(--copper);">Why This Exists</p>
+    <h2 style="color: var(--bone);">Not Built to Maximize Profit</h2>
+    <p class="body-copy" style="color: var(--bone-warm); max-width:620px; margin:0 auto;">A basic tribute is free for every family, and it always will be. What keeps that promise standing is Story Assist, families who choose that extra help fund the free tribute for the next family who can't pay for anything at all. Partnering with us costs your organization nothing and asks nothing in return beyond helping the families you already care for.</p>
+    <div class="cta-row" data-reveal style="margin-top:32px;">
+      <a href="mailto:partners@valorandserenity.com" class="btn btn-primary">Request Partner Info</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<script>
+(function(){
+  try {
+    var sizeKey = 'vs_text_scale';
+    var root = document.documentElement;
+    function applyScale(s){ root.style.fontSize = s + 'px'; try{localStorage.setItem(sizeKey, s);}catch(e){} }
+    var current = parseInt(localStorage.getItem(sizeKey)) || 16;
+    applyScale(current);
+    document.getElementById('textSmaller').addEventListener('click', function(){ current = Math.max(13, current-1); applyScale(current); });
+    document.getElementById('textReset').addEventListener('click', function(){ current = 16; applyScale(current); });
+    document.getElementById('textLarger').addEventListener('click', function(){ current = Math.min(22, current+1); applyScale(current); });
+    var contrastKey = 'vs_high_contrast';
+    var cbtn = document.getElementById('contrastToggle');
+    function setContrast(on){
+      document.body.classList.toggle('high-contrast', on);
+      cbtn.setAttribute('aria-pressed', on ? 'true' : 'false');
+      try { localStorage.setItem(contrastKey, on ? '1' : '0'); } catch(e){}
+    }
+    cbtn.addEventListener('click', function(){ setContrast(!document.body.classList.contains('high-contrast')); });
+    setContrast(localStorage.getItem(contrastKey) === '1');
+  } catch(e) {}
+})();
+</script>
+</body></html>

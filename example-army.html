@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Example Tribute: Army Theme | Valor & Serenity</title>
+<meta name="description" content="An illustrative example of a Army-themed tribute page on Valor & Serenity. Not a real person.">
+<link rel="canonical" href="https://valorandserenity.com/example-army.html">
+<meta name="robots" content="noindex">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Lato:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bone: #FAF8F3;
+    --bone-warm: #F0E9DC;
+    --bone-deep: #E1D5C0;
+    --bone-line: #ECE3D3;
+    --bone-line-2: #E7DCC7;
+    --ink: #1D1C1B;
+    --aubergine: #69545F;
+    --aubergine-deep: #29212B;
+    --copper: #B66F4A;
+    --copper-deep: #8B4E30;
+    --copper-text: #9C5C3A;
+    --tan-muted: #9C8A6E;
+    --branch-dark-1: #1C1C1C;
+    --branch-dark-2: #050505;
+    --rule-h: 2px; --rule-w: 32px; --section-pad: 92px; --radius-base: 3px; --reveal-dist: 22px; --reveal-dur: .8s; --reveal-ease: ease; --heading-transform: none; --heading-tracking: normal;
+    --font-display: 'Cinzel', serif;
+    --font-body: 'Lato', sans-serif;
+  }
+  /* Branch themes: structure, not just color */
+  body[data-theme="marine-corps"] { --copper: #A0182A; --copper-deep: #7c1220; --copper-text: #7c1220; --aubergine-deep: #1C1C1C; --rule-h: 4px; --rule-w: 56px; --section-pad: 90px; --radius-base: 0px; --reveal-dist: 16px; --reveal-dur: .45s; --reveal-ease: ease-out; --heading-transform: uppercase; --heading-tracking: 0.02em; }
+  body[data-theme="marine-corps"] .cover-motif { width: 84px; height: 20px; background: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 84 20'%3E%3Cpath d='M6 16L42 4L78 16' stroke='%23A0182A' stroke-width='5' fill='none' stroke-linecap='square'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: center; }
+  body[data-theme="navy"] { --copper: #9C8737; --copper-deep: #786829; --copper-text: #786829; --aubergine-deep: #00205B; --rule-h: 1px; --rule-w: 64px; --section-pad: 170px; --radius-base: 4px; --reveal-dist: 30px; --reveal-dur: 1.3s; --reveal-ease: ease; }
+  body[data-theme="navy"] .horizon-motif { display: block; }
+  body[data-theme="navy"] .cover-motif { width: 90px; height: 22px; background: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 90 22'%3E%3Ccircle cx='45' cy='6' r='3' stroke='%239C8737' stroke-width='1.6' fill='none'/%3E%3Cline x1='45' y1='9' x2='45' y2='19' stroke='%239C8737' stroke-width='1.6'/%3E%3Cline x1='38' y1='12' x2='52' y2='12' stroke='%239C8737' stroke-width='1.6'/%3E%3Cpath d='M45 19c-5 0-8-2-9-6' stroke='%239C8737' stroke-width='1.6' fill='none' stroke-linecap='round'/%3E%3Cpath d='M45 19c5 0 8-2 9-6' stroke='%239C8737' stroke-width='1.6' fill='none' stroke-linecap='round'/%3E%3Cline x1='2' y1='12' x2='34' y2='12' stroke='%239C8737' stroke-width='1.2'/%3E%3Cline x1='56' y1='12' x2='88' y2='12' stroke='%239C8737' stroke-width='1.2'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: center; }
+  body[data-theme="army"] { --copper: #A8842A; --copper-deep: #816321; --copper-text: #816321; --aubergine-deep: #1C1C1C; --rule-h: 5px; --rule-w: 72px; --section-pad: 108px; --radius-base: 0px; --reveal-dist: 20px; --reveal-dur: .6s; --reveal-ease: ease; --heading-transform: uppercase; --heading-tracking: 0.03em; }
+  body[data-theme="army"] .cover-motif { width: 90px; height: 20px; background: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 90 20'%3E%3Cg stroke='%23A8842A' stroke-width='1.8' stroke-linecap='round'%3E%3Cline x1='16' y1='6' x2='16' y2='14'/%3E%3Cline x1='12' y1='10' x2='20' y2='10'/%3E%3Cline x1='13' y1='7' x2='19' y2='13'/%3E%3Cline x1='13' y1='13' x2='19' y2='7'/%3E%3Cline x1='45' y1='6' x2='45' y2='14'/%3E%3Cline x1='41' y1='10' x2='49' y2='10'/%3E%3Cline x1='42' y1='7' x2='48' y2='13'/%3E%3Cline x1='42' y1='13' x2='48' y2='7'/%3E%3Cline x1='74' y1='6' x2='74' y2='14'/%3E%3Cline x1='70' y1='10' x2='78' y2='10'/%3E%3Cline x1='71' y1='7' x2='77' y2='13'/%3E%3Cline x1='71' y1='13' x2='77' y2='7'/%3E%3C/g%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: center; }
+  body[data-theme="army"] .gallery-item, body[data-theme="army"] .gallery-item:nth-child(even) { flex-direction: row; border-top: 1px solid var(--bone-deep); padding-top: 40px; }
+  body[data-theme="army"] .gallery-item:first-child { border-top: none; padding-top: 0; }
+  body[data-theme="army"] .timeline-entry { border-left: 3px solid var(--bone-deep); padding-left: 24px; margin-left: -27px; }
+  body[data-theme="air-force"] { --copper: #2F6FA8; --copper-deep: #24567F; --copper-text: #24567F; --aubergine-deep: #00308F; --rule-h: 1.5px; --rule-w: 40px; --section-pad: 150px; --radius-base: 6px; --reveal-dist: 44px; --reveal-dur: 1s; --reveal-ease: cubic-bezier(0.16,1,0.3,1); --heading-tracking: 0.03em; }
+  body[data-theme="air-force"] .cover-motif { width: 90px; height: 20px; background: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 90 20'%3E%3Cpath d='M2 16C18 16 24 3 45 3C66 3 72 16 88 16' stroke='%232F6FA8' stroke-width='1.8' fill='none' stroke-linecap='round'/%3E%3Cpath d='M14 16C24 16 28 8 45 8C62 8 66 16 76 16' stroke='%232F6FA8' stroke-width='1.4' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: center; }
+  body[data-theme="coast-guard"] { --copper: #CE1126; --copper-deep: #a10d1e; --copper-text: #a10d1e; --aubergine-deep: #003087; --rule-h: 3px; --rule-w: 48px; --section-pad: 120px; --radius-base: 3px; --reveal-dist: 24px; --reveal-dur: .75s; --reveal-ease: ease; }
+  body[data-theme="coast-guard"] .cover-motif { width: 90px; height: 14px; background: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 90 14'%3E%3Cpath d='M0 7c7-9 14-9 22.5 0s15.5 9 22.5 0 15-9 22.5 0 15.5 9 22.5 0' stroke='%23CE1126' stroke-width='2.2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: center; }
+    body[data-theme="space-force"] { --copper: #6C6F76; --copper-deep: #52555B; --copper-text: #52555B; --aubergine-deep: #1C1E22; --rule-h: 1px; --rule-w: 24px; --section-pad: 140px; --radius-base: 0px; --reveal-dist: 18px; --reveal-dur: .9s; --reveal-ease: ease; --heading-tracking: 0.08em; }
+  body[data-theme="space-force"] .eyebrow, body[data-theme="space-force"] .story-assist-tag, body[data-theme="space-force"] .timeline-context-label { letter-spacing: 0.18em; }
+  body[data-theme="space-force"] .cover-motif { width: 90px; height: 20px; background: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 90 20'%3E%3Cellipse cx='45' cy='11' rx='40' ry='7' stroke='%236C6F76' stroke-width='1.2' fill='none'/%3E%3Ccircle cx='83' cy='7' r='2.4' fill='%236C6F76'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: center; }
+  body[data-theme="flag"] { --copper: #B31942; --copper-deep: #8f0f30; --copper-text: #B31942; --aubergine-deep: #0A3161; --rule-h: 3px; --rule-w: 60px; --section-pad: 130px; --radius-base: 2px; --reveal-dist: 26px; --reveal-dur: .8s; --reveal-ease: ease-in-out; --heading-transform: uppercase; --heading-tracking: 0.04em; }
+  body[data-theme="flag"] .cover-motif { width: 90px; height: 20px; background: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 90 20'%3E%3Cg fill='%23B31942'%3E%3Cpath transform='translate(18,10)' d='M0 -7L1.6 -2.2L6.7 -2.2L2.6 0.8L4.1 5.7L0 2.7L-4.1 5.7L-2.6 0.8L-6.7 -2.2L-1.6 -2.2Z'/%3E%3Cpath transform='translate(45,10)' d='M0 -7L1.6 -2.2L6.7 -2.2L2.6 0.8L4.1 5.7L0 2.7L-4.1 5.7L-2.6 0.8L-6.7 -2.2L-1.6 -2.2Z'/%3E%3Cpath transform='translate(72,10)' d='M0 -7L1.6 -2.2L6.7 -2.2L2.6 0.8L4.1 5.7L0 2.7L-4.1 5.7L-2.6 0.8L-6.7 -2.2L-1.6 -2.2Z'/%3E%3C/g%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: center; }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--bone); color: var(--ink); font-family: var(--font-body); -webkit-font-smoothing: antialiased; }
+  a { color: var(--copper-text); text-decoration: none; }
+  a:hover { color: var(--aubergine-deep); text-decoration: underline; }
+  img { max-width: 100%; display: block; }
+  .top-bar { height: 4px; width: 100%; background: var(--copper); }
+  .site-header { position: sticky; top: 0; z-index: 50; background: var(--bone); border-bottom: 1px solid rgba(29,28,27,0.09); display: flex; align-items: center; justify-content: space-between; padding: 20px clamp(24px,5vw,64px); gap: 28px; }
+  .wordmark { font-family: var(--font-display); font-size: 19px; font-weight: 600; letter-spacing: 0.1em; color: var(--ink); display: flex; align-items: baseline; gap: 7px; white-space: nowrap; }
+  .wordmark .amp { color: var(--copper); }
+  .primary-nav { display: flex; align-items: center; gap: 36px; }
+  .primary-nav a { color: var(--ink); font-weight: 600; font-size: 15px; }
+  .primary-nav a:hover { color: var(--copper-text); text-decoration: none; }
+  .btn { display: inline-block; font-family: var(--font-body); font-weight: 700; font-size: 15px; padding: 15px 30px; border-radius: 2px; letter-spacing: 0.01em; border: none; cursor: pointer; }
+  .btn-primary { background: var(--copper); color: var(--bone); }
+  .btn-primary:hover { background: var(--copper-deep); color: var(--bone); text-decoration: none; }
+  @media (max-width: 760px) { .primary-nav { display: none !important; } }
+
+  .illustrative-bar { background: var(--ink); color: var(--bone); text-align: center; padding: 10px 20px; font-family: var(--font-body); font-size: 12.5px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+
+  .cover { background: var(--bone); }
+  .cover-portrait { position: relative; width: 100%; height: 52vh; min-height: 340px; max-height: 520px; overflow: hidden; background-image: repeating-linear-gradient(45deg, var(--bone-warm), var(--bone-warm) 12px, var(--bone-deep) 12px, var(--bone-deep) 24px); display: flex; align-items: center; justify-content: center; }
+  .cover-portrait span { font-family: var(--font-body); font-size: 12.5px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--aubergine); background: var(--bone-warm); padding: 10px 18px; border-radius: 3px; }
+  .cover-plaque { max-width: 600px; margin: 0 auto; text-align: center; padding: 48px 24px 56px; }
+  .cover-branch-line { font-family: var(--font-body); font-size: 13px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--copper-text); margin: 0 0 16px; }
+  .cover-name { font-size: clamp(30px,4.4vw,46px); margin: 0 0 10px; }
+  .cover-dates { font-family: var(--font-body); font-size: 14.5px; color: var(--aubergine); margin: 0 0 22px; }
+  .cover-sentence { font-family: var(--font-display); font-style: italic; font-size: 18px; font-weight: 400; color: var(--aubergine-deep); line-height: 1.6; margin: 22px 0 0; }
+  @media (max-width: 640px) { .cover-portrait { height: 40vh; min-height: 260px; } }
+  .theme-invite-text { font-family: var(--font-display); font-style: italic; font-size: 16px; font-weight: 400; color: var(--aubergine); line-height: 1.7; max-width: 460px; margin: 0 auto 14px; }
+  .theme-invite-note { font-family: var(--font-body); font-style: italic; font-size: 12px; color: var(--tan-muted); margin: 0; letter-spacing: 0.04em; text-transform: uppercase; }
+
+  section.example-section { padding: var(--section-pad, 92px) clamp(24px,5vw,64px); }
+  .example-inner { max-width: 720px; margin: 0 auto; text-align: center; }
+  .rule { width: var(--rule-w, 32px); height: var(--rule-h, 2px); background: var(--copper); margin: 0 auto 20px; }
+  .cover-motif { width: var(--rule-w, 32px); height: var(--rule-h, 2px); background: var(--copper); margin: 24px auto 0; }
+  .eyebrow { font-size: 13px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--copper-text); margin: 0 0 18px; text-align: center; }
+  h1, h2 { text-transform: var(--heading-transform, none); letter-spacing: var(--heading-tracking, normal); }
+  h2 { font-family: var(--font-display); font-size: clamp(26px,3.2vw,38px); font-weight: 500; color: var(--ink); margin: 0 0 20px; text-align: center; line-height: 1.25; }
+  .section-lede { font-size: 16px; color: var(--aubergine); text-align: center; max-width: 540px; margin: 0 auto; line-height: 1.65; }
+
+  #example-about { background: var(--bone-warm); }
+  .placeholder-photo { width: 100%; max-width: 320px; aspect-ratio: 4/5; margin: 44px auto 0; border-radius: var(--radius-base, 4px); background-image: repeating-linear-gradient(45deg, var(--bone), var(--bone) 10px, var(--bone-deep) 10px, var(--bone-deep) 20px); display: flex; align-items: center; justify-content: center; }
+  .placeholder-photo span { font-family: var(--font-body); font-size: 12.5px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--aubergine); background: var(--bone-warm); padding: 8px 14px; border-radius: 3px; }
+  .placeholder-note { font-style: italic; font-size: 14px; color: var(--aubergine); margin: 40px auto 0; max-width: 520px; line-height: 1.7; }
+
+  .readings-search-input { width: 100%; padding: 14px 18px; border: 1px solid var(--bone-deep); border-radius: 24px; background: var(--bone); font-family: var(--font-body); font-size: 15px; color: var(--ink); margin: 40px 0 24px; }
+  .readings-search-input::placeholder { color: var(--tan-muted); }
+  .readings-results { display: flex; flex-direction: column; gap: 16px; text-align: left; }
+  .reading-result { background: var(--bone); border-radius: var(--radius-base, 4px); padding: 24px 28px; }
+  .reading-result-source { font-family: var(--font-body); font-size: 11.5px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--copper-text); margin: 0 0 10px; }
+  .reading-result-text { font-family: var(--font-display); font-style: italic; font-size: 15px; color: var(--ink); line-height: 1.7; margin: 0; }
+  .own-words-block { margin-top: 32px; text-align: left; }
+  .own-words-label { font-family: var(--font-body); font-size: 13px; font-weight: 700; color: var(--aubergine); margin: 0 0 10px; }
+  .own-words-textarea { width: 100%; min-height: 90px; border: 1px solid var(--bone-deep); border-radius: 6px; background: var(--bone); font-family: var(--font-body); font-size: 15px; color: var(--ink); padding: 14px 16px; resize: vertical; }
+  .own-words-textarea::placeholder { color: var(--tan-muted); font-style: italic; }
+
+  #example-audio { background: var(--bone-warm); }
+  .audio-dropdown-wrap { max-width: 480px; margin: 40px auto 0; text-align: left; }
+  .audio-select { width: 100%; padding: 13px 16px; border: 1px solid var(--bone-deep); border-radius: 6px; background: var(--bone); font-family: var(--font-body); font-size: 14.5px; color: var(--ink); margin-bottom: 18px; }
+  .audio-player-row { display: flex; align-items: center; gap: 16px; background: var(--bone); border: 1px solid var(--bone-deep); border-radius: var(--radius-base, 6px); padding: 18px 22px; }
+  .audio-play-btn { width: 46px; height: 46px; border-radius: 50%; border: none; background: var(--copper); color: var(--bone); flex-shrink: 0; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+  .audio-play-btn svg { width: 18px; height: 18px; }
+  .audio-play-btn:hover:not([disabled]) { background: var(--copper-deep); }
+  .audio-play-btn[disabled] { background: var(--bone-deep); color: var(--tan-muted); cursor: not-allowed; }
+  .audio-meta-title { font-family: var(--font-body); font-weight: 700; font-size: 14.5px; color: var(--ink); margin: 0 0 4px; }
+  .audio-meta-note { font-family: var(--font-body); font-style: italic; font-size: 12px; color: var(--tan-muted); margin: 0; }
+  .audio-opt-in-note { font-size: 12.5px; color: var(--tan-muted); text-align: center; margin: 16px 0 0; }
+
+  .example-crosslinks { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px 22px; padding: 30px clamp(24px,5vw,64px); background: var(--bone); border-top: 1px solid var(--bone-deep); border-bottom: 1px solid var(--bone-deep); }
+  .example-crosslinks a { font-family: var(--font-body); font-size: 13px; font-weight: 700; color: var(--aubergine); }
+  .example-crosslinks a.current { color: var(--copper-text); text-decoration: underline; }
+
+  #example-cta { text-align: center; }
+  #example-cta p { font-size: 16px; color: var(--aubergine); margin: 0 0 24px; }
+
+  footer { background: var(--aubergine); padding: 96px clamp(24px,5vw,64px) 0; }
+  .footer-quote-wrap { max-width: 760px; margin: 0 auto; text-align: center; padding: 0 24px 72px; }
+  .footer-quote { font-family: var(--font-display); font-size: clamp(20px,2.2vw,26px); font-weight: 500; color: var(--bone); line-height: 1.55; margin: 0; }
+  .footer-cols { max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 64px; justify-content: space-between; padding-bottom: 64px; }
+  .footer-brand { flex: 1 1 280px; max-width: 340px; }
+  .footer-brand .wordmark { color: var(--bone); font-size: 18px; margin-bottom: 14px; }
+  .footer-brand .tagline { font-style: italic; font-size: 15px; color: var(--bone-warm); margin: 0; line-height: 1.6; }
+  .footer-groups { display: flex; gap: 64px; flex-wrap: wrap; }
+  .footer-group-title { font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--copper); margin-bottom: 18px; }
+  .footer-links { display: flex; flex-direction: column; gap: 12px; list-style: none; margin: 0; padding: 0; }
+  .footer-links a { color: var(--bone-warm); font-size: 15px; }
+  .footer-links a:hover { color: var(--bone); }
+  .footer-bottom { max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between; padding: 24px 0; border-top: 1px solid rgba(250,248,243,0.15); }
+  .footer-bottom span { font-size: 13px; color: rgba(240,233,220,0.7); }
+
+  [data-reveal] { transition: opacity var(--reveal-dur, .8s) var(--reveal-ease, ease), transform var(--reveal-dur, .8s) var(--reveal-ease, ease); }
+  [data-reveal].reveal-pending { opacity: 0; transform: translateY(var(--reveal-dist, 22px)); }
+  [data-reveal].in-view { opacity: 1; transform: translateY(0); }
+  .example-motif { width: 34px; height: auto; color: rgba(250,248,243,0.55); margin-bottom: 18px; display: block; }
+  .example-founding { font-size: 13.5px; font-style: italic; color: rgba(250,248,243,0.68); margin: 0 0 18px; }
+  .horizon-motif { display: none; width: 100%; height: 1px; background: linear-gradient(to right, transparent, var(--copper), transparent); position: relative; margin: 0; }
+  .horizon-motif::after { content: ''; position: absolute; top: -3px; left: 50%; transform: translateX(-50%); width: 7px; height: 7px; border-radius: 50%; background: var(--copper); }
+  .theme-pill { font: inherit; font-style: normal; font-weight: 700; color: var(--aubergine); background: none; border: none; border-bottom: 1px dotted var(--aubergine); padding: 0 1px; cursor: pointer; }
+  .theme-pill:hover { color: var(--copper-text); border-bottom-color: var(--copper-text); }
+  .theme-pill[aria-pressed="true"] { color: var(--copper-text); border-bottom: 1px solid var(--copper-text); }
+
+  .a11y-bar { display: flex; align-items: center; justify-content: center; gap: 18px; flex-wrap: wrap; background: var(--ink); padding: 10px 20px; }
+  .a11y-bar button { background: none; border: 1px solid rgba(250,248,243,0.4); color: var(--bone); font-family: var(--font-body); font-size: 12.5px; font-weight: 700; padding: 6px 12px; border-radius: 3px; cursor: pointer; }
+  .a11y-bar button:hover, .a11y-bar button:focus-visible, .a11y-bar button[aria-pressed="true"] { background: var(--copper); border-color: var(--copper); }
+  a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible { outline: 2px solid var(--copper-text); outline-offset: 2px; }
+  body.high-contrast { --bone: #FFFFFF; --bone-warm: #FFFFFF; --bone-deep: #CCCCCC; --ink: #000000; --aubergine: #000000; --aubergine-deep: #000000; --copper: #7a3d18; --copper-deep: #5c2d12; --copper-text: #7a3d18; --tan-muted: #000000; }
+</style>
+</head>
+<body data-theme="army">
+<a href="#main-content" style="position:absolute; left:-9999px; top:0; z-index:100; background:var(--copper); color:var(--bone); padding:12px 20px; font-family:var(--font-body); font-weight:700; font-size:14px; border-radius:0 0 3px 0;" onfocus="this.style.left='0'" onblur="this.style.left='-9999px'">Skip to main content</a>
+
+<div class="top-bar"></div>
+<div class="a11y-bar">
+  <span style="color:rgba(250,248,243,0.6); font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.06em;">Display</span>
+  <button type="button" id="textSmaller" aria-label="Decrease text size">A&minus;</button>
+  <button type="button" id="textReset" aria-label="Reset text size">A</button>
+  <button type="button" id="textLarger" aria-label="Increase text size">A+</button>
+  <button type="button" id="contrastToggle" aria-pressed="false">High Contrast</button>
+</div>
+
+
+<header class="site-header">
+  <a href="index.html" class="wordmark"><span>VALOR</span><span class="amp">&amp;</span><span>SERENITY</span></a>
+  <nav class="primary-nav" aria-label="Primary">
+    <a href="about.html">Our Story</a>
+    <a href="index.html#how-it-works">How It Works</a>
+    <a href="story-assist.html">Story Assist</a>
+    <a href="example-marine-corps.html">Examples</a>
+    <a href="index.html#partners">For Partners</a>
+  </nav>
+  <a href="index.html#start" class="btn btn-primary">Start a Tribute</a>
+</header>
+
+<main id="main-content">
+
+<section class="cover" aria-label="Example tribute cover">
+  <div class="cover-portrait"><span>Portrait &middot; Families Add Their Own</span></div>
+  <div class="cover-plaque">
+    <p class="cover-branch-line">United States Army &middot; [ Years of Service ]</p>
+    <h1 class="cover-name">John Doe</h1>
+    <p class="cover-dates">[ Birth Year ] &ndash; [ Passing Year ]</p>
+    <div class="cover-motif"></div>
+    <p class="cover-sentence">Beloved husband, father, and Soldier.</p>
+  </div>
+</section>
+
+
+
+<section id="example-about">
+  <div class="example-inner">
+    <div class="rule"></div>
+    <p class="eyebrow">Their Story</p>
+    <h2>This Is Where Their Story Would Go</h2>
+    <p class="section-lede">A family's own words about their life, their service, and the people who loved them. Guided, one prompt at a time.</p>
+    <div class="placeholder-photo" data-reveal><span>Family Photo. Add Your Own.</span></div>
+    <p class="placeholder-note">No official crests or seals are used in this theme. Families add their own photos and keepsakes, the same way Mike's family did.</p>
+  </div>
+</section>
+
+<div class="horizon-motif"></div>
+
+<section id="theme-invitation" aria-label="View this example in another theme">
+  <div class="example-inner theme-invite-inner" id="themeToggleRow">
+    <p class="theme-invite-text">This example is shown here in <button type="button" class="theme-pill" data-theme-value="army" aria-pressed="true">Army</button> colors. It can also be viewed in <button type="button" class="theme-pill" data-theme-value="default" aria-pressed="false">Default</button>, <button type="button" class="theme-pill" data-theme-value="marine-corps" aria-pressed="false">Marine Corps</button>, <button type="button" class="theme-pill" data-theme-value="navy" aria-pressed="false">Navy</button>, <button type="button" class="theme-pill" data-theme-value="air-force" aria-pressed="false">Air Force</button>, <button type="button" class="theme-pill" data-theme-value="coast-guard" aria-pressed="false">Coast Guard</button>, or <button type="button" class="theme-pill" data-theme-value="space-force" aria-pressed="false">Space Force</button>, or <button type="button" class="theme-pill" data-theme-value="flag" aria-pressed="false">American Flag</button>.</p>
+    <p class="theme-invite-note">Illustrative Example. Not a Real Person.</p>
+  </div>
+</section>
+
+<section id="example-readings">
+  <div class="example-inner">
+    <div class="rule"></div>
+    <p class="eyebrow">In Their Own Words</p>
+    <h2>Readings</h2>
+    <p class="section-lede">Add a poem, a passage, or your own words. Looking for scripture? Search public-domain translations built right in. Free, and never required.</p>
+
+    <input type="text" class="readings-search-input" placeholder="Search readings by title, theme, or a few words..." aria-label="Search readings" data-reveal>
+    <div class="readings-results" data-reveal>
+      <div class="reading-result">
+        <p class="reading-result-source">Psalm 23:1&ndash;4 &middot; King James Version &middot; Public Domain</p>
+        <p class="reading-result-text">"The Lord is my shepherd; I shall not want. He maketh me to lie down in green pastures... Yea, though I walk through the valley of the shadow of death, I will fear no evil: for thou art with me."</p>
+      </div>
+      <div class="reading-result">
+        <p class="reading-result-source">Ecclesiastes 3:1&ndash;2 &middot; Douay-Rheims &middot; Public Domain</p>
+        <p class="reading-result-text">"All things have their season, and in their times all things pass under heaven. A time to be born, and a time to die."</p>
+      </div>
+    </div>
+
+    <div class="own-words-block" data-reveal>
+      <p class="own-words-label">Or Add Your Own Words</p>
+      <textarea class="own-words-textarea" placeholder="A favorite quote, a line from a letter, or something only your family would recognize..." aria-label="Add your own words"></textarea>
+    </div>
+  </div>
+</section>
+
+<section id="example-audio">
+  <div class="example-inner">
+    <div class="rule"></div>
+    <p class="eyebrow">Optional, Opt-In</p>
+    <h2>Service Song</h2>
+    <p class="section-lede">A family can choose to add a recording to their page. Nothing plays automatically. A visitor always chooses to press play.</p>
+
+    <div class="audio-dropdown-wrap" data-reveal>
+      <select class="audio-select" id="audioSelect">
+        <option value="https://commons.wikimedia.org/wiki/Special:FilePath/Army_goes_rolling_along.ogg" data-title="The Army Goes Rolling Along" data-attrib="U.S. Army Band &middot; Public Domain &middot; via Wikimedia Commons">The Army Goes Rolling Along: U.S. Army Band</option>
+        <option value="https://commons.wikimedia.org/wiki/Special:FilePath/Taps.ogg" data-title="Taps" data-attrib="Traditional bugle call &middot; Public Domain">Taps</option>
+      </select>
+      <div class="audio-player-row">
+        <button class="audio-play-btn" id="audioPlayBtn" type="button" aria-label="Play">
+          <svg id="audioPlayIcon" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"></path></svg>
+        </button>
+        <div>
+          <p class="audio-meta-title" id="audioMetaTitle">The Army Goes Rolling Along</p>
+          <p class="audio-meta-note" id="audioMetaNote">U.S. Army Band &middot; Public Domain &middot; via Wikimedia Commons</p>
+        </div>
+      </div>
+      <audio id="audioEl" preload="none"></audio>
+      <p class="audio-opt-in-note">Sourced from verified public-domain collections (U.S. military bands, Library of Congress, Wikimedia Commons). Never autoplays.</p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<div class="example-crosslinks">
+  <a href="mike-mesarch.html">Major Mike Mesarch (Real Example)</a>
+  <a href="example-marine-corps.html">Marine Corps</a>
+  <a href="example-navy.html">Navy</a>
+  <a href="example-army.html" class="current">Army</a>
+  <a href="example-air-force.html">Air Force</a>
+  <a href="example-coast-guard.html">Coast Guard</a>
+  <a href="example-space-force.html">Space Force</a>
+  <a href="example-flag.html">American Flag</a>
+</div>
+
+<section id="example-cta" class="example-section">
+  <div class="example-inner">
+    <p>Every family's tribute takes its own shape. Yours will hold your story, not this one.</p>
+    <a href="index.html#start" class="btn btn-primary">Start Your Tribute</a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-quote-wrap">
+    <div class="rule"></div>
+    <p class="footer-quote">No veteran's story should be lost to time, and no family should have to preserve it alone.</p>
+  </div>
+  <div class="footer-cols">
+    <div class="footer-brand">
+      <div class="wordmark"><span>VALOR</span><span class="amp">&amp;</span><span>SERENITY</span></div>
+      <p class="tagline">Built to honor. Built to last.</p>
+      <p style="font-size:13px; color:var(--bone-warm); line-height:1.6; margin:14px 0 0;">Chad Corriveau<br>1835 S Centre City Pkwy, Ste A #5026<br>Escondido, CA 92025<br>Based in San Diego County</p>
+    </div>
+    <div class="footer-groups">
+      <div>
+        <div class="footer-group-title">For Families</div>
+        <ul class="footer-links">
+          <li><a href="index.html#start">Start a Tribute</a></li>
+          <li><a href="index.html#how-it-works">How It Works</a></li>
+          <li><a href="mike-mesarch.html">Example Page</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-group-title">Partners &amp; Contact</div>
+        <ul class="footer-links">
+          <li><a href="index.html#partners">Partner Info</a></li>
+          <li><a href="mailto:hello@valorandserenity.com">Contact Us</a></li>
+          <li><a href="tel:+17603004555">760-300-4555</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2026 Valor &amp; Serenity.</span>
+    <span>For veterans and the families who love them.</span>
+    <span>Built by <a href="https://thinkroot.io" style="color:inherit;">ThinkRoot</a></span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  try {
+    var reveals = document.querySelectorAll('[data-reveal]');
+    if ('IntersectionObserver' in window && reveals.length) {
+      reveals.forEach(function(el){ el.classList.add('reveal-pending'); });
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          if (entry.isIntersecting) { entry.target.classList.add('in-view'); io.unobserve(entry.target); }
+        });
+      }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+      reveals.forEach(function(el){ io.observe(el); });
+    }
+  } catch (e) {}
+
+  try {
+    var sel = document.getElementById('audioSelect');
+    var btn = document.getElementById('audioPlayBtn');
+    var icon = document.getElementById('audioPlayIcon');
+    var audioEl = document.getElementById('audioEl');
+    var titleEl = document.getElementById('audioMetaTitle');
+    var noteEl = document.getElementById('audioMetaNote');
+    var playing = false;
+    var PLAY_PATH = 'M8 5v14l11-7z';
+    var PAUSE_PATH = '<rect x="6" y="5" width="4" height="14"></rect><rect x="14" y="5" width="4" height="14"></rect>';
+    function loadSelected(){
+      var opt = sel.options[sel.selectedIndex];
+      titleEl.textContent = opt.getAttribute('data-title');
+      noteEl.textContent = opt.getAttribute('data-attrib');
+      audioEl.src = opt.value;
+      playing = false;
+      icon.innerHTML = '<path d="' + PLAY_PATH + '"></path>';
+      btn.disabled = false;
+    }
+    if (sel && btn && audioEl) {
+      sel.addEventListener('change', loadSelected);
+      audioEl.addEventListener('error', function(){
+        noteEl.textContent = 'Recording unavailable right now \u2014 source link may need to be verified.';
+        btn.disabled = true;
+      });
+      audioEl.addEventListener('ended', function(){ playing = false; icon.innerHTML = '<path d="' + PLAY_PATH + '"></path>'; });
+      btn.addEventListener('click', function(){
+        if (!playing) {
+          audioEl.play().then(function(){ playing = true; icon.innerHTML = PAUSE_PATH; }).catch(function(){
+            noteEl.textContent = 'Recording unavailable right now \u2014 source link may need to be verified.';
+            btn.disabled = true;
+          });
+        } else {
+          audioEl.pause(); playing = false; icon.innerHTML = '<path d="' + PLAY_PATH + '"></path>';
+        }
+      });
+      loadSelected();
+    }
+  } catch (e) {}
+
+  try {
+    var themePills = document.querySelectorAll('.theme-pill');
+    function applyTheme(name){
+      if (name === 'default') { document.body.removeAttribute('data-theme'); }
+      else { document.body.setAttribute('data-theme', name); }
+      themePills.forEach(function(p){ p.setAttribute('aria-pressed', p.getAttribute('data-theme-value') === name ? 'true' : 'false'); });
+    }
+    themePills.forEach(function(p){ p.addEventListener('click', function(){ applyTheme(p.getAttribute('data-theme-value')); }); });
+    applyTheme(document.body.getAttribute('data-theme') || 'default');
+  } catch (e) {}
+
+  try {
+    var root = document.documentElement;
+    var STEP = 0.0625, MIN = 0.85, MAX = 1.4;
+    var sizeKey = 'vs_text_scale';
+    function getScale(){ var v = parseFloat(localStorage.getItem(sizeKey)); return isNaN(v) ? 1 : v; }
+    function setScale(v){ v = Math.max(MIN, Math.min(MAX, v)); root.style.fontSize = (v * 100) + '%'; try { localStorage.setItem(sizeKey, v); } catch(e){} }
+    document.getElementById('textSmaller').addEventListener('click', function(){ setScale(getScale() - STEP); });
+    document.getElementById('textLarger').addEventListener('click', function(){ setScale(getScale() + STEP); });
+    document.getElementById('textReset').addEventListener('click', function(){ setScale(1); });
+    setScale(getScale());
+    var contrastKey = 'vs_high_contrast';
+    var cbtn = document.getElementById('contrastToggle');
+    function setContrast(on){
+      document.body.classList.toggle('high-contrast', on);
+      cbtn.setAttribute('aria-pressed', on ? 'true' : 'false');
+      try { localStorage.setItem(contrastKey, on ? '1' : '0'); } catch(e){}
+    }
+    cbtn.addEventListener('click', function(){ setContrast(!document.body.classList.contains('high-contrast')); });
+    setContrast(localStorage.getItem(contrastKey) === '1');
+  } catch(e) {}
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Our Story: Valor & Serenity</title>
+<meta name="description" content="Why a veteran and his wife, a hospice care professional, built Valor & Serenity. The story of the stepfather, Major Mike Mesarch, who started it all.">
+<link rel="canonical" href="https://valorandserenity.com/about.html">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Valor & Serenity">
+<meta property="og:title" content="Our Story: Valor & Serenity">
+<meta property="og:description" content="Why a veteran and his wife, a hospice care professional, built Valor & Serenity. The story of the stepfather whose story started it all.">
+<meta property="og:url" content="https://valorandserenity.com/about.html">
+<meta property="og:image" content="https://valorandserenity.com/images/flag.jpg">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Our Story: Valor & Serenity">
+<meta name="twitter:description" content="Why a veteran and his wife, a hospice care professional, built Valor & Serenity. The story of the stepfather whose story started it all.">
+<meta name="twitter:image" content="https://valorandserenity.com/images/flag.jpg">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Lato:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bone: #FAF8F3;
+    --bone-warm: #F0E9DC;
+    --bone-deep: #E1D5C0;
+    --bone-line: #ECE3D3;
+    --bone-line-2: #E7DCC7;
+    --ink: #1D1C1B;
+    --aubergine: #69545F;
+    --aubergine-deep: #29212B;
+    --copper: #B66F4A;
+    --copper-deep: #8B4E30;
+    --copper-text: #9C5C3A;
+    --tan-muted: #9C8A6E;
+    --font-display: 'Cinzel', serif;
+    --font-body: 'Lato', sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bone);
+    color: var(--ink);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--copper-text); text-decoration: none; }
+  a:hover { color: var(--aubergine-deep); text-decoration: underline; }
+  img { max-width: 100%; display: block; }
+
+  .top-bar { height: 4px; width: 100%; background: var(--copper); }
+
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--bone);
+    border-bottom: 1px solid rgba(29,28,27,0.09);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px clamp(24px,5vw,64px);
+    gap: 28px;
+  }
+  .wordmark {
+    font-family: var(--font-display);
+    font-size: 19px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    color: var(--ink);
+    display: flex;
+    align-items: baseline;
+    gap: 7px;
+    white-space: nowrap;
+  }
+  .wordmark .amp { color: var(--copper); }
+  .primary-nav { display: flex; align-items: center; gap: 36px; }
+  .primary-nav a { color: var(--ink); font-weight: 600; font-size: 15px; }
+  .primary-nav a:hover { color: var(--copper-text); text-decoration: none; }
+
+  .btn {
+    display: inline-block;
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 15px;
+    padding: 15px 30px;
+    border-radius: 2px;
+    letter-spacing: 0.01em;
+    border: none;
+    cursor: pointer;
+  }
+  .btn-primary { background: var(--copper); color: var(--ink); }
+  .btn-primary:hover { background: var(--copper-deep); color: var(--bone); text-decoration: none; }
+
+  section { padding: 130px clamp(24px,5vw,64px); }
+  .section-inner { max-width: 1200px; margin: 0 auto; }
+  .rule { width: 32px; height: 2px; background: var(--copper); margin: 0 auto 20px; }
+  .eyebrow {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--copper-text);
+    margin: 0 0 18px;
+    text-align: center;
+  }
+  h2 {
+    font-family: var(--font-display);
+    font-size: clamp(28px,3.4vw,42px);
+    font-weight: 500;
+    color: var(--ink);
+    margin: 0 0 20px;
+    text-align: center;
+    line-height: 1.25;
+  }
+  .section-lede {
+    font-size: 17px;
+    color: var(--aubergine);
+    text-align: center;
+    max-width: 560px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  [data-reveal] { transition: opacity .8s ease, transform .8s ease; }
+  [data-reveal].reveal-pending { opacity: 0; transform: translateY(22px); }
+  [data-reveal].in-view { opacity: 1; transform: translateY(0); }
+
+  .letter-inner { max-width: 640px; margin: 0 auto; padding: 90px 24px 130px; }
+  .letter-kicker { font-family: var(--font-body); font-size: 13px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--copper-text); margin: 0 0 56px; text-align: center; }
+
+  .letter-copy p { font-family: var(--font-body); font-size: 18px; color: var(--ink); line-height: 1.85; margin: 0 0 42px; }
+  .letter-copy p:last-child { margin-bottom: 0; }
+  .letter-open { font-size: clamp(23px,3vw,29px); line-height: 1.6; font-weight: 400; }
+
+  .letter-turn-band { position: relative; margin: 16px calc(50% - 50vw) 80px; width: 100vw; padding: 108px 24px; overflow: hidden; background: var(--bone-warm); }
+  .letter-turn-band::before { content: ''; position: absolute; inset: 0; background-image: url('letter.png'); background-size: cover; background-position: center 32%; opacity: 0.26; filter: grayscale(1) sepia(0.12) contrast(1.08); mix-blend-mode: multiply; }
+  .letter-turn-band::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(250,248,243,0.1), rgba(240,233,220,0.5)); }
+  .letter-turn { position: relative; z-index: 1; font-family: var(--font-display); font-size: clamp(36px,6vw,60px); font-weight: 500; color: var(--aubergine-deep); line-height: 1.22; max-width: 800px; margin: 0 auto; text-align: center; }
+
+  .letter-photo-block { display: flex; flex-direction: column; align-items: center; margin: 0 0 84px; }
+  .letter-photo { width: 100%; max-width: 540px; aspect-ratio: 4/5; border-radius: 3px; overflow: hidden; box-shadow: 0 50px 90px -26px rgba(29,20,15,0.4), 0 14px 30px -12px rgba(29,20,15,0.28); transform: rotate(-1deg); }
+  .letter-photo img { width: 100%; height: 100%; object-fit: cover; }
+  .letter-photo-caption { font-family: var(--font-display); font-style: italic; font-size: 17px; color: var(--aubergine); margin: 26px 0 0; }
+
+  .letter-signature { font-family: var(--font-display); font-size: clamp(22px,2.6vw,27px); font-weight: 500; color: var(--copper-text); text-align: center; margin: 20px 0 0; }
+
+  .letter-footnote-wrap { margin-top: 76px; padding-top: 30px; border-top: 1px solid var(--bone-deep); }
+  .letter-footnote { font-style: italic; font-size: 13.5px; color: var(--aubergine); line-height: 1.7; margin: 0; text-align: center; }
+
+  @media (max-width: 600px) {
+    .letter-copy p { font-size: 16.5px; }
+    .letter-inner { padding-top: 64px; }
+    .letter-turn-band { padding: 76px 24px; }
+    .letter-photo { max-width: 100%; }
+  }
+
+  footer { background: var(--aubergine); padding: 96px clamp(24px,5vw,64px) 0; }
+  .footer-quote-wrap { max-width: 760px; margin: 0 auto; text-align: center; padding: 0 24px 72px; }
+  .footer-quote {
+    font-family: var(--font-display);
+    font-size: clamp(20px,2.2vw,26px);
+    font-weight: 500;
+    color: var(--bone);
+    line-height: 1.55;
+    margin: 0;
+  }
+  .footer-cols { max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 64px; justify-content: space-between; padding-bottom: 64px; }
+  .footer-brand { flex: 1 1 280px; max-width: 340px; }
+  .footer-brand .wordmark { color: var(--bone); font-size: 18px; margin-bottom: 14px; }
+  .footer-brand .tagline { font-style: italic; font-size: 15px; color: var(--bone-warm); margin: 0; line-height: 1.6; }
+  .footer-groups { display: flex; gap: 64px; flex-wrap: wrap; }
+  .footer-group-title { font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--copper); margin-bottom: 18px; }
+  .footer-links { display: flex; flex-direction: column; gap: 12px; list-style: none; margin: 0; padding: 0; }
+  .footer-links a { color: var(--bone-warm); font-size: 15px; }
+  .footer-links a:hover { color: var(--bone); }
+  .footer-bottom {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: space-between;
+    padding: 24px 0;
+    border-top: 1px solid rgba(250,248,243,0.15);
+  }
+  .footer-bottom span { font-size: 13px; color: rgba(240,233,220,0.7); }
+
+  @media (max-width: 760px) {
+    .primary-nav { display: none !important; }
+  }
+
+  #faq { background: var(--bone-warm); }
+  .faq-list { display: flex; flex-direction: column; gap: 40px; margin-top: 56px; }
+  .faq-question { font-family: var(--font-body); font-size: 17px; font-weight: 700; color: var(--ink); margin: 0 0 12px; text-align: left; }
+  .faq-answer { font-family: var(--font-body); font-size: 15.5px; color: var(--aubergine); line-height: 1.75; margin: 0; text-align: left; }
+
+  .a11y-bar { display: flex; align-items: center; justify-content: center; gap: 18px; flex-wrap: wrap; background: var(--ink); padding: 10px 20px; }
+  .a11y-bar button { background: none; border: 1px solid rgba(250,248,243,0.4); color: var(--bone); font-family: var(--font-body); font-size: 12.5px; font-weight: 700; padding: 6px 12px; border-radius: 3px; cursor: pointer; }
+  .a11y-bar button:hover, .a11y-bar button:focus-visible, .a11y-bar button[aria-pressed="true"] { background: var(--copper); border-color: var(--copper); }
+  a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible { outline: 2px solid var(--copper-text); outline-offset: 2px; }
+  body.high-contrast { --bone: #FFFFFF; --bone-warm: #FFFFFF; --bone-deep: #CCCCCC; --ink: #000000; --aubergine: #000000; --aubergine-deep: #000000; --copper: #7a3d18; --copper-deep: #5c2d12; --copper-text: #7a3d18; --tan-muted: #000000; }
+</style>
+</head>
+<body>
+<a href="#main-content" style="position:absolute; left:-9999px; top:0; z-index:100; background:var(--copper); color:var(--bone); padding:12px 20px; font-family:var(--font-body); font-weight:700; font-size:14px; border-radius:0 0 3px 0;" onfocus="this.style.left='0'" onblur="this.style.left='-9999px'">Skip to main content</a>
+
+<div class="top-bar"></div>
+<div class="a11y-bar">
+  <span style="color:rgba(250,248,243,0.6); font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.06em;">Display</span>
+  <button type="button" id="textSmaller" aria-label="Decrease text size">A&minus;</button>
+  <button type="button" id="textReset" aria-label="Reset text size">A</button>
+  <button type="button" id="textLarger" aria-label="Increase text size">A+</button>
+  <button type="button" id="contrastToggle" aria-pressed="false">High Contrast</button>
+</div>
+
+
+<header class="site-header">
+  <a href="index.html" class="wordmark"><span>VALOR</span><span class="amp">&amp;</span><span>SERENITY</span></a>
+  <nav class="primary-nav" aria-label="Primary">
+    <a href="about.html">Our Story</a>
+    <a href="index.html#how-it-works">How It Works</a>
+    <a href="story-assist.html">Story Assist</a>
+    <a href="index.html#preview">Examples</a>
+    <a href="index.html#partners">For Partners</a>
+  </nav>
+  <a href="index.html#start" class="btn btn-primary">Start a Tribute</a>
+</header>
+
+<main id="main-content">
+
+<section>
+  <div class="letter-inner">
+    <h1 class="letter-kicker">Our Story</h1>
+
+    <div class="letter-copy">
+      <p class="letter-open">I'm a Navy veteran. I served during Desert Shield. My wife has worked in hospice care for over a decade. Between the two of us, we've spent a lot of time around families trying to hold onto someone's story before it's gone.</p>
+
+      <p data-reveal>She sees it at work all the time. Families sitting with someone they love while there's still time, and not knowing how to ask the right questions, or where to put the answers once they get them.</p>
+
+      <p data-reveal>I work in tech. I kept thinking there had to be a better way to do this. Technology that's simple and seamless, so families can do it together instead of alone. Something that builds trust with every step, instead of asking you to hand over a story and hope it's handled right. Something that helps you find the small memories you thought you'd lost, and places them next to the bigger history of the time your loved one served in, so the whole picture comes together.</p>
+
+      <p data-reveal>I wanted it to feel good to use. Not heavy the whole way through. Something you'd actually want to sit down and do with your family, not something you dread.</p>
+    </div>
+
+    <div class="letter-turn-band" data-reveal>
+      <p class="letter-turn">The real reason, though, is simpler than any of that.</p>
+    </div>
+
+    <div class="letter-photo-block" data-reveal>
+      <div class="letter-photo">
+        <img src="mike-chad-boyhood.png" alt="Chad, as a teenager, with Mike Mesarch outdoors">
+      </div>
+      <p class="letter-photo-caption">Chad and Mike</p>
+    </div>
+
+    <div class="letter-copy">
+      <p data-reveal>My stepfather was Major Mike Mesarch. Mike was a true giver. We all love him so deeply. He served in the Army, then spent twenty more years at Job Corps helping young people find their footing. He taught me and my sons many things, the same way he taught so many other young people who came through his life. He was a great man, the kind who showed up, again and again, for people who needed it.</p>
+
+      <p data-reveal>I did not want that lost. I wanted a way to give that back to him. And I figured if I needed a place like this for my own family, other families probably needed one too.</p>
+    </div>
+
+    <p class="letter-signature" data-reveal>That's Valor &amp; Serenity.</p>
+
+    <div class="letter-footnote-wrap" data-reveal>
+      <p class="letter-footnote">My wife's work in hospice care informed this project; Valor &amp; Serenity is not affiliated with or endorsed by her employer.</p>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="section-inner" style="max-width:760px;">
+    <div class="rule"></div>
+    <p class="eyebrow">Questions</p>
+    <h2>A Few Things Families Ask</h2>
+
+    <div class="faq-list">
+      <div class="faq-item" data-reveal>
+        <h3 class="faq-question">Why does this exist? Isn't there already an official VA memorial?</h3>
+        <p class="faq-answer">Yes, and we think it's important. The VA's own Veterans Legacy Memorial is a real, valuable record. If your veteran has a page there, we'll gladly link to it from theirs here. But a record and a story aren't the same thing. Official systems are built to register facts. Service dates, resting place, rank. They aren't built to help you remember the sound of his laugh, or the story he told a hundred times at Thanksgiving, or what it meant that he came home from twenty years in the Army Reserve and spent twenty more helping young people find their way. That's the part we built. Not instead of the official record. Alongside it.</p>
+      </div>
+      <div class="faq-item" data-reveal>
+        <h3 class="faq-question">What happens to our information? Do you keep it, or use it for anything else?</h3>
+        <p class="faq-answer">Nothing you share here is used to train AI, ours or anyone else's. We don't sell your information, ever. If you use Story Assist, what you type is used only to help shape your own story, then discarded. You can export or delete everything, anytime. It's yours, not ours. Every public tribute is reviewed before it goes live, and you decide exactly who can see it. Just your family, a wider circle, or the whole Valor and Serenity community.</p>
+      </div>
+      <div class="faq-item" data-reveal>
+        <h3 class="faq-question">Is this really free?</h3>
+        <p class="faq-answer">Building a complete tribute is free, always. No card, no time limit. That includes every theme, the scripture and readings search, the service song player, and your own photos and recordings. If you'd like extra help writing it with Story Assist, or want a permanent home for it as it grows over the years with the Legacy Vault, those are small, optional additions. Cost should never be the reason a veteran's story goes untold. If it ever is, reach out and we'll work it out.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="footer-quote-wrap">
+    <div class="rule"></div>
+    <p class="footer-quote">No veteran's story should be lost to time, and no family should have to preserve it alone.</p>
+  </div>
+  <div class="footer-cols">
+    <div class="footer-brand">
+      <div class="wordmark"><span>VALOR</span><span class="amp">&amp;</span><span>SERENITY</span></div>
+      <p class="tagline">Built to honor. Built to last.</p>
+      <p style="font-size:13px; color:var(--bone-warm); line-height:1.6; margin:14px 0 0;">Chad Corriveau<br>1835 S Centre City Pkwy, Ste A #5026<br>Escondido, CA 92025<br>Based in San Diego County</p>
+    </div>
+    <div class="footer-groups">
+      <div>
+        <div class="footer-group-title">For Families</div>
+        <ul class="footer-links">
+          <li><a href="index.html#start">Start a Tribute</a></li>
+          <li><a href="index.html#how-it-works">How It Works</a></li>
+          <li><a href="index.html#preview">Example Page</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-group-title">Partners &amp; Contact</div>
+        <ul class="footer-links">
+          <li><a href="index.html#partners">Partner Info</a></li>
+          <li><a href="mailto:hello@valorandserenity.com">Contact Us</a></li>
+          <li><a href="mailto:valor.and.serenity@gmail.com">Questions? Reach out directly</a></li>
+          <li><a href="tel:+17603004555">760-300-4555</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2026 Valor &amp; Serenity.</span>
+    <span>For veterans and the families who love them.</span>
+    <span>Built by <a href="https://thinkroot.io" style="color:inherit;">ThinkRoot</a></span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  try {
+    var reveals = document.querySelectorAll('[data-reveal]');
+    if ('IntersectionObserver' in window && reveals.length) {
+      reveals.forEach(function(el){ el.classList.add('reveal-pending'); });
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in-view');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+      reveals.forEach(function(el){ io.observe(el); });
+    }
+  } catch (e) {}
+
+  try {
+    var root = document.documentElement;
+    var STEP = 0.0625, MIN = 0.85, MAX = 1.4;
+    var sizeKey = 'vs_text_scale';
+    function getScale(){ var v = parseFloat(localStorage.getItem(sizeKey)); return isNaN(v) ? 1 : v; }
+    function setScale(v){ v = Math.max(MIN, Math.min(MAX, v)); root.style.fontSize = (v * 100) + '%'; try { localStorage.setItem(sizeKey, v); } catch(e){} }
+    document.getElementById('textSmaller').addEventListener('click', function(){ setScale(getScale() - STEP); });
+    document.getElementById('textLarger').addEventListener('click', function(){ setScale(getScale() + STEP); });
+    document.getElementById('textReset').addEventListener('click', function(){ setScale(1); });
+    setScale(getScale());
+    var contrastKey = 'vs_high_contrast';
+    var cbtn = document.getElementById('contrastToggle');
+    function setContrast(on){
+      document.body.classList.toggle('high-contrast', on);
+      cbtn.setAttribute('aria-pressed', on ? 'true' : 'false');
+      try { localStorage.setItem(contrastKey, on ? '1' : '0'); } catch(e){}
+    }
+    cbtn.addEventListener('click', function(){ setContrast(!document.body.classList.contains('high-contrast')); });
+    setContrast(localStorage.getItem(contrastKey) === '1');
+  } catch(e) {}
+})();
+</script>
+<script src="js/site.js" defer></script>
+</body>
+</html>

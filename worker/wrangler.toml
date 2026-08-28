@@ -1,0 +1,15 @@
+name = "valor-and-serenity-tribute-links"
+main = "src/index.js"
+compatibility_date = "2024-09-23"
+compatibility_flags = ["nodejs_compat"]
+
+# The real database_id must be created with
+# `wrangler d1 create valor-and-serenity-tributes` before this Worker is
+# actually deployed. The placeholder below is enough for local dev and for
+# the test suite, which runs against a real, ephemeral SQLite-backed D1
+# instance provisioned per test run, not a mock.
+[[d1_databases]]
+binding = "DB"
+database_name = "valor-and-serenity-tributes"
+database_id = "REPLACE_WITH_REAL_D1_DATABASE_ID"
+migrations_dir = "migrations"

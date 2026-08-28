@@ -1,0 +1,38 @@
+# Valor & Serenity
+
+> A free, guided way to build a lasting online tribute for a veteran and the family who loved them. Not affiliated with the Department of Veterans Affairs, the Veterans Legacy Memorial, We Honor Veterans, or any hospice organization.
+
+## About
+
+- [Our Story](https://valorandserenity.com/about.html): Why this exists, the founder's own family story, and the site's FAQ on how it differs from official VA resources.
+- [How It Works](https://valorandserenity.com/index.html#how-it-works): The 8-step guided process for building a tribute, free and always.
+- [Pricing](https://valorandserenity.com/pricing.html): Basic is free, always. Story Assist is $99 one time. The Legacy Vault is $19 a year. No per-referral payments are ever made to healthcare providers.
+
+## Story Assist
+
+- [What Story Assist Does](https://valorandserenity.com/story-assist.html): Guided memory-provoking questions, help shaping fragments into a finished story, and sourced historical context for major milestones like a birthday or wedding day.
+
+## A Real Example
+
+- [Major Mike Mesarch's Tribute](https://valorandserenity.com/mike-mesarch.html): A complete, real tribute built by the founder for his own stepfather, showing every feature in actual use, including Story Assist's historical context callouts.
+
+## For Organizations
+
+- [For Hospice and Funeral Home Partners](https://valorandserenity.com/partners.html): A free, goodwill referral partnership, states plainly that no per-referral payments are made, ever, to stay clear of Anti-Kickback Statute concerns for regulated healthcare providers.
+
+## For Families Navigating This Time
+
+- [Help for Families at This Time](https://valorandserenity.com/help-for-families.html): Plain, honest information on VA burial and survivor benefits, Veteran Service Officers, and Veteran Pinning Ceremonies. Not affiliated with the VA; always confirm current details at VA.gov.
+
+## Optional
+
+- [Marine Corps Theme Example](https://valorandserenity.com/example-marine-corps.html): Illustrative, not a real person.
+- [Navy Theme Example](https://valorandserenity.com/example-navy.html): Illustrative, not a real person.
+- [Army Theme Example](https://valorandserenity.com/example-army.html): Illustrative, not a real person.
+- [Air Force Theme Example](https://valorandserenity.com/example-air-force.html): Illustrative, not a real person.
+- [Coast Guard Theme Example](https://valorandserenity.com/example-coast-guard.html): Illustrative, not a real person.
+- [Space Force Theme Example](https://valorandserenity.com/example-space-force.html): Illustrative, not a real person.
+- [American Flag Theme Example](https://valorandserenity.com/example-flag.html): Illustrative, not a real person, not tied to a specific branch.
+- [Start a Tribute](https://valorandserenity.com/start.html): An early, illustrative preview of the guided tribute-builder experience.
+
+Note: this file governs discovery and retrieval only. It does not grant permission for AI training on this site's content, family stories, or photos. That permission is separately and explicitly withheld in robots.txt.
