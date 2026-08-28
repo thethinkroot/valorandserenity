@@ -866,7 +866,7 @@
       living: {
         step1Question: "What is their name?",
         step1Sub: "Their full name, exactly as they'd want it known.",
-        datesHelper: "When were they born, and when did they pass, if this changes later, you can always update it.",
+        datesHelper: "When were they born? Your best guess is fine.",
         step4Question: "Tell their story",
         prompt1: "What do you want people to know about him?",
         prompt3: "What did he care about most?"
@@ -890,7 +890,7 @@
 
     document.getElementById('resource-card-passed').classList.toggle('hidden', subjectMode !== 'passed');
     document.getElementById('resource-card-living').classList.toggle('hidden', subjectMode !== 'living');
-    document.getElementById('passing-field-row').classList.toggle('hidden', subjectMode === 'self');
+    document.getElementById('passing-field-row').classList.toggle('hidden', subjectMode !== 'passed');
   }
   applySubjectCopy();
 
@@ -915,6 +915,9 @@
       if (subjectMode === 'self') {
         datesText = born;
         writtenText = 'Written in ' + new Date().getFullYear();
+      } else if (subjectMode === 'living') {
+        datesText = born;
+        writtenText = 'Last entry: ' + new Date().getFullYear();
       } else {
         const passed = document.getElementById('input-passing').value || 'Passed';
         datesText = born + ' – ' + passed;
