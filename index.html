@@ -29,9 +29,22 @@
   @keyframes vsFadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
 
   .top-bar { height: 4px; width: 100%; background: var(--copper); }
-  .a11y-bar { display: flex; align-items: center; justify-content: center; gap: 18px; flex-wrap: wrap; background: var(--ink); padding: 10px 20px; }
-  .a11y-bar button { background: none; border: 1px solid rgba(250,248,243,0.4); color: var(--bone); font-family: var(--font-body); font-size: 12.5px; font-weight: 700; padding: 6px 12px; border-radius: 3px; cursor: pointer; }
-  .a11y-bar button:hover, .a11y-bar button:focus-visible, .a11y-bar button[aria-pressed="true"] { background: var(--copper); border-color: var(--copper); }
+  .a11y-bar { display: flex; align-items: center; justify-content: center; gap: 24px; flex-wrap: wrap; background: var(--aubergine-deep); padding: 12px 20px; }
+  .a11y-group { display: flex; align-items: center; gap: 12px; }
+  .a11y-group-label { font-family: var(--font-body); font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: rgba(250,248,243,0.6); white-space: nowrap; }
+  .a11y-divider { width: 1px; height: 26px; background: rgba(250,248,243,0.2); }
+  .text-size-control { display: flex; align-items: center; background: rgba(250,248,243,0.08); border: 1px solid rgba(250,248,243,0.25); border-radius: 9px; padding: 3px; gap: 2px; }
+  .text-size-option { display: flex; align-items: center; justify-content: center; min-width: 42px; min-height: 38px; background: none; border: none; border-radius: 6px; cursor: pointer; color: var(--bone); }
+  .text-size-option .ts-glyph { font-family: var(--font-display); line-height: 1; display: block; }
+  .text-size-option:hover, .text-size-option:focus-visible { background: rgba(250,248,243,0.14); }
+  .text-size-option[aria-pressed="true"] { background: var(--copper); }
+  .text-size-option[aria-pressed="true"] .ts-glyph { color: var(--ink); }
+  .contrast-switch { display: flex; align-items: center; background: none; border: none; padding: 6px 4px; cursor: pointer; }
+  .contrast-switch-track { display: block; width: 44px; height: 25px; border-radius: 999px; background: rgba(250,248,243,0.2); border: 1px solid rgba(250,248,243,0.3); position: relative; transition: background .2s ease, border-color .2s ease; }
+  .contrast-switch-knob { position: absolute; top: 2px; left: 2px; width: 19px; height: 19px; border-radius: 50%; background: var(--bone); transition: transform .2s ease; box-shadow: 0 1px 3px rgba(0,0,0,0.35); }
+  .contrast-switch[aria-checked="true"] .contrast-switch-track { background: var(--copper); border-color: var(--copper); }
+  .contrast-switch[aria-checked="true"] .contrast-switch-knob { transform: translateX(19px); }
+  .contrast-switch:focus-visible .contrast-switch-track { outline: 2px solid var(--copper-text); outline-offset: 2px; }
   body.high-contrast { --bone: #FFFFFF; --bone-warm: #FFFFFF; --bone-deep: #CCCCCC; --ink: #000000; --aubergine: #000000; --aubergine-deep: #000000; --copper: #7a3d18; --copper-deep: #5c2d12; --copper-text: #7a3d18; --tan-muted: #000000; }
 
   .site-header { position: sticky; top: 0; z-index: 50; background: var(--bone); border-bottom: 1px solid rgba(29,28,27,0.09); display: flex; align-items: center; justify-content: space-between; padding: 20px clamp(24px,5vw,64px); gap: 28px; }
@@ -199,11 +212,22 @@
 <a href="#main-content" style="position:absolute; left:-9999px; top:0; z-index:100; background:var(--copper); color:var(--bone); padding:12px 20px; font-family:var(--font-body); font-weight:700; font-size:14px; border-radius:0 0 3px 0;" onfocus="this.style.left='0'" onblur="this.style.left='-9999px'">Skip to main content</a>
 <div class="top-bar"></div>
 <div class="a11y-bar">
-  <span style="color:rgba(250,248,243,0.6); font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.06em;">Display</span>
-  <button type="button" id="textSmaller" aria-label="Decrease text size">A&minus;</button>
-  <button type="button" id="textReset" aria-label="Reset text size">A</button>
-  <button type="button" id="textLarger" aria-label="Increase text size">A+</button>
-  <button type="button" id="contrastToggle" aria-pressed="false">High Contrast</button>
+  <div class="a11y-group">
+    <span class="a11y-group-label">Text Size</span>
+    <div class="text-size-control" id="textSizeControl">
+      <button type="button" class="text-size-option" data-zoom="1" aria-pressed="true" aria-label="Default text size"><span class="ts-glyph" style="font-size:13px;">A</span></button>
+      <button type="button" class="text-size-option" data-zoom="1.15" aria-pressed="false" aria-label="Larger text size"><span class="ts-glyph" style="font-size:16px;">A</span></button>
+      <button type="button" class="text-size-option" data-zoom="1.3" aria-pressed="false" aria-label="Even larger text size"><span class="ts-glyph" style="font-size:19px;">A</span></button>
+      <button type="button" class="text-size-option" data-zoom="1.45" aria-pressed="false" aria-label="Largest text size"><span class="ts-glyph" style="font-size:22px;">A</span></button>
+    </div>
+  </div>
+  <div class="a11y-divider" aria-hidden="true"></div>
+  <div class="a11y-group">
+    <span class="a11y-group-label">High Contrast</span>
+    <button type="button" class="contrast-switch" id="contrastToggle" role="switch" aria-checked="false" aria-label="High contrast">
+      <span class="contrast-switch-track"><span class="contrast-switch-knob"></span></span>
+    </button>
+  </div>
 </div>
 
 <header class="site-header">
@@ -490,21 +514,27 @@
     });
   } catch (e) {}
 
-  try {
+    try {
     var root = document.documentElement;
-    var STEP = 0.0625, MIN = 0.85, MAX = 1.4;
-    var sizeKey = 'vs_text_scale';
-    function getScale(){ var v = parseFloat(localStorage.getItem(sizeKey)); return isNaN(v) ? 1 : v; }
-    function setScale(v){ v = Math.max(MIN, Math.min(MAX, v)); root.style.fontSize = (v * 100) + '%'; try { localStorage.setItem(sizeKey, v); } catch(e){} }
-    document.getElementById('textSmaller').addEventListener('click', function(){ setScale(getScale() - STEP); });
-    document.getElementById('textLarger').addEventListener('click', function(){ setScale(getScale() + STEP); });
-    document.getElementById('textReset').addEventListener('click', function(){ setScale(1); });
-    setScale(getScale());
+    var zoomKey = 'vs_text_zoom';
+    var sizeOptions = Array.prototype.slice.call(document.querySelectorAll('.text-size-option'));
+    function applyZoom(z){
+      root.style.zoom = z;
+      try { localStorage.setItem(zoomKey, z); } catch(e){}
+      sizeOptions.forEach(function(btn){
+        btn.setAttribute('aria-pressed', String(parseFloat(btn.getAttribute('data-zoom')) === parseFloat(z)));
+      });
+    }
+    sizeOptions.forEach(function(btn){
+      btn.addEventListener('click', function(){ applyZoom(btn.getAttribute('data-zoom')); });
+    });
+    var storedZoom = parseFloat(localStorage.getItem(zoomKey));
+    applyZoom(isNaN(storedZoom) ? 1 : storedZoom);
     var contrastKey = 'vs_high_contrast';
     var cbtn = document.getElementById('contrastToggle');
     function setContrast(on){
       document.body.classList.toggle('high-contrast', on);
-      cbtn.setAttribute('aria-pressed', on ? 'true' : 'false');
+      cbtn.setAttribute('aria-checked', String(on));
       try { localStorage.setItem(contrastKey, on ? '1' : '0'); } catch(e){}
     }
     cbtn.addEventListener('click', function(){ setContrast(!document.body.classList.contains('high-contrast')); });
