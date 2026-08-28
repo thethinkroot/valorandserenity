@@ -621,7 +621,7 @@
       <span class="done"></span><span class="current"></span><span></span><span></span><span></span><span></span><span></span><span></span>
     </div>
     <h1 class="eyebrow-title">Step 2 of 8</h1>
-    <h2 class="question">What branch did they serve in?</h2>
+    <h2 class="question" id="step2a-question">What branch did they serve in?</h2>
     <div class="tile-grid">
       <button class="choice-tile" data-branch="Army" data-action="select-branch">Army</button>
       <button class="choice-tile" data-branch="Navy" data-action="select-branch">Navy</button>
@@ -640,7 +640,7 @@
       <span class="done"></span><span class="current"></span><span></span><span></span><span></span><span></span><span></span><span></span>
     </div>
     <h1 class="eyebrow-title">Step 2 of 8</h1>
-    <h2 class="question">What years did they serve?</h2>
+    <h2 class="question" id="step2b-question">What years did they serve?</h2>
     <p class="helper">Not sure of exact dates? Your best guess is fine. You can always fix it later.</p>
     <div class="date-row">
       <div class="field-row"><input type="text" id="input-svc-from" placeholder="From" data-check="year" data-note="svc-year-note"></div>
@@ -669,7 +669,7 @@
       <p class="sa-ack" id="photo-prompt-link" style="margin-top:-8px;">Not sure what to write? <a href="#" data-action="show-photo-prompt" style="color:var(--copper);">Get a gentle prompt</a>.</p>
       <div class="sa-context hidden" id="photo-prompt-box" style="margin-top:12px;">
         <strong>A gentle prompt</strong>
-        <span>Where was this taken, and who's with him?</span>
+        <span id="photo-prompt-text">Where was this taken, and who's with him?</span>
       </div>
     </div>
     <div id="video-option" class="hidden" style="margin-top: 20px;">
@@ -694,7 +694,7 @@
       <strong>Here's a real example of what Story Assist can find</strong>
       <span style="filter: blur(4px); user-select: none; display:block; margin-top:4px;">Did you know? Harry Truman was president. That same year, the Rochester Royals beat the Knicks for the NBA title, and the country's best-selling song was "How High the Moon."</span>
     </div>
-    <p class="helper" style="font-size:14px; margin-top:10px;">This is a real example from another family's tribute, shown so you can see how it works. Your own veteran's story stays completely private until you choose to publish it.</p>
+    <p class="helper" style="font-size:14px; margin-top:10px;" id="step4choice-privacy-note">This is a real example from another family's tribute, shown so you can see how it works. Your own veteran's story stays completely private until you choose to publish it.</p>
     <p class="helper" style="font-size:15px; font-style:italic; text-align:center; margin-top:20px;">Most memorial pages only record what happened. This also shows you what the world was like when it happened, so more memories come back to you.</p>
     <button class="back-link" data-action="goto" data-arg="step3">Go back</button>
   </div>
@@ -727,7 +727,7 @@
       <span class="done"></span><span class="done"></span><span class="done"></span><span class="current"></span><span></span><span></span><span></span><span></span>
     </div>
     <h1 class="eyebrow-title">Step 4 of 8 · Getting some help</h1>
-    <div class="sa-message">What's one thing you remember him teaching you, that you can still hear him saying?</div>
+    <div class="sa-message" id="sa1-message">What's one thing you remember him teaching you, that you can still hear him saying?</div>
     <div class="field-row">
       <input type="text" placeholder="Type or tap the mic to speak" >
       <button class="mic-icon" data-action="mock-listen">🎤</button>
@@ -761,7 +761,7 @@
       <span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="current"></span><span></span><span></span><span></span>
     </div>
     <h1 class="eyebrow-title">Step 5 of 8</h1>
-    <h2 class="question">Did they receive any medals or honors?</h2>
+    <h2 class="question" id="step5-question">Did they receive any medals or honors?</h2>
     <div class="resource-card hidden" id="resource-card-living">
       <p>Has your hospice team talked with you about a Pinning Ceremony? It's a quiet moment many programs offer, a certificate and a flag pin, formally thanking a veteran for their service, often with family present. If it hasn't happened yet, it's worth asking about.</p>
       <a href="help-for-families.html#pinning-ceremony">Learn more &rarr;</a>
@@ -860,34 +860,62 @@
         step1Question: "What was their name?",
         step1Sub: "Their full name, exactly as they'd want it remembered.",
         datesHelper: "When were they born, and when did they pass, if you know?",
+        step2aQuestion: "What branch did they serve in?",
+        step2bQuestion: "What years did they serve?",
+        photoPrompt: "Where was this taken, and who's with him?",
         step4Question: "Tell their story",
+        privacyNote: "This is a real example from another family's tribute, shown so you can see how it works. Your own veteran's story stays completely private until you choose to publish it.",
         prompt1: "What do you want people to know about him?",
-        prompt3: "What did he care about most?"
+        prompt3: "What did he care about most?",
+        sa1Message: "What's one thing you remember him teaching you, that you can still hear him saying?",
+        step5Question: "Did they receive any medals or honors?",
+        finalThankYou: "It's live. Thank you for taking the time to do this for him."
       },
       living: {
         step1Question: "What is their name?",
         step1Sub: "Their full name, exactly as they'd want it known.",
         datesHelper: "When were they born? Your best guess is fine.",
+        step2aQuestion: "What branch did they serve in?",
+        step2bQuestion: "What years did they serve?",
+        photoPrompt: "Where was this taken, and who's with him?",
         step4Question: "Tell their story",
+        privacyNote: "This is a real example from another family's tribute, shown so you can see how it works. Your own veteran's story stays completely private until you choose to publish it.",
         prompt1: "What do you want people to know about him?",
-        prompt3: "What did he care about most?"
+        prompt3: "What did he care about most?",
+        sa1Message: "What's one thing you remember him teaching you, that you can still hear him saying?",
+        step5Question: "Did they receive any medals or honors?",
+        finalThankYou: "It's live. Thank you for taking the time to do this for him."
       },
       self: {
         step1Question: "What's your name?",
         step1Sub: "Your full name, exactly as you'd want it remembered.",
-        datesHelper: "Just the year is fine.",
+        datesHelper: "Add your birthday, exactly as you know it.",
+        step2aQuestion: "What branch did you serve in?",
+        step2bQuestion: "What years did you serve?",
+        photoPrompt: "Where was this taken, and who's with you?",
         step4Question: "Tell your story",
+        privacyNote: "This is a real example from another family's tribute, shown so you can see how it works. Your story stays completely private until you choose to publish it.",
         prompt1: "What do you want people to know about you?",
-        prompt3: "What do you care about most?"
+        prompt3: "What do you care about most?",
+        sa1Message: "What's one thing someone taught you, that you can still hear them saying?",
+        step5Question: "Did you receive any medals or honors?",
+        finalThankYou: "It's live. Thank you for taking the time to put this into words."
       }
     };
     var c = copy[subjectMode] || copy.passed;
     document.getElementById('step1-question').textContent = c.step1Question;
     document.getElementById('step1-sub').textContent = c.step1Sub;
     document.getElementById('step1-dates-helper').textContent = c.datesHelper;
+    document.getElementById('step2a-question').textContent = c.step2aQuestion;
+    document.getElementById('step2b-question').textContent = c.step2bQuestion;
+    document.getElementById('photo-prompt-text').textContent = c.photoPrompt;
     document.getElementById('step4choice-question').textContent = c.step4Question;
+    document.getElementById('step4choice-privacy-note').textContent = c.privacyNote;
     document.getElementById('prompt-1').textContent = c.prompt1;
     document.getElementById('prompt-3').textContent = c.prompt3;
+    document.getElementById('sa1-message').textContent = c.sa1Message;
+    document.getElementById('step5-question').textContent = c.step5Question;
+    document.getElementById('final-thankyou').textContent = c.finalThankYou;
 
     document.getElementById('resource-card-passed').classList.toggle('hidden', subjectMode !== 'passed');
     document.getElementById('resource-card-living').classList.toggle('hidden', subjectMode !== 'living');
@@ -1003,6 +1031,7 @@
     const val = input.value.trim();
     const note = document.getElementById(noteId);
     if (val === '') { note.classList.add('hidden'); return; }
+    if (input.id === 'input-birth' && subjectMode === 'self') { note.classList.add('hidden'); return; }
     const isPlausibleYear = /^\d{4}$/.test(val) && Number(val) >= 1900 && Number(val) <= 2026;
     note.classList.toggle('hidden', isPlausibleYear);
   }
@@ -1068,10 +1097,15 @@
     const birth = document.getElementById('input-birth').value.trim();
     const svcFrom = document.getElementById('input-svc-from').value.trim();
     const el = document.getElementById('context-text');
-    if (/^\d{4}$/.test(birth)) {
-      el.textContent = 'You mentioned he was born in ' + birth + '. We looked up what was happening in the world that year, who was president, what was on the radio. Does anything from that time sound familiar?';
-    } else if (/^\d{4}$/.test(svcFrom)) {
-      el.textContent = 'You mentioned his service began around ' + svcFrom + '. We looked up what his branch was doing in that era. Does anything from that time sound familiar?';
+    const wasBorn = subjectMode === 'self' ? 'you were born' : 'he was born';
+    const svcBegan = subjectMode === 'self' ? 'your service began' : 'his service began';
+    const svcBranch = subjectMode === 'self' ? 'your branch was doing' : 'his branch was doing';
+    const birthYearMatch = birth.match(/\d{4}/);
+    const svcFromYearMatch = svcFrom.match(/\d{4}/);
+    if (birthYearMatch) {
+      el.textContent = 'You mentioned ' + wasBorn + ' in ' + birthYearMatch[0] + '. We looked up what was happening in the world that year, who was president, what was on the radio. Does anything from that time sound familiar?';
+    } else if (svcFromYearMatch) {
+      el.textContent = 'You mentioned ' + svcBegan + ' around ' + svcFromYearMatch[0] + '. We looked up what ' + svcBranch + ' in that era. Does anything from that time sound familiar?';
     } else {
       el.textContent = 'Once you add a birth year or service date, we can show you what was happening in the world at that time, and ask if it sounds familiar.';
     }
