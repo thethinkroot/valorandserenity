@@ -522,13 +522,6 @@
   .tribute-card .dates { color: #C9B79A; margin-bottom: 20px; }
   .written-line { font-size: 13px; font-style: italic; color: #C9B79A; margin: -14px 0 20px; }
   .tribute-card .sentence { font-style: italic; font-family: var(--font-display); font-size: 19px; }
-  #final-thankyou {
-    margin-top: 28px;
-    color: var(--aubergine);
-    font-size: 17px;
-    opacity: 0;
-    animation: fadeInSlow 1.2s ease 1.8s forwards;
-  }
 
   .gentle-note {
     color: var(--copper);
@@ -853,24 +846,19 @@
     </div>
     <h1 class="eyebrow-title">Step 8 of 8</h1>
     <h2 class="question">One last step</h2>
-    <p class="helper">We'll send a quick email to confirm it's really you, then your tribute goes live.</p>
+    <p class="helper">We'll send a link to this email. Click it to publish your tribute, and use that same link anytime after to come back and make changes.</p>
     <div class="field-row">
-      <input type="email" id="input-confirm-email" placeholder="Your email address">
+      <input type="email" id="input-confirm-email" placeholder="Your email address" required>
     </div>
-    <button class="btn-primary" data-action="goto" data-arg="finalreveal">Send the confirmation</button>
+    <p class="gentle-note hidden" id="confirm-email-note">Please add your email so we can send the link.</p>
+    <button class="btn-primary" data-action="submit-email">Send the confirmation</button>
     <button class="back-link" data-action="goto" data-arg="step7">Go back</button>
   </div>
 
   <!-- FINAL REVEAL -->
   <div class="screen hidden" id="screen-finalreveal">
-    <div class="tribute-card">
-      <div class="branch-line" id="final-branch">United States Army</div>
-      <h1 id="final-name">Their Name</h1>
-      <div class="dates" id="final-dates">Born – Passed</div>
-      <p class="written-line hidden" id="final-written-line"></p>
-      <p class="sentence">Beloved husband, father, and Soldier.</p>
-    </div>
-    <p id="final-thankyou">It's live. Thank you for taking the time to do this for him.</p>
+    <h2 class="question" style="text-align:center;">Check your email</h2>
+    <p class="helper" style="text-align:center;">We've sent a link to <strong id="confirm-email-display">you</strong>. Click it to publish this tribute, and use that same link anytime to come back and make changes.</p>
     <details class="resource-card tip-callout hidden" id="resource-card-passed" style="text-align:left; margin-top:32px;">
       <summary>While you're here, a few practical things that might help</summary>
       <p>If you haven't already: locate their DD-214, order a few extra certified copies of the death certificate, and know that a Veteran Service Officer can help you navigate benefits at no cost. We've put together a fuller guide if it helps.</p>
@@ -909,7 +897,6 @@
         prompt3: "What did he care about most?",
         sa1Message: "What's one thing you remember him teaching you, that you can still hear him saying?",
         step5Question: "Did they receive any medals or honors?",
-        finalThankYou: "It's live. Thank you for taking the time to do this for him.",
         saExampleTip: "If you shared 1969, Story Assist might ask: \"That was the year of the moon landing. Does that ring a bell for him?\""
       },
       living: {
@@ -925,7 +912,6 @@
         prompt3: "What did he care about most?",
         sa1Message: "What's one thing you remember him teaching you, that you can still hear him saying?",
         step5Question: "Did they receive any medals or honors?",
-        finalThankYou: "It's live. Thank you for taking the time to do this for him.",
         saExampleTip: "If you shared 1969, Story Assist might ask: \"That was the year of the moon landing. Does that ring a bell for him?\""
       },
       self: {
@@ -941,7 +927,6 @@
         prompt3: "What do you care about most?",
         sa1Message: "What's one thing someone taught you, that you can still hear them saying?",
         step5Question: "Did you receive any medals or honors?",
-        finalThankYou: "It's live. Thank you for taking the time to put this into words.",
         saExampleTip: "If you shared 1969, Story Assist might ask: \"That was the year of the moon landing. Does that ring a bell for you?\""
       }
     };
@@ -958,7 +943,6 @@
     document.getElementById('prompt-3').textContent = c.prompt3;
     document.getElementById('sa1-message').textContent = c.sa1Message;
     document.getElementById('step5-question').textContent = c.step5Question;
-    document.getElementById('final-thankyou').textContent = c.finalThankYou;
     document.getElementById('sa-example-tip').textContent = c.saExampleTip;
 
     document.getElementById('resource-card-passed').classList.toggle('hidden', subjectMode !== 'passed');
@@ -984,10 +968,9 @@
       buildContextText();
     }
 
-    if (id === 'step7' || id === 'finalreveal') {
+    if (id === 'step7') {
       const name = document.getElementById('input-name').value || 'Their Name';
       const born = document.getElementById('input-birth').value || 'Born';
-      const branchLabel = 'United States ' + selectedBranch;
       let datesText, writtenText;
       if (subjectMode === 'self') {
         datesText = born;
@@ -1000,22 +983,32 @@
         datesText = born + ' – ' + passed;
         writtenText = '';
       }
-      if (id === 'step7') {
-        document.getElementById('preview-name').textContent = name;
-        document.getElementById('preview-dates').textContent = datesText;
-        const pw = document.getElementById('preview-written-line');
-        pw.textContent = writtenText;
-        pw.classList.toggle('hidden', !writtenText);
-        applyPreviewTheme(selectedBranch);
-      } else {
-        document.getElementById('final-name').textContent = name;
-        document.getElementById('final-dates').textContent = datesText;
-        document.getElementById('final-branch').textContent = branchLabel;
-        const fw = document.getElementById('final-written-line');
-        fw.textContent = writtenText;
-        fw.classList.toggle('hidden', !writtenText);
-      }
+      document.getElementById('preview-name').textContent = name;
+      document.getElementById('preview-dates').textContent = datesText;
+      const pw = document.getElementById('preview-written-line');
+      pw.textContent = writtenText;
+      pw.classList.toggle('hidden', !writtenText);
+      applyPreviewTheme(selectedBranch);
     }
+
+    if (id === 'finalreveal') {
+      const email = document.getElementById('input-confirm-email').value.trim();
+      document.getElementById('confirm-email-display').textContent = email;
+    }
+  }
+
+  function submitEmailConfirmation() {
+    const input = document.getElementById('input-confirm-email');
+    const note = document.getElementById('confirm-email-note');
+    const val = input.value.trim();
+    const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
+    if (!isValid) {
+      note.classList.remove('hidden');
+      input.focus();
+      return;
+    }
+    note.classList.add('hidden');
+    goTo('finalreveal');
   }
 
   function selectBranch(btn) {
@@ -1189,6 +1182,7 @@
       case 'add-honor': addHonor(); break;
       case 'show-invite-field': showInviteField(); break;
       case 'apply-preview-theme': applyPreviewTheme(arg); break;
+      case 'submit-email': submitEmailConfirmation(); break;
     }
   });
 
