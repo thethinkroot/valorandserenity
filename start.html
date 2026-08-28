@@ -434,6 +434,10 @@
   }
   .sa-context strong { display: block; font-family: var(--font-display); font-size: 13px; letter-spacing: 0.06em; margin-bottom: 8px; color: #E3C9A8; }
 
+  .resource-card { background: var(--bone-warm); border: 1px solid var(--bone-deep); border-radius: 10px; padding: 20px 22px; margin: 20px 0; }
+  .resource-card p { font-size: 14.5px; color: var(--ink); line-height: 1.65; margin: 0 0 10px; }
+  .resource-card a { font-weight: 700; color: var(--copper-text); }
+
   /* ---- Photo/upload mock ---- */
   .upload-box {
     border: 2px dashed #D8CFC0;
@@ -549,7 +553,22 @@
   <!-- OPENING STILLNESS -->
   <div class="screen" id="screen-opening">
     <p class="mission">No veteran's story should be lost to time, and no family should have to preserve it alone.</p>
-    <button class="btn-primary" id="opening-continue" data-action="goto" data-arg="entry">Begin</button>
+    <button class="btn-primary" id="opening-continue" data-action="goto" data-arg="subject">Begin</button>
+  </div>
+
+  <!-- SUBJECT: WHOSE STORY IS THIS -->
+  <div class="screen hidden" id="screen-subject">
+    <h1 class="eyebrow-title">Let's get started</h1>
+    <h2 class="question">Whose story is this?</h2>
+    <button class="choice-tile" data-action="select-subject" data-arg="self">I'm telling my own story
+      <span class="sub">In your own words, for the people you love.</span>
+    </button>
+    <button class="choice-tile" data-action="select-subject" data-arg="living">For a veteran who's still with us
+      <span class="sub">Their story, gathered now, together.</span>
+    </button>
+    <button class="choice-tile" data-action="select-subject" data-arg="passed">In memory of someone who has passed
+      <span class="sub">Preserving what they meant to everyone who knew them.</span>
+    </button>
   </div>
 
   <!-- ENTRY POINT -->
@@ -572,13 +591,13 @@
       <span class="current"></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
     </div>
     <h1 class="eyebrow-title">Step 1 of 8</h1>
-    <h2 class="question">What was their name?</h2>
-    <p class="helper">Their full name, exactly as they'd want it remembered.</p>
+    <h2 class="question" id="step1-question">What was their name?</h2>
+    <p class="helper" id="step1-sub">Their full name, exactly as they'd want it remembered.</p>
     <div class="field-row">
       <input type="text" id="input-name" placeholder="e.g. Michael Mesarch" >
       <button class="mic-icon" data-action="mock-listen">🎤</button>
     </div>
-    <p class="helper" style="margin-top:28px; margin-bottom:10px;">When were they born, and when did they pass, if you know?</p>
+    <p class="helper" style="margin-top:28px; margin-bottom:10px;" id="step1-dates-helper">When were they born, and when did they pass, if you know?</p>
     <div class="date-row">
       <div class="field-row">
         <input type="text" id="input-birth" placeholder="Born" data-check="year" data-note="birth-year-note">
@@ -588,6 +607,10 @@
       </div>
     </div>
     <p class="gentle-note hidden" id="birth-year-note">That doesn't look like a full year. Try something like 1951.</p>
+    <div class="resource-card hidden" id="resource-card-passed">
+      <p>If you haven't already: locate their DD-214, order a few extra certified copies of the death certificate, and know that a Veteran Service Officer can help you navigate benefits at no cost. We've put together a fuller guide if it helps.</p>
+      <a href="help-for-families.html">See the full guide &rarr;</a>
+    </div>
     <button class="btn-primary" data-action="goto" data-arg="step2a">Continue</button>
   </div>
 
@@ -661,7 +684,7 @@
       <span class="done"></span><span class="done"></span><span class="done"></span><span class="current"></span><span></span><span></span><span></span><span></span>
     </div>
     <h1 class="eyebrow-title">Step 4 of 8</h1>
-    <h2 class="question">Tell their story</h2>
+    <h2 class="question" id="step4choice-question">Tell their story</h2>
     <button class="choice-tile" data-action="goto" data-arg="step4write">Write it yourself</button>
     <button class="choice-tile" data-action="goto" data-arg="step4sa1">Get some help
       <span class="sub">Just asks a few gentle questions to jog your memory. Nothing is added that you don't say yourself.</span>
@@ -684,9 +707,9 @@
     <h2 class="question">In your own words</h2>
     <p class="sa-ack" id="write-prompt-link">Need a place to start? <a href="#" data-action="show-write-prompts" style="color:var(--copper);">See a few ideas</a>.</p>
     <div class="hidden" id="write-prompts-box" style="margin-bottom:16px;">
-      <button class="btn-secondary" style="margin-bottom:8px; text-align:left; font-weight:400;" data-action="insert-prompt">What do you want people to know about him?</button>
+      <button class="btn-secondary" id="prompt-1" style="margin-bottom:8px; text-align:left; font-weight:400;" data-action="insert-prompt">What do you want people to know about him?</button>
       <button class="btn-secondary" style="margin-bottom:8px; text-align:left; font-weight:400;" data-action="insert-prompt">What is a memory that still makes you smile?</button>
-      <button class="btn-secondary" style="text-align:left; font-weight:400;" data-action="insert-prompt">What did he care about most?</button>
+      <button class="btn-secondary" id="prompt-3" style="text-align:left; font-weight:400;" data-action="insert-prompt">What did he care about most?</button>
     </div>
     <div class="field-row">
       <textarea id="write-textarea" placeholder="Start writing..." ></textarea>
@@ -738,6 +761,10 @@
     </div>
     <h1 class="eyebrow-title">Step 5 of 8</h1>
     <h2 class="question">Did they receive any medals or honors?</h2>
+    <div class="resource-card hidden" id="resource-card-living">
+      <p>Has your hospice team talked with you about a Pinning Ceremony? It's a quiet moment many programs offer, a certificate and a flag pin, formally thanking a veteran for their service, often with family present. If it hasn't happened yet, it's worth asking about.</p>
+      <a href="help-for-families.html#pinning-ceremony">Learn more &rarr;</a>
+    </div>
     <button class="btn-secondary" style="margin-bottom:14px;" data-action="add-honor">+ Add one</button>
     <div id="honors-list"></div>
     <button class="choice-tile" style="margin-top: 6px;" data-action="goto" data-arg="step6">None, or not sure, and that's okay</button>
@@ -811,6 +838,53 @@
 <script>
   let selectedBranch = "Army";
   let honorCount = 0;
+  let subjectMode = "passed";
+
+  function selectSubject(mode) {
+    subjectMode = mode;
+    applySubjectCopy();
+    goTo('entry');
+  }
+
+  function applySubjectCopy() {
+    var copy = {
+      passed: {
+        step1Question: "What was their name?",
+        step1Sub: "Their full name, exactly as they'd want it remembered.",
+        datesHelper: "When were they born, and when did they pass, if you know?",
+        step4Question: "Tell their story",
+        prompt1: "What do you want people to know about him?",
+        prompt3: "What did he care about most?"
+      },
+      living: {
+        step1Question: "What is their name?",
+        step1Sub: "Their full name, exactly as they'd want it known.",
+        datesHelper: "When were they born, and when did they pass, if this changes later, you can always update it.",
+        step4Question: "Tell their story",
+        prompt1: "What do you want people to know about him?",
+        prompt3: "What did he care about most?"
+      },
+      self: {
+        step1Question: "What's your name?",
+        step1Sub: "Your full name, exactly as you'd want it remembered.",
+        datesHelper: "When were you born, and when did you pass, if this changes later, you can always update it.",
+        step4Question: "Tell your story",
+        prompt1: "What do you want people to know about you?",
+        prompt3: "What do you care about most?"
+      }
+    };
+    var c = copy[subjectMode] || copy.passed;
+    document.getElementById('step1-question').textContent = c.step1Question;
+    document.getElementById('step1-sub').textContent = c.step1Sub;
+    document.getElementById('step1-dates-helper').textContent = c.datesHelper;
+    document.getElementById('step4choice-question').textContent = c.step4Question;
+    document.getElementById('prompt-1').textContent = c.prompt1;
+    document.getElementById('prompt-3').textContent = c.prompt3;
+
+    document.getElementById('resource-card-passed').classList.toggle('hidden', subjectMode !== 'passed');
+    document.getElementById('resource-card-living').classList.toggle('hidden', subjectMode !== 'living');
+  }
+  applySubjectCopy();
 
   function goTo(id) {
     document.querySelectorAll('.screen').forEach(s => s.classList.add('hidden'));
@@ -995,6 +1069,7 @@
     var arg = el.getAttribute('data-arg');
     switch (action) {
       case 'goto': goTo(arg); break;
+      case 'select-subject': selectSubject(arg); break;
       case 'select-branch': selectBranch(el); break;
       case 'mock-listen': mockListen(el); break;
       case 'mock-upload': mockUpload(); break;
@@ -1027,6 +1102,7 @@
 </script>
 
 <script src="js/nav-toggle.js" defer></script>
+<script src="js/anchor-fix.js" defer></script>
 </body>
 </html>
 
