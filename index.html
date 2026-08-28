@@ -207,9 +207,9 @@
   .featured-tribute-label { display: inline-block; font-family: var(--font-body); font-weight: 700; font-size: 14.5px; color: var(--copper-text); letter-spacing: 0.03em; }
   .featured-card { display: flex; background: var(--bone); border-radius: 6px; overflow: hidden; box-shadow: 0 32px 64px -26px rgba(29,20,15,0.34); text-decoration: none; margin-bottom: 68px; border: 1.5px solid var(--copper); transition: transform .3s ease, box-shadow .3s ease; }
   .featured-card:hover { transform: translateY(-4px); box-shadow: 0 40px 76px -24px rgba(29,20,15,0.4); text-decoration: none; }
-  .featured-thumb { position: relative; flex: 0 0 44%; min-height: 260px; display: flex; align-items: flex-end; padding: 30px; }
+  .featured-thumb { position: relative; flex: 0 0 44%; min-height: 260px; overflow: hidden; }
+  .featured-thumb img { width: 100%; height: 100%; object-fit: cover; object-position: center 20%; display: block; }
   .featured-badge { position: absolute; top: 20px; left: 20px; background: var(--copper); color: var(--bone); font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; padding: 6px 12px; border-radius: 3px; }
-  .featured-thumb-label { font-family: var(--font-display); font-size: 30px; color: var(--bone); font-weight: 500; }
   .featured-info { padding: 36px 42px; display: flex; flex-direction: column; justify-content: center; }
   .featured-branch { font-family: var(--font-display); font-weight: 500; font-size: 27px; color: var(--ink); margin: 0 0 10px; }
   .featured-note { font-family: var(--font-body); font-size: 15.5px; color: var(--aubergine); margin: 0; line-height: 1.6; }
@@ -337,9 +337,9 @@
       <span class="featured-tribute-label">Here's a real one</span>
     </div>
     <a class="featured-card" href="mike-mesarch.html">
-      <div class="featured-thumb" style="background: var(--aubergine-deep);">
+      <div class="featured-thumb">
+        <img src="images/mike-and-grandson.png" alt="Major Mike Mesarch with his grandson">
         <span class="featured-badge">A Real Tribute</span>
-        <span class="featured-thumb-label">Default</span>
       </div>
       <div class="featured-info">
         <p class="featured-branch">Major Mike Mesarch</p>
