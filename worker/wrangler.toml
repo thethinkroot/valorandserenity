@@ -10,3 +10,15 @@ binding = "DB"
 database_name = "valorandserenity-tributes"
 database_id = "1a09bbc8-2d2b-446d-aad1-1d46ab6503e1"
 migrations_dir = "migrations"
+
+# Step 3's real photo storage (see src/photos.js). NOT YET CREATED for
+# real: this environment has no authenticated Cloudflare session
+# (`wrangler whoami` fails here), so this bucket only exists in Miniflare's
+# local simulation used by `npm test` and `wrangler dev`. Before deploying
+# for real, run:
+#   wrangler r2 bucket create valorandserenity-draft-photos
+# then run `wrangler deploy`. No bucket_id needs to change here first,
+# R2 buckets are referenced by name.
+[[r2_buckets]]
+binding = "PHOTOS"
+bucket_name = "valorandserenity-draft-photos"

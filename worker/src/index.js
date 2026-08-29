@@ -12,10 +12,21 @@ import {
   verifyPrivacyWord,
   InvalidVisibilityError,
 } from './tributes.js';
+import {
+  storePhoto,
+  fetchPhoto,
+  MAX_PHOTO_BYTES,
+  PhotoTooLargeError,
+  UnsupportedPhotoTypeError,
+} from './photos.js';
 
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
+
+    if (request.method === 'OPTIONS' && (url.pathname === '/photo' || url.pathname.startsWith('/photo/'))) {
+      return corsPreflightResponse(request);
+    }
 
     if (request.method === 'POST' && url.pathname === '/tribute') {
       return handleCreate(request, env);
@@ -30,9 +41,61 @@ export default {
       return handleGet(request, env, match[1]);
     }
 
+    if (request.method === 'POST' && url.pathname === '/photo') {
+      return handleUploadPhoto(request, env);
+    }
+
+    const photoMatch = url.pathname.match(/^\/photo\/([A-Za-z0-9_-]+)$/);
+    if (request.method === 'GET' && photoMatch) {
+      return handleGetPhoto(request, env, photoMatch[1]);
+    }
+
     return jsonResponse({ error: 'Not found' }, 404);
   },
 };
+
+// Draft photo uploads happen from the guided-flow page (a different
+// origin than this Worker), so real preflighted, cross-origin fetch()
+// calls need real CORS headers, not just a same-origin assumption.
+// Allowed: the real production domain (per README.md) and any localhost
+// port for local development testing. NOT included: a Cloudflare Pages
+// preview subdomain (*.pages.dev), because its exact project-name
+// pattern isn't confirmed anywhere in this repo, and guessing one here
+// would repeat exactly the mistake README.md already documents (a
+// fabricated media.valorandserenity.com that was never real). Add the
+// real preview pattern once the Pages project actually exists and its
+// domain is known, don't guess it.
+function isAllowedOrigin(origin) {
+  if (!origin) return false;
+  if (origin === 'https://valorandserenity.com' || origin === 'https://www.valorandserenity.com') return true;
+  if (/^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin)) return true;
+  return false;
+}
+
+function corsHeaders(request) {
+  const origin = request.headers.get('Origin');
+  if (!isAllowedOrigin(origin)) return {};
+  return {
+    'Access-Control-Allow-Origin': origin,
+    'Vary': 'Origin',
+  };
+}
+
+function corsPreflightResponse(request) {
+  const headers = corsHeaders(request);
+  if (!headers['Access-Control-Allow-Origin']) {
+    return new Response(null, { status: 403 });
+  }
+  return new Response(null, {
+    status: 204,
+    headers: {
+      ...headers,
+      'Access-Control-Allow-Methods': 'POST, GET, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type',
+      'Access-Control-Max-Age': '86400',
+    },
+  });
+}
 
 async function handleCreate(request, env) {
   let body;
@@ -85,10 +148,75 @@ function extractPrivacyWord(request) {
   return match ? decodeURIComponent(match[1]) : null;
 }
 
-function jsonResponse(body, status) {
+// Step 3's one real photo upload: the request body is the raw file bytes,
+// its Content-Type header is the photo's real MIME type (set by the
+// browser from the picked file, not chosen by the family). No form
+// fields, no JSON wrapper, nothing else in this pass.
+async function handleUploadPhoto(request, env) {
+  const cors = corsHeaders(request);
+  if (!cors['Access-Control-Allow-Origin']) {
+    return jsonResponse({ error: 'Origin not allowed' }, 403);
+  }
+
+  const contentType = request.headers.get('Content-Type') || '';
+  const contentLength = Number(request.headers.get('Content-Length') || 0);
+
+  if (contentLength > MAX_PHOTO_BYTES) {
+    return jsonResponse(
+      { error: "That photo's a little large for us right now. Could you try a smaller one, or a different photo?" },
+      413,
+      cors
+    );
+  }
+
+  const body = await request.arrayBuffer();
+
+  try {
+    const key = await storePhoto(env.PHOTOS, {
+      body,
+      contentType,
+      byteLength: body.byteLength,
+    });
+    return jsonResponse({ key }, 201, cors);
+  } catch (err) {
+    if (err instanceof PhotoTooLargeError) {
+      return jsonResponse(
+        { error: "That photo's a little large for us right now. Could you try a smaller one, or a different photo?" },
+        413,
+        cors
+      );
+    }
+    if (err instanceof UnsupportedPhotoTypeError) {
+      return jsonResponse(
+        { error: "That file doesn't look like a photo we can use yet. A JPEG, PNG, HEIC, or similar image works best." },
+        415,
+        cors
+      );
+    }
+    throw err;
+  }
+}
+
+async function handleGetPhoto(request, env, key) {
+  const cors = corsHeaders(request);
+  const object = await fetchPhoto(env.PHOTOS, key);
+  if (!object) {
+    return new Response(null, { status: 404, headers: cors });
+  }
+  return new Response(object.body, {
+    status: 200,
+    headers: {
+      ...cors,
+      'Content-Type': object.httpMetadata?.contentType || 'application/octet-stream',
+      'Cache-Control': 'private, max-age=31536000, immutable',
+    },
+  });
+}
+
+function jsonResponse(body, status, extraHeaders = {}) {
   return new Response(JSON.stringify(body), {
     status,
-    headers: { 'content-type': 'application/json' },
+    headers: { 'content-type': 'application/json', ...extraHeaders },
   });
 }
 
