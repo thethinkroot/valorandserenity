@@ -330,6 +330,16 @@
   [data-story-assist-highlight] { animation: storyAssistHighlight 1.6s ease; }
   @keyframes storyAssistHighlight { 0% { background: rgba(182,111,74,0.16); } 100% { background: transparent; } }
 
+  /* Story Assist with/without toggle: same component as the example pages, wired to this real page */
+  .sa-page-toggle { max-width: 620px; margin: 8px auto 40px; text-align: left; }
+  .sa-toggle-explainer { font-family: var(--font-body); font-size: 15px; color: var(--aubergine); line-height: 1.7; margin: 0 0 18px; text-align: center; }
+  .sa-toggle-buttons { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .sa-toggle-btn { font-family: var(--font-body); font-weight: 700; font-size: 16px; padding: 16px 26px; min-height: 56px; min-width: 200px; border-radius: 8px; border: 2px solid var(--copper); background: var(--bone); color: var(--copper-text); cursor: pointer; }
+  .sa-toggle-btn:hover, .sa-toggle-btn:focus-visible { background: var(--bone-deep); }
+  .sa-toggle-btn[aria-pressed="true"] { background: var(--copper); color: var(--bone); }
+  .sa-toggle-btn[aria-pressed="true"]:hover, .sa-toggle-btn[aria-pressed="true"]:focus-visible { background: var(--copper-deep); }
+  @media (max-width: 520px) { .sa-toggle-btn { min-width: 0; flex: 1 1 auto; } }
+
   /* Gallery */
   .gallery-sequence { max-width: 980px; margin: 72px auto 0; display: flex; flex-direction: column; gap: 96px; }
   .gallery-item { display: flex; gap: 60px; align-items: center; flex-wrap: wrap; }
@@ -623,6 +633,14 @@
     <p class="eyebrow">Unit History</p>
     <h2>The 187th Infantry Brigade</h2>
     <p class="section-lede">The unit itself, apart from any one soldier's time in it.</p>
+
+    <div class="sa-page-toggle" data-reveal>
+      <p class="sa-toggle-explainer">Every piece of researched historical context on this page, this section included, can be shown or hidden. Both are the same real page, this is just an optional layer.</p>
+      <div class="sa-toggle-buttons" role="group" aria-label="Show this page with or without Story Assist's researched context">
+        <button type="button" class="sa-toggle-btn" data-sa-toggle="plain" aria-pressed="false">Plain Story</button>
+        <button type="button" class="sa-toggle-btn" data-sa-toggle="enhanced" aria-pressed="true">With Story Assist Added</button>
+      </div>
+    </div>
 
     <div data-story-assist>
       <p class="unit-history-body">The 187th Infantry Brigade was reactivated in the Army Reserve in 1963, headquartered in Boston. In 1971, the same year Mike enlisted, its headquarters moved to Wollaston, Massachusetts, and in 1976, three years before Mike was commissioned, moved again to Fort Devens. By the years Mike served, the brigade was built around three infantry battalions plus artillery, armor, engineer, and support units, one of only a handful of combat infantry brigades still standing in the entire Army Reserve.</p>
@@ -1286,6 +1304,24 @@
       });
       loadSelected();
     }
+  } catch (e) {}
+
+  try {
+    var pageToggleButtons = document.querySelectorAll('.sa-page-toggle .sa-toggle-btn');
+    var pageStoryAssistBlocks = document.querySelectorAll('[data-story-assist]');
+    pageToggleButtons.forEach(function(saBtn){
+      saBtn.addEventListener('click', function(){
+        pageToggleButtons.forEach(function(b){ b.setAttribute('aria-pressed', b === saBtn ? 'true' : 'false'); });
+        var enhanced = saBtn.getAttribute('data-sa-toggle') === 'enhanced';
+        pageStoryAssistBlocks.forEach(function(block){
+          block.hidden = !enhanced;
+          if (enhanced) {
+            block.setAttribute('data-story-assist-highlight', '');
+            setTimeout(function(){ block.removeAttribute('data-story-assist-highlight'); }, 1600);
+          }
+        });
+      });
+    });
   } catch (e) {}
 
     try {
