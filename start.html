@@ -468,6 +468,11 @@
   .resource-card p { font-size: 14.5px; color: var(--ink); line-height: 1.65; margin: 0 0 10px; }
   .resource-card a { font-weight: 700; color: var(--copper-text); }
 
+  /* ---- Story Assist, finished-page treatment: quiet, not the live Step 4 box ---- */
+  .story-assist-note { text-align: left; margin: 18px 0 0; padding: 4px 0 4px 16px; border-left: 2px solid var(--copper); }
+  .story-assist-note-body { font-family: var(--font-body); font-size: 14.5px; color: var(--ink); line-height: 1.7; margin: 0; }
+  .story-assist-attribution { display: block; font-family: var(--font-body); font-style: italic; font-size: 12.5px; color: var(--aubergine); margin: 10px 0 0; }
+
   /* ---- Tip callouts: visually subordinate asides, not the next required step ---- */
   .tip-callout { max-width: 88%; margin-left: auto; margin-right: auto; }
   .tip-callout.sa-context { font-size: 13.5px; padding: 14px 16px; }
@@ -536,6 +541,8 @@
   }
   .tribute-card .dates { color: #C9B79A; margin-bottom: 20px; }
   .written-line { font-size: 13px; font-style: italic; color: #C9B79A; margin: -14px 0 20px; }
+  .tribute-card .story-assist-note-body { color: var(--bone-warm); }
+  .tribute-card .story-assist-attribution { color: #C9B79A; }
   .tribute-card .sentence { font-style: italic; font-family: var(--font-display); font-size: 19px; }
 
   .gentle-note {
@@ -848,6 +855,10 @@
       <h1 id="preview-name" style="font-size:34px;">Their Name</h1>
       <div class="dates" id="preview-dates">Born – Passed</div>
       <p class="written-line hidden" id="preview-written-line"></p>
+      <div class="story-assist-note hidden" id="preview-story-assist">
+        <p class="story-assist-note-body" id="preview-story-assist-body"></p>
+        <p class="story-assist-attribution" data-story-assist-attribution>Researched by Story Assist, from verified public record.</p>
+      </div>
     </div>
     <p class="theme-note" id="preview-theme-note" style="font-style:italic; font-family:var(--font-display); font-size:15px; color:var(--aubergine); text-align:center; margin-top:16px;"></p>
     <button class="btn-primary" style="margin-top:12px;" data-action="goto" data-arg="step8">This looks right</button>
@@ -897,6 +908,11 @@
   let selectedBranch = null;
   let honorCount = 0;
   let subjectMode = "passed";
+  // Set only when buildContextText() finds a real, verified fact for the
+  // year given, never for the "nothing verified yet" decline. Step 7's
+  // preview reads this to show the same quiet treatment Mike's page uses,
+  // so a family never discovers a different visual system after publishing.
+  let verifiedHistoricalNote = null;
 
   function selectSubject(mode) {
     subjectMode = mode;
@@ -991,6 +1007,7 @@
     }
 
     if (id === 'step7') {
+      buildContextText();
       const name = document.getElementById('input-name').value || 'Their Name';
       const born = document.getElementById('input-birth').value || 'Born';
       let datesText, writtenText;
@@ -1010,6 +1027,9 @@
       const pw = document.getElementById('preview-written-line');
       pw.textContent = writtenText;
       pw.classList.toggle('hidden', !writtenText);
+      const saNote = document.getElementById('preview-story-assist');
+      document.getElementById('preview-story-assist-body').textContent = verifiedHistoricalNote || '';
+      saNote.classList.toggle('hidden', !verifiedHistoricalNote);
       applyPreviewTheme(selectedBranch);
     }
 
@@ -1199,6 +1219,7 @@
     if (!year) {
       heading.textContent = 'Did you know?';
       el.textContent = 'Once you add a birth year or service date, we can show you what was happening in the world at that time, and ask if it sounds familiar.';
+      verifiedHistoricalNote = null;
       return;
     }
 
@@ -1206,9 +1227,11 @@
     if (fact) {
       heading.textContent = 'Did you know?';
       el.textContent = 'You mentioned ' + phrase + ' ' + connector + ' ' + year + '. That year, ' + fact + ' Does anything from that time sound familiar?';
+      verifiedHistoricalNote = 'That year, ' + fact;
     } else {
       heading.textContent = 'Worth being honest about';
       el.textContent = "We don't have anything verified for " + year + " yet, so we're not going to guess. Nothing is lost by us not having this one, feel free to keep going.";
+      verifiedHistoricalNote = null;
     }
   }
 

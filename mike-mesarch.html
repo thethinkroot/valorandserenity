@@ -240,7 +240,7 @@
   .own-words-quote p { font-family: var(--font-display); font-style: italic; font-size: clamp(19px,2.4vw,24px); color: var(--ink); line-height: 1.65; margin: 0 0 22px; }
   .own-words-quote cite { font-family: var(--font-body); font-style: normal; font-size: 13.5px; font-weight: 700; color: var(--copper-text); letter-spacing: 0.02em; }
   .legacy-statement { max-width: 560px; margin: 32px auto 0; font-family: var(--font-display); font-size: clamp(19px,2.4vw,23px); font-weight: 400; color: var(--ink); line-height: 1.65; text-align: center; }
-  #mike-story, #mike-service, #mike-person, #mike-legacy, #mike-unit-history { background: var(--bone); }
+  #mike-story, #mike-service, #mike-person, #mike-legacy, #mike-unit-history, #mike-gallery { background: var(--bone); }
   .unit-history-body { font-size: 16.5px; color: var(--ink); line-height: 1.8; max-width: 640px; margin: 0 auto 20px; }
   .unit-history-body:last-child { margin-bottom: 0; }
   #theme-invitation, #mike-own-words, #mike-honors { background: var(--bone-warm); }
@@ -269,7 +269,7 @@
   body[data-theme="coast-guard"] { --copper: #CE1126; --copper-deep: #a10d1e; --copper-text: #a10d1e; --aubergine-deep: #003087; --rule-h: 3px; --rule-w: 48px; --section-pad: 120px; --radius-base: 3px; --reveal-dist: 24px; --reveal-dur: .75s; --reveal-ease: ease; }
   body[data-theme="coast-guard"] .cover-motif { width: 90px; height: 14px; background: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 90 14'%3E%3Cpath d='M0 7c7-9 14-9 22.5 0s15.5 9 22.5 0 15-9 22.5 0 15.5 9 22.5 0' stroke='%23CE1126' stroke-width='2.2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: center; }
     body[data-theme="space-force"] { --copper: #6C6F76; --copper-deep: #52555B; --copper-text: #52555B; --aubergine-deep: #1C1E22; --rule-h: 1px; --rule-w: 24px; --section-pad: 140px; --radius-base: 0px; --reveal-dist: 18px; --reveal-dur: .9s; --reveal-ease: ease; --heading-tracking: 0.08em; }
-  body[data-theme="space-force"] .eyebrow, body[data-theme="space-force"] .story-assist-tag, body[data-theme="space-force"] .timeline-context-label { letter-spacing: 0.18em; }
+  body[data-theme="space-force"] .eyebrow, body[data-theme="space-force"] .story-assist-note-questions-label, body[data-theme="space-force"] .timeline-context-label { letter-spacing: 0.18em; }
   body[data-theme="space-force"] .cover-motif { width: 90px; height: 20px; background: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 90 20'%3E%3Cellipse cx='45' cy='11' rx='40' ry='7' stroke='%236C6F76' stroke-width='1.2' fill='none'/%3E%3Ccircle cx='83' cy='7' r='2.4' fill='%236C6F76'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: center; }
   body[data-theme="flag"] { --copper: #B31942; --copper-deep: #8f0f30; --copper-text: #B31942; --aubergine-deep: #0A3161; --rule-h: 3px; --rule-w: 60px; --section-pad: 130px; --radius-base: 2px; --reveal-dist: 26px; --reveal-dur: .8s; --reveal-ease: ease-in-out; --heading-transform: uppercase; --heading-tracking: 0.04em; }
   body[data-theme="flag"] .cover-motif { width: 90px; height: 20px; background: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 90 20'%3E%3Cg fill='%23B31942'%3E%3Cpath transform='translate(18,10)' d='M0 -7L1.6 -2.2L6.7 -2.2L2.6 0.8L4.1 5.7L0 2.7L-4.1 5.7L-2.6 0.8L-6.7 -2.2L-1.6 -2.2Z'/%3E%3Cpath transform='translate(45,10)' d='M0 -7L1.6 -2.2L6.7 -2.2L2.6 0.8L4.1 5.7L0 2.7L-4.1 5.7L-2.6 0.8L-6.7 -2.2L-1.6 -2.2Z'/%3E%3Cpath transform='translate(72,10)' d='M0 -7L1.6 -2.2L6.7 -2.2L2.6 0.8L4.1 5.7L0 2.7L-4.1 5.7L-2.6 0.8L-6.7 -2.2L-1.6 -2.2Z'/%3E%3C/g%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: center; }
@@ -313,23 +313,24 @@
 
   @media (max-width: 480px) { .hero-share-toggle span { display: none; } .hero-share-toggle { padding: 10px 12px; } }
 
-  .story-assist-callout { max-width: 640px; margin: -12px auto 48px; padding: 44px 44px; background: var(--aubergine-deep); border-radius: var(--radius-base, 3px); }
-  .story-assist-tag { display: inline-block; font-family: var(--font-body); font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--bone); background: var(--copper); padding: 6px 16px; border-radius: 20px; margin: 0 0 18px; }
-  .story-assist-heading { font-family: var(--font-display); font-size: 21px; font-weight: 500; color: var(--copper); margin: 0 0 16px; line-height: 1.4; }
-  .story-assist-body { font-family: var(--font-body); font-size: 15px; color: var(--bone-warm); line-height: 1.8; margin: 0 0 18px; }
-  .story-assist-disclaimer { font-family: var(--font-body); font-style: italic; font-size: 13.5px; color: rgba(240,233,220,0.62); line-height: 1.65; margin: 0 0 20px; }
-  .story-assist-cta { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-body); font-weight: 700; font-size: 14px; color: var(--copper); }
-  .story-assist-cta:hover { color: var(--bone); text-decoration: underline; }
-  .story-assist-questions-label { display: block; font-family: var(--font-body); font-size: 11.5px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(240,233,220,0.55); margin: 6px 0 16px; padding-top: 24px; border-top: 1px solid rgba(240,233,220,0.16); }
-  .story-assist-question { display: flex; align-items: flex-start; gap: 14px; background: rgba(250,248,243,0.06); border-radius: 8px; padding: 14px 16px; margin-bottom: 10px; }
-  .story-assist-question:last-child { margin-bottom: 22px; }
-  .story-assist-question span { display: flex; align-items: center; justify-content: center; width: 20px; height: 20px; border-radius: 50%; background: var(--copper); color: var(--aubergine-deep); font-family: var(--font-display); font-size: 12px; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
-  .story-assist-question span::before { content: '?'; }
-  .story-assist-question p { font-family: var(--font-body); font-size: 14px; color: var(--bone-warm); line-height: 1.6; margin: 0; }
-  @media (max-width: 600px) { .story-assist-callout { padding: 28px 24px; } }
+  .story-assist-note { max-width: 640px; margin: -12px auto 48px; padding: 6px 0 6px 22px; border-left: 2px solid var(--copper); }
+  .story-assist-note-heading { font-family: var(--font-display); font-size: 20px; font-weight: 500; color: var(--ink); margin: 0 0 14px; line-height: 1.4; }
+  .story-assist-note-body { font-family: var(--font-body); font-size: 15.5px; color: var(--ink); line-height: 1.8; margin: 0 0 14px; }
+  .story-assist-note-disclaimer { font-family: var(--font-body); font-style: italic; font-size: 13.5px; color: var(--aubergine); line-height: 1.65; margin: 0 0 16px; }
+  .story-assist-note-cta { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-body); font-weight: 700; font-size: 14px; color: var(--copper-text); }
+  .story-assist-note-cta:hover { color: var(--copper-deep); text-decoration: underline; }
+  .story-assist-attribution { display: block; font-family: var(--font-body); font-style: italic; font-size: 13px; color: var(--tan-muted); margin: 16px 0 0; }
+  .story-assist-note-questions-label { display: block; font-family: var(--font-body); font-size: 11.5px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--tan-muted); margin: 6px 0 16px; padding-top: 20px; border-top: 1px solid var(--bone-deep); }
+  .story-assist-note-question { display: flex; align-items: flex-start; gap: 14px; background: var(--bone-warm); border-radius: 8px; padding: 14px 16px; margin-bottom: 10px; }
+  .story-assist-note-question:last-child { margin-bottom: 22px; }
+  .story-assist-note-question span { display: flex; align-items: center; justify-content: center; width: 20px; height: 20px; border-radius: 50%; background: var(--copper); color: var(--bone); font-family: var(--font-display); font-size: 12px; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+  .story-assist-note-question span::before { content: '?'; }
+  .story-assist-note-question p { font-family: var(--font-body); font-size: 14px; color: var(--aubergine); line-height: 1.6; margin: 0; }
+  @media (max-width: 600px) { .story-assist-note { padding: 4px 0 4px 16px; } }
+  [data-story-assist-highlight] { animation: storyAssistHighlight 1.6s ease; }
+  @keyframes storyAssistHighlight { 0% { background: rgba(182,111,74,0.16); } 100% { background: transparent; } }
 
   /* Gallery */
-  #mike-gallery { background: var(--bone-warm); }
   .gallery-sequence { max-width: 980px; margin: 72px auto 0; display: flex; flex-direction: column; gap: 96px; }
   .gallery-item { display: flex; gap: 60px; align-items: center; flex-wrap: wrap; }
   .gallery-item:nth-child(even) { flex-direction: row-reverse; }
@@ -539,12 +540,12 @@
         </div>
       </div>
 
-      <div class="story-assist-callout" data-reveal>
-        <p class="story-assist-tag">Story Assist</p>
-        <h4 class="story-assist-heading">The Day He Was Born</h4>
-        <p class="story-assist-body">Saturday, April 21, 1951. Harry Truman was president. The country was still talking about his controversial removal of General Douglas MacArthur from Korean War command, ten days earlier. That same day, the Rochester Royals beat the New York Knicks to win the NBA Finals. On the radio, "How High the Moon" by Les Paul and Mary Ford was the country's best-selling record. The Korean War was in its second year. It was the defining story of the era Mike was born into.</p>
-        <p class="story-assist-disclaimer">We don't know what his family talked about that day. We only know the world that was waiting for him.</p>
-        <a class="story-assist-cta" href="mailto:hello@valorandserenity.com?subject=Story%20detail%20for%20Mike%20Mesarch%20-%20birth">Know more? Add it here &rarr;</a>
+      <div class="story-assist-note" data-story-assist data-reveal>
+        <h4 class="story-assist-note-heading">The Day He Was Born</h4>
+        <p class="story-assist-note-body">Saturday, April 21, 1951. Harry Truman was president. The country was still talking about his controversial removal of General Douglas MacArthur from Korean War command, ten days earlier. That same day, the Rochester Royals beat the New York Knicks to win the NBA Finals. On the radio, "How High the Moon" by Les Paul and Mary Ford was the country's best-selling record. The Korean War was in its second year. It was the defining story of the era Mike was born into.</p>
+        <p class="story-assist-note-disclaimer">We don't know what his family talked about that day. We only know the world that was waiting for him.</p>
+        <a class="story-assist-note-cta" href="mailto:hello@valorandserenity.com?subject=Story%20detail%20for%20Mike%20Mesarch%20-%20birth">Know more? Add it here &rarr;</a>
+        <p class="story-assist-attribution" data-story-assist-attribution>Researched by Story Assist, from verified public record.</p>
       </div>
     </div>
   </div>
@@ -574,20 +575,20 @@
           <p>Mike enlists in the United States Army.</p>
         </div>
       </div>
-      <div class="story-assist-callout" id="story-assist-demo" data-reveal>
-        <p class="story-assist-tag">Story Assist</p>
-        <h4 class="story-assist-heading">Shaped From Real Military History, Not Guesswork</h4>
-        <p class="story-assist-body">Mike's unit and its place in Army Reserve history are covered in full under Unit History below. What Story Assist adds here is more personal: gentle questions built from that same real context, aimed at the details only his family would know.</p>
-        <p class="story-assist-disclaimer">We don't know what his day-to-day service looked like inside that story. We only know this is the world he stepped into.</p>
+      <div class="story-assist-note" id="story-assist-demo" data-story-assist data-reveal>
+        <h4 class="story-assist-note-heading">Shaped From Real Military History, Not Guesswork</h4>
+        <p class="story-assist-note-body">Mike's unit and its place in Army Reserve history are covered in full under Unit History below. What Story Assist adds here is more personal: gentle questions built from that same real context, aimed at the details only his family would know.</p>
+        <p class="story-assist-note-disclaimer">We don't know what his day-to-day service looked like inside that story. We only know this is the world he stepped into.</p>
 
-        <p class="story-assist-questions-label">Questions Story Assist Might Ask</p>
-        <div class="story-assist-question"><span></span><p>Did Mike ever mention drilling at Fort Devens, or talk about weekend training with the 187th?</p></div>
-        <div class="story-assist-question"><span></span><p>Was there ever talk of Iceland, or a NATO deployment that might happen? It's the kind of thing that hung over those years even if it never came to pass.</p></div>
-        <div class="story-assist-question"><span></span><p>What made him decide to go from twenty years in the Army Reserve straight into another twenty at Job Corps? Was there a moment that connected the two for him?</p></div>
-        <div class="story-assist-question"><span></span><p>You mentioned he taught you and your sons a lot. Is there one specific thing he taught you that you can still hear him saying?</p></div>
-        <div class="story-assist-question"><span></span><p>What did he and Joan love doing together most? Skiing, rafting, and traveling all came up.</p></div>
+        <p class="story-assist-note-questions-label">Questions Story Assist Might Ask</p>
+        <div class="story-assist-note-question"><span></span><p>Did Mike ever mention drilling at Fort Devens, or talk about weekend training with the 187th?</p></div>
+        <div class="story-assist-note-question"><span></span><p>Was there ever talk of Iceland, or a NATO deployment that might happen? It's the kind of thing that hung over those years even if it never came to pass.</p></div>
+        <div class="story-assist-note-question"><span></span><p>What made him decide to go from twenty years in the Army Reserve straight into another twenty at Job Corps? Was there a moment that connected the two for him?</p></div>
+        <div class="story-assist-note-question"><span></span><p>You mentioned he taught you and your sons a lot. Is there one specific thing he taught you that you can still hear him saying?</p></div>
+        <div class="story-assist-note-question"><span></span><p>What did he and Joan love doing together most? Skiing, rafting, and traveling all came up.</p></div>
 
-        <a class="story-assist-cta" href="mailto:hello@valorandserenity.com?subject=Story%20detail%20for%20Mike%20Mesarch">Know more? Add it here &rarr;</a>
+        <a class="story-assist-note-cta" href="mailto:hello@valorandserenity.com?subject=Story%20detail%20for%20Mike%20Mesarch">Know more? Add it here &rarr;</a>
+        <p class="story-assist-attribution" data-story-assist-attribution>Researched by Story Assist, from verified public record.</p>
       </div>
 
       <div class="timeline-entry" data-reveal>
@@ -597,12 +598,12 @@
           <p>Earns a B.A. in History and is commissioned a Second Lieutenant of Infantry.</p>
         </div>
       </div>
-      <div class="story-assist-callout" data-reveal>
-        <p class="story-assist-tag">Story Assist</p>
-        <h4 class="story-assist-heading">An Army Rebuilding Itself</h4>
-        <p class="story-assist-body">The draft had ended six years earlier, in 1973, and the Army was still in the middle of reinventing itself as an all-volunteer force. Officers commissioned in that era, like Mike, were part of the generation the Army needed to prove the new model could work.</p>
-        <p class="story-assist-disclaimer">We don't know how often that shift came up for Mike directly. We only know it shaped the Army he was commissioned into.</p>
-        <a class="story-assist-cta" href="mailto:hello@valorandserenity.com?subject=Story%20detail%20for%20Mike%20Mesarch%20-%201979">Know more? Add it here &rarr;</a>
+      <div class="story-assist-note" data-story-assist data-reveal>
+        <h4 class="story-assist-note-heading">An Army Rebuilding Itself</h4>
+        <p class="story-assist-note-body">The draft had ended six years earlier, in 1973, and the Army was still in the middle of reinventing itself as an all-volunteer force. Officers commissioned in that era, like Mike, were part of the generation the Army needed to prove the new model could work.</p>
+        <p class="story-assist-note-disclaimer">We don't know how often that shift came up for Mike directly. We only know it shaped the Army he was commissioned into.</p>
+        <a class="story-assist-note-cta" href="mailto:hello@valorandserenity.com?subject=Story%20detail%20for%20Mike%20Mesarch%20-%201979">Know more? Add it here &rarr;</a>
+        <p class="story-assist-attribution" data-story-assist-attribution>Researched by Story Assist, from verified public record.</p>
       </div>
 
       <div class="timeline-entry" data-reveal>
@@ -623,8 +624,11 @@
     <h2>The 187th Infantry Brigade</h2>
     <p class="section-lede">The unit itself, apart from any one soldier's time in it.</p>
 
-    <p class="unit-history-body">The 187th Infantry Brigade was reactivated in the Army Reserve in 1963, headquartered in Boston. In 1971, the same year Mike enlisted, its headquarters moved to Wollaston, Massachusetts, and in 1976, three years before Mike was commissioned, moved again to Fort Devens. By the years Mike served, the brigade was built around three infantry battalions plus artillery, armor, engineer, and support units, one of only a handful of combat infantry brigades still standing in the entire Army Reserve.</p>
-    <p class="unit-history-body">Its Cold War mission, if a confrontation between NATO and the Soviet Union ever came, was to reinforce Iceland as part of the Iceland Defense Force. That call never came. On April 14, 1994, as part of the Army-wide drawdown that followed the Cold War's end, the 187th was inactivated. It was the same year Mike's own service came to a close.</p>
+    <div data-story-assist>
+      <p class="unit-history-body">The 187th Infantry Brigade was reactivated in the Army Reserve in 1963, headquartered in Boston. In 1971, the same year Mike enlisted, its headquarters moved to Wollaston, Massachusetts, and in 1976, three years before Mike was commissioned, moved again to Fort Devens. By the years Mike served, the brigade was built around three infantry battalions plus artillery, armor, engineer, and support units, one of only a handful of combat infantry brigades still standing in the entire Army Reserve.</p>
+      <p class="unit-history-body">Its Cold War mission, if a confrontation between NATO and the Soviet Union ever came, was to reinforce Iceland as part of the Iceland Defense Force. That call never came. On April 14, 1994, as part of the Army-wide drawdown that followed the Cold War's end, the 187th was inactivated. It was the same year Mike's own service came to a close.</p>
+      <p class="story-assist-attribution" data-story-assist-attribution>Researched by Story Assist, from verified public record.</p>
+    </div>
   </div>
 </section>
 
@@ -655,12 +659,12 @@
         </div>
       </div>
 
-      <div class="story-assist-callout" data-reveal>
-        <p class="story-assist-tag">Story Assist</p>
-        <h4 class="story-assist-heading">The World They Met In</h4>
-        <p class="story-assist-body">1984 was a landmark year. The Summer Olympics came to Los Angeles that July. It was the first Games held on U.S. soil since 1932. Ronald Reagan was re-elected president that November in one of the largest landslides in U.S. history. Apple had just introduced the Macintosh computer to the world in January, and MTV was at the height of its cultural power. It was the year of Prince's Purple Rain, Bruce Springsteen's Born in the U.S.A., and Cyndi Lauper's Girls Just Want to Have Fun.</p>
-        <p class="story-assist-disclaimer">We don't know the day Mike and Joan actually met, or what was playing when they did. We only know this is the world they found each other in.</p>
-        <a class="story-assist-cta" href="mailto:hello@valorandserenity.com?subject=Story%20detail%20for%20Mike%20Mesarch%20-%201984">Know more? Add it here &rarr;</a>
+      <div class="story-assist-note" data-story-assist data-reveal>
+        <h4 class="story-assist-note-heading">The World They Met In</h4>
+        <p class="story-assist-note-body">1984 was a landmark year. The Summer Olympics came to Los Angeles that July. It was the first Games held on U.S. soil since 1932. Ronald Reagan was re-elected president that November in one of the largest landslides in U.S. history. Apple had just introduced the Macintosh computer to the world in January, and MTV was at the height of its cultural power. It was the year of Prince's Purple Rain, Bruce Springsteen's Born in the U.S.A., and Cyndi Lauper's Girls Just Want to Have Fun.</p>
+        <p class="story-assist-note-disclaimer">We don't know the day Mike and Joan actually met, or what was playing when they did. We only know this is the world they found each other in.</p>
+        <a class="story-assist-note-cta" href="mailto:hello@valorandserenity.com?subject=Story%20detail%20for%20Mike%20Mesarch%20-%201984">Know more? Add it here &rarr;</a>
+        <p class="story-assist-attribution" data-story-assist-attribution>Researched by Story Assist, from verified public record.</p>
       </div>
 
       <div class="timeline-entry" data-reveal>
@@ -678,6 +682,33 @@
           <p>Skiing Colorado and Utah, rafting rivers, marching in local parades. Mike stayed active for the people and places he loved.</p>
         </div>
       </div>
+    </div>
+  </div>
+</section>
+
+<section id="mike-audio">
+  <div class="section-inner">
+    <div class="rule"></div>
+    <p class="eyebrow">Optional, Opt-In</p>
+    <h2>Service Song</h2>
+    <p class="section-lede">A family can choose to add a recording to their page. Nothing plays automatically. A visitor always chooses to press play.</p>
+
+    <div class="audio-dropdown-wrap" data-reveal>
+      <select class="audio-select" id="audioSelect">
+        <option value="https://commons.wikimedia.org/wiki/Special:FilePath/Army_goes_rolling_along.ogg" data-title="The Army Goes Rolling Along" data-attrib="U.S. Army Band &middot; Public Domain &middot; via Wikimedia Commons">The Army Goes Rolling Along: U.S. Army Band</option>
+        <option value="https://commons.wikimedia.org/wiki/Special:FilePath/Taps.ogg" data-title="Taps" data-attrib="Traditional bugle call &middot; Public Domain">Taps</option>
+      </select>
+      <div class="audio-player-row">
+        <button class="audio-play-btn" id="audioPlayBtn" type="button" aria-label="Play">
+          <svg id="audioPlayIcon" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"></path></svg>
+        </button>
+        <div>
+          <p class="audio-meta-title" id="audioMetaTitle">The Army Goes Rolling Along</p>
+          <p class="audio-meta-note" id="audioMetaNote">U.S. Army Band &middot; Public Domain &middot; via Wikimedia Commons</p>
+        </div>
+      </div>
+      <audio id="audioEl" preload="none"></audio>
+      <p class="audio-opt-in-note">Sourced from verified public-domain collections (U.S. military bands, Library of Congress, Wikimedia Commons). Never autoplays.</p>
     </div>
   </div>
 </section>
@@ -888,12 +919,12 @@
         </div>
       </div>
 
-      <div class="story-assist-callout" data-reveal>
-        <p class="story-assist-tag">Story Assist</p>
-        <h4 class="story-assist-heading">The World That Day</h4>
-        <p class="story-assist-body">Mike's military honors were held during one of the hardest stretches of the COVID-19 pandemic, a time when gatherings everywhere were smaller, quieter, and harder to hold than they should have been. That same week, the country was watching the first-ever fully virtual Democratic National Convention, held remotely because of the very pandemic reshaping how families everywhere, including this one, were able to come together to say goodbye.</p>
-        <p class="story-assist-disclaimer">We don't know exactly what that day looked like for those who were there. We only know it took place inside a moment the whole country was living through, unlike any before it.</p>
-        <a class="story-assist-cta" href="mailto:hello@valorandserenity.com?subject=Story%20detail%20for%20Mike%20Mesarch%20-%202020">Know more? Add it here &rarr;</a>
+      <div class="story-assist-note" data-story-assist data-reveal>
+        <h4 class="story-assist-note-heading">The World That Day</h4>
+        <p class="story-assist-note-body">Mike's military honors were held during one of the hardest stretches of the COVID-19 pandemic, a time when gatherings everywhere were smaller, quieter, and harder to hold than they should have been. That same week, the country was watching the first-ever fully virtual Democratic National Convention, held remotely because of the very pandemic reshaping how families everywhere, including this one, were able to come together to say goodbye.</p>
+        <p class="story-assist-note-disclaimer">We don't know exactly what that day looked like for those who were there. We only know it took place inside a moment the whole country was living through, unlike any before it.</p>
+        <a class="story-assist-note-cta" href="mailto:hello@valorandserenity.com?subject=Story%20detail%20for%20Mike%20Mesarch%20-%202020">Know more? Add it here &rarr;</a>
+        <p class="story-assist-attribution" data-story-assist-attribution>Researched by Story Assist, from verified public record.</p>
       </div>
     </div>
   </div>
@@ -905,33 +936,6 @@
     <p class="eyebrow">Their Legacy</p>
     <h2>What He Left Behind</h2>
     <p class="legacy-statement" data-reveal>Twenty years in the Army Reserve. Twenty more helping young people find their footing at Job Corps. However you measure a life, Mike's was full. It continues now in every story his family tells.</p>
-  </div>
-</section>
-
-<section id="mike-audio">
-  <div class="section-inner">
-    <div class="rule"></div>
-    <p class="eyebrow">Optional, Opt-In</p>
-    <h2>Service Song</h2>
-    <p class="section-lede">A family can choose to add a recording to their page. Nothing plays automatically. A visitor always chooses to press play.</p>
-
-    <div class="audio-dropdown-wrap" data-reveal>
-      <select class="audio-select" id="audioSelect">
-        <option value="https://commons.wikimedia.org/wiki/Special:FilePath/Army_goes_rolling_along.ogg" data-title="The Army Goes Rolling Along" data-attrib="U.S. Army Band &middot; Public Domain &middot; via Wikimedia Commons">The Army Goes Rolling Along: U.S. Army Band</option>
-        <option value="https://commons.wikimedia.org/wiki/Special:FilePath/Taps.ogg" data-title="Taps" data-attrib="Traditional bugle call &middot; Public Domain">Taps</option>
-      </select>
-      <div class="audio-player-row">
-        <button class="audio-play-btn" id="audioPlayBtn" type="button" aria-label="Play">
-          <svg id="audioPlayIcon" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"></path></svg>
-        </button>
-        <div>
-          <p class="audio-meta-title" id="audioMetaTitle">The Army Goes Rolling Along</p>
-          <p class="audio-meta-note" id="audioMetaNote">U.S. Army Band &middot; Public Domain &middot; via Wikimedia Commons</p>
-        </div>
-      </div>
-      <audio id="audioEl" preload="none"></audio>
-      <p class="audio-opt-in-note">Sourced from verified public-domain collections (U.S. military bands, Library of Congress, Wikimedia Commons). Never autoplays.</p>
-    </div>
   </div>
 </section>
 
