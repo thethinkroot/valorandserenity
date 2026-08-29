@@ -8,7 +8,8 @@ file whenever a new image is generated, placed, renamed, or found to be
 wrong, rather than treating it as a one-time snapshot.
 
 Last verified: 2026-08-29 (updated same day: Army placed, Air Force
-replaced), against the live local build, by looking directly at each
+replaced, then gendered taglines fixed on Air Force, Space Force, and
+Navy), against the live local build, by looking directly at each
 rendered page and each image file, not by reading code alone.
 
 ## How to use this file
@@ -82,6 +83,14 @@ pass.
   `images/space-force-veteran-tribute-example.png`: adult with hair in an
   updo, softer profile, holding a child, looking up at a starfield.
   Visually confirmed female.
+- **Tagline mismatch found and fixed.** The page's `.cover-sentence`
+  previously read "Beloved husband, father, and Guardian," male-gendered
+  against the "Jane Smith" heading. Unlike Air Force, this page's image
+  matches the same "later years with a child" mood the other pages
+  assume, so no age/relationship judgment call was needed, only the
+  gender words. Fixed to "Beloved wife, mother, and Guardian." Found
+  while auditing all seven pages for the same bug class as Air Force's,
+  not previously flagged anywhere.
 - **Secondary slot.** Status: **placeholder still showing**.
 
 ### Coast Guard: `example-coast-guard.html`
@@ -109,15 +118,14 @@ pass.
   diverges from the shared direction, for a different reason than Army
   (a deliberate swap for clarity, not a generation-round gap). Tracked
   here so a future consistency pass has the full picture, not fixed here.
-  **Tagline mismatch found, not fixed:** the page's `.cover-sentence`
-  currently reads "Beloved husband, father, grandfather, and Airman."
-  This is male-gendered against a "Jane Smith" heading, a mismatch that
-  predates today's image swap and isn't caused by it (it would have been
-  wrong against the old image too). It also reads oddly against a
-  visibly young subject regardless of gender ("grandfather"/"grandmother"
-  implies an older person). Left untouched, flagged here rather than
-  guessed at, since the right fix depends on choices only Chad should
-  make (what age/relationship the example subject implies).
+  **Tagline mismatch found and fixed.** The page's `.cover-sentence`
+  previously read "Beloved husband, father, grandfather, and Airman,"
+  male-gendered against the "Jane Smith" heading and describing a
+  later-life stage that didn't match the young subject in the current
+  image. Chad supplied the exact replacement text directly: "Beloved
+  daughter and Airman." Applied verbatim, not a mechanical word-swap,
+  since this page's fix genuinely needed the age/relationship judgment
+  call the other two below didn't.
 - **Secondary slot.** Status: **placeholder still showing**.
 
 ### Marine Corps: `example-marine-corps.html`
@@ -142,7 +150,34 @@ pass.
   a clear male read (no beard, no strong jaw angularity). Flagged here as
   lower-confidence than the other five in case a future viewer disagrees;
   if so, update this row and the page.
+- **Tagline mismatch found and fixed.** The page's `.cover-sentence`
+  previously read "Beloved husband, father, grandfather, and Sailor,"
+  male-gendered against the "Jane Smith" heading. Like Space Force, the
+  image matches the assumed "later years with a child" mood, so this was
+  a straightforward gender-word fix, not an age/relationship judgment
+  call. Fixed to "Beloved wife, mother, grandmother, and Sailor."
 - **Secondary slot.** Status: **placeholder still showing**.
+
+## Root cause: the gendered-tagline mismatches (Air Force, Space Force, Navy)
+
+The same bug (a leftover "husband, father[, grandfather]" tagline against
+a "Jane Smith" heading) existed independently on three pages, not just
+Air Force. It was fixed on all three in the same session once a full
+seven-page check was actually done. Before that, only Air Force's
+instance had ever been noticed (during the prior session's image-swap
+work) and it was explicitly left unfixed at the time, flagged in
+conversation rather than applied to any file. Space Force's and Navy's
+instances had never been noticed or flagged anywhere until this pass.
+
+To be precise about what "an earlier brief" actually was: git history
+shows no commit, ever, attempted to change any of these three taglines.
+The phrase "wife, mother, grandmother, and Airman" that prompted this
+session's brief was never itself a task that was sent and failed to
+apply; it only ever existed as a suggested phrasing inside a prior
+session's closing report to Chad, correctly left as a suggestion rather
+than a code change, per that session's own explicit instruction to flag
+rather than silently decide. There was no failed fix to explain, only an
+unactioned observation waiting for the judgment call it needed.
 
 ## Root cause: the "Jamie Smith" mismatch
 
