@@ -898,6 +898,29 @@
     </div>
     <h1 class="eyebrow-title">Step 8 of 8</h1>
     <h2 class="question">One last step</h2>
+
+    <div id="visibility-section" style="margin-bottom:28px;">
+      <p style="font-weight:700; font-size:16px; color:var(--aubergine-deep); margin:0 0 4px;">Who can see this tribute?</p>
+      <p class="helper" style="margin:0 0 16px;">You can change this later.</p>
+      <button type="button" class="choice-tile" data-action="select-visibility" data-visibility="private">Just for close family
+        <span class="sub">A private link. It opens for whoever you share it with, and no one else.</span>
+      </button>
+      <button type="button" class="choice-tile" data-action="select-visibility" data-visibility="family">Family and friends
+        <span class="sub">For your wider circle. Right now this works the same as a private link, an invite list isn't built yet, but this is here for when it is.</span>
+      </button>
+      <button type="button" class="choice-tile" data-action="select-visibility" data-visibility="community">Open for anyone to find
+        <span class="sub">The link works for anyone, no invitation needed. There's no public directory yet, so it won't appear in any search or gallery, the link itself is just openly shareable.</span>
+      </button>
+      <p class="gentle-note hidden" id="visibility-note">Please choose who can see this tribute.</p>
+
+      <div id="privacy-word-block" class="hidden" style="margin-top:16px; padding:18px 20px; background:var(--bone-warm); border-radius:8px;">
+        <p style="font-weight:700; margin:0 0 6px;">Want one more layer of privacy?</p>
+        <p class="helper" style="margin:0 0 12px;">Choose a simple word to share with family yourself, like handing someone a house key. Completely optional.</p>
+        <label for="input-privacy-word" style="font-size:14px; font-weight:700; display:block; margin-bottom:6px;">Your word</label>
+        <input type="text" id="input-privacy-word" placeholder="Optional" autocomplete="off">
+      </div>
+    </div>
+
     <p class="helper">We'll send a link to this email. Click it to publish your tribute, and use that same link anytime after to come back and make changes.</p>
     <div class="field-row">
       <input type="email" id="input-confirm-email" placeholder="Your email address" required>
@@ -969,6 +992,10 @@
   let selectedBranch = null;
   let honorCount = 0;
   let subjectMode = "passed";
+  // Same no-default rule as selectedBranch: nobody's tribute defaults to
+  // any tier silently. A real choice has to be made before publish can
+  // proceed, the same hard-requirement spirit as the consent gate.
+  let selectedVisibility = null;
   // Set only when buildContextText() finds a real, verified fact for the
   // year given, never for the "nothing verified yet" decline. Step 7's
   // preview reads this to show the same quiet treatment Mike's page uses,
@@ -1183,6 +1210,13 @@
       consentAuthorized: document.getElementById('consent-authorized').checked,
       consentStoryReviewed: document.getElementById('consent-story-reviewed').checked,
       consentVersion: CONSENT_VERSION,
+      visibility: selectedVisibility,
+      // Privacy word only ever means anything for Private (see
+      // requiresPrivacyWordGate() in worker/src/tributes.js), so don't
+      // send one collected while Private was selected if the person then
+      // switched to Family or Community, it would be silently stored but
+      // never actually checked, which is misleading either way.
+      privacyWord: (selectedVisibility === 'private' && document.getElementById('input-privacy-word').value.trim()) || null,
     };
   }
 
@@ -1213,6 +1247,16 @@
     if (currentScreenId() !== 'step8') {
       goTo('step8');
     }
+
+    // A real choice, same spirit as branch selection on Step 2: nobody's
+    // tribute defaults to a tier they never actually picked.
+    const visibilityNote = document.getElementById('visibility-note');
+    if (!selectedVisibility) {
+      visibilityNote.classList.remove('hidden');
+      document.getElementById('visibility-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      return;
+    }
+    visibilityNote.classList.add('hidden');
 
     const input = document.getElementById('input-confirm-email');
     const note = document.getElementById('confirm-email-note');
@@ -1300,6 +1344,26 @@
     selectedBranch = btn.getAttribute('data-branch');
     applyBranchSelection();
     saveDraft();
+  }
+
+  function selectVisibility(btn) {
+    selectedVisibility = btn.getAttribute('data-visibility');
+    applyVisibilitySelection();
+    saveDraft();
+  }
+
+  // Same restore-visibility pattern as applyBranchSelection(): re-applies
+  // the selected tile and reveals the privacy-word field (Private only,
+  // matching requiresPrivacyWordGate() in worker/src/tributes.js exactly,
+  // since Family and Community never check it regardless of what's
+  // stored) whether this runs from a live click or from restoreDraft().
+  function applyVisibilitySelection() {
+    document.querySelectorAll('#visibility-section .choice-tile').forEach(t => t.classList.remove('selected'));
+    document.getElementById('visibility-note').classList.add('hidden');
+    document.getElementById('privacy-word-block').classList.toggle('hidden', selectedVisibility !== 'private');
+    if (!selectedVisibility) return;
+    const tile = document.querySelector('#visibility-section [data-visibility="' + selectedVisibility + '"]');
+    if (tile) tile.classList.add('selected');
   }
 
   // Re-applies the visual selected tile and enables Continue for whatever
@@ -1580,7 +1644,7 @@
   const AUTOSAVE_FIELD_IDS = [
     'input-name', 'input-birth', 'input-passing', 'input-svc-from', 'input-svc-to',
     'write-textarea', 'input-photo-caption', 'input-sa1-answer', 'input-sa2-answer',
-    'input-invite-contact', 'input-confirm-email'
+    'input-invite-contact', 'input-confirm-email', 'input-privacy-word'
   ];
 
   function currentScreenId() {
@@ -1600,6 +1664,7 @@
       screenId: currentScreenId(),
       subjectMode: subjectMode,
       selectedBranch: selectedBranch,
+      selectedVisibility: selectedVisibility,
       fields: fields,
       honors: honors,
       photoKey: photoKey,
@@ -1625,6 +1690,8 @@
     subjectMode = state.subjectMode || 'passed';
     selectedBranch = state.selectedBranch || null;
     applyBranchSelection();
+    selectedVisibility = state.selectedVisibility || null;
+    applyVisibilitySelection();
 
     Object.keys(state.fields || {}).forEach(function(id) {
       const el = document.getElementById(id);
@@ -1690,6 +1757,7 @@
       case 'goto': goTo(arg); break;
       case 'select-subject': selectSubject(arg); break;
       case 'select-branch': selectBranch(el); break;
+      case 'select-visibility': selectVisibility(el); break;
       case 'mock-listen': mockListen(el); break;
       case 'remove-photo': removePhoto(); break;
       case 'show-photo-prompt': showPhotoPrompt(); break;

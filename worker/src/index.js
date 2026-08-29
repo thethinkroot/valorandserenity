@@ -12,6 +12,7 @@ import {
   verifyPrivacyWord,
   InvalidVisibilityError,
   MissingConsentError,
+  VISIBILITY_TIERS,
 } from './tributes.js';
 import {
   storePhoto,
@@ -114,9 +115,7 @@ async function handleCreate(request, env) {
 
   // Every field here is real content the 8-step flow already collects
   // (see start.html's serializeDraft()), passed straight through from the
-  // browser's draft state at Step 8. No tier-selection UI exists yet, so
-  // visibility always defaults to 'private' here, per this build's scope:
-  // token-required access, not publicly listed or indexed.
+  // browser's draft state at Step 8.
   const {
     title,
     privacyWord,
@@ -134,7 +133,19 @@ async function handleCreate(request, env) {
     consentAuthorized,
     consentStoryReviewed,
     consentVersion,
+    visibility,
   } = body || {};
+
+  // Real tier-selection UI now exists (Step 8), so the client should
+  // always send one of the three real values. Falling back to the most
+  // restrictive tier, rather than rejecting outright, if it somehow
+  // doesn't, a missing or malformed value should never accidentally
+  // expose a family's tribute more openly than they chose.
+  const chosenVisibility = VISIBILITY_TIERS.includes(visibility) ? visibility : 'private';
+  // requiresPrivacyWordGate() only ever checks this for Private; storing
+  // a hash for Family or Community would just be inert, never actually
+  // gating anything, so don't store one for a tier it can't apply to.
+  const effectivePrivacyWord = chosenVisibility === 'private' ? privacyWord : null;
 
   try {
     // skipConsentCheck is never passed here, on purpose: this is the
@@ -142,8 +153,8 @@ async function handleCreate(request, env) {
     // gate itself, not just this HTTP layer, so no future code path
     // that also calls createTribute can accidentally skip it either.
     const record = await createTribute(env.DB, {
-      visibility: 'private',
-      privacyWord,
+      visibility: chosenVisibility,
+      privacyWord: effectivePrivacyWord,
       title: fullName || title || 'Untitled Tribute',
       subjectMode,
       fullName,
