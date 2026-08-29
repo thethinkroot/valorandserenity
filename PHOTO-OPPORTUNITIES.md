@@ -7,8 +7,9 @@ Living tracker for every photo slot across the seven example theme pages
 file whenever a new image is generated, placed, renamed, or found to be
 wrong, rather than treating it as a one-time snapshot.
 
-Last verified: 2026-08-29, against the live local build, by looking directly
-at each rendered page and each image file, not by reading code alone.
+Last verified: 2026-08-29 (updated same day: Army placed, Air Force
+replaced), against the live local build, by looking directly at each
+rendered page and each image file, not by reading code alone.
 
 ## How to use this file
 
@@ -22,13 +23,21 @@ at each rendered page and each image file, not by reading code alone.
 
 ## Status summary
 
+All seven example pages now have a real hero image. Five of the seven
+(Flag, Space Force, Coast Guard, Marine Corps, Navy) share the same
+"later years with a child" mood and generation round. Army and Air Force
+are the two that don't, each for a different reason, both noted below and
+in the detail sections. This divergence hasn't been fixed and isn't being
+glossed over; it's tracked here for whoever does a future consistency
+pass.
+
 | Branch | Assigned name | Hero image | Secondary "family photo" slot |
 |---|---|---|---|
-| Army | John Smith | Placeholder (diagonal stripe) | Placeholder |
+| Army | John Smith | Filled, verified correct (different style, see note) | Placeholder |
 | American Flag | John Smith | Filled, verified correct | Placeholder |
 | Space Force | Jane Smith | Filled, verified correct | Placeholder |
 | Coast Guard | John Smith | Filled, verified correct | Placeholder |
-| Air Force | Jane Smith | Filled, verified correct | Placeholder |
+| Air Force | Jane Smith | Filled, verified correct (different style, see note) | Placeholder |
 | Marine Corps | John Smith | Filled, verified correct | Placeholder |
 | Navy | Jane Smith | Filled, verified correct (see note) | Placeholder |
 
@@ -36,10 +45,19 @@ at each rendered page and each image file, not by reading code alone.
 
 ### Army: `example-army.html`
 - **Hero image.** Branch: Army. Assigned gender: John Smith (male).
-  Status: **placeholder still showing** (diagonal-stripe `.cover-portrait`,
-  "Portrait · Families Add Their Own"). No real image has been generated
-  for this theme yet. This is the one page intentionally left untouched
-  during the six-image placement pass.
+  Status: **filled and verified correct**.
+  `images/army-veteran-tribute-example.png`: an older man, weathered
+  profile, smoking, seated on a farmhouse porch overlooking water at
+  golden hour, with a younger woman beside him. Visually confirmed male.
+  This closes the last open hero-image gap; all seven example pages now
+  have a real image.
+  **Style note:** this image comes from an earlier generation round than
+  the other six, no confirmed ethnicity assignment in the source
+  filename, and a warmer, more naturalistic "quiet farmhouse porch" mood
+  rather than the "low-key rim-lit silhouette" styling the other five
+  share. Placed as-is because it's a real, usable image and closes a real
+  gap, not because the style matches. Worth regenerating in the shared
+  style during a future consistency pass, not fixed silently here.
 - **Secondary slot.** Type: "family photo" demonstration slot inside the
   Their Story section (`.placeholder-photo`, "Family Photo. Add Your
   Own."). Status: **placeholder still showing**. This slot is meant to
@@ -77,8 +95,29 @@ at each rendered page and each image file, not by reading code alone.
 ### Air Force: `example-air-force.html`
 - **Hero image.** Branch: Air Force. Assigned gender: Jane Smith (female).
   Status: **filled and verified correct**.
-  `images/air-force-veteran-tribute-example.png`: full natural hair,
-  softer profile, close with a child at dusk. Visually confirmed female.
+  `images/air-force-veteran-tribute-example.png`: a young airman in
+  service uniform and cap, aviator sunglasses, earring, aircraft blurred
+  on a tarmac in the background, well-lit. Visually confirmed female
+  (earring, facial structure), confirmed Black ethnicity assignment in
+  the source filename. Visibly clearer and better-lit than the image it
+  replaced (that earlier image was a dusk, backlit two-figure scene judged
+  too dark to read well, removed from `images/` entirely, not just
+  unreferenced).
+  **Style note:** this replacement image is a young service member in
+  uniform, not the "later years with a child" mood the other five hero
+  images share. That makes it, along with Army, the second card that
+  diverges from the shared direction, for a different reason than Army
+  (a deliberate swap for clarity, not a generation-round gap). Tracked
+  here so a future consistency pass has the full picture, not fixed here.
+  **Tagline mismatch found, not fixed:** the page's `.cover-sentence`
+  currently reads "Beloved husband, father, grandfather, and Airman."
+  This is male-gendered against a "Jane Smith" heading, a mismatch that
+  predates today's image swap and isn't caused by it (it would have been
+  wrong against the old image too). It also reads oddly against a
+  visibly young subject regardless of gender ("grandfather"/"grandmother"
+  implies an older person). Left untouched, flagged here rather than
+  guessed at, since the right fix depends on choices only Chad should
+  make (what age/relationship the example subject implies).
 - **Secondary slot.** Status: **placeholder still showing**.
 
 ### Marine Corps: `example-marine-corps.html`
