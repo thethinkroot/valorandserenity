@@ -315,7 +315,25 @@
     <div class="rule"></div>
     <p class="eyebrow">Optional, Opt-In</p>
     <h2>A Song of Your Choosing</h2>
-    <p class="section-lede">The American Flag theme isn't tied to a single branch, so there's no one official song attached to it. Choose the branch theme instead to add that service's song, or add your own recording as a keepsake.</p>
+    <p class="section-lede">A family can choose to add a recording to their page. Nothing plays automatically. A visitor always chooses to press play.</p>
+
+    <div class="audio-dropdown-wrap" data-reveal>
+      <select class="audio-select" id="audioSelect">
+        <option value="https://commons.wikimedia.org/wiki/Special:FilePath/%22The%20Star-Spangled%20Banner%22%20performed%20by%20the%20United%20States%20Navy%20Band.mp3" data-title="The Star-Spangled Banner" data-attrib="U.S. Navy Band &middot; Public Domain &middot; via Wikimedia Commons">The Star-Spangled Banner: U.S. Navy Band</option>
+        <option value="https://commons.wikimedia.org/wiki/Special:FilePath/%22America%20the%20Beautiful%22,%20performed%20by%20the%20United%20States%20Navy%20Band.oga" data-title="America the Beautiful" data-attrib="U.S. Navy Band &middot; Public Domain &middot; via Wikimedia Commons">America the Beautiful: U.S. Navy Band</option>
+      </select>
+      <div class="audio-player-row">
+        <button class="audio-play-btn" id="audioPlayBtn" type="button" aria-label="Play">
+          <svg id="audioPlayIcon" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"></path></svg>
+        </button>
+        <div>
+          <p class="audio-meta-title" id="audioMetaTitle">The Star-Spangled Banner</p>
+          <p class="audio-meta-note" id="audioMetaNote">U.S. Navy Band &middot; Public Domain &middot; via Wikimedia Commons</p>
+        </div>
+      </div>
+      <audio id="audioEl" preload="none"></audio>
+      <p class="audio-opt-in-note">Sourced from verified public-domain collections (U.S. military bands, Library of Congress, Wikimedia Commons). Never autoplays.</p>
+    </div>
   </div>
 </section>
 
