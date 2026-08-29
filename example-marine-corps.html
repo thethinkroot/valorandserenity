@@ -93,6 +93,7 @@
   .cover { background: var(--bone); }
   .cover-portrait { position: relative; width: 100%; height: 52vh; min-height: 340px; max-height: 520px; overflow: hidden; background-image: repeating-linear-gradient(45deg, var(--bone-warm), var(--bone-warm) 12px, var(--bone-deep) 12px, var(--bone-deep) 24px); display: flex; align-items: center; justify-content: center; }
   .cover-portrait span { font-family: var(--font-body); font-size: 12.5px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--aubergine); background: var(--bone-warm); padding: 10px 18px; border-radius: 3px; }
+  .cover-portrait img { width: 100%; height: 100%; object-fit: cover; object-position: center 20%; }
   .cover-plaque { max-width: 600px; margin: 0 auto; text-align: center; padding: 48px 24px 56px; }
   .cover-branch-line { font-family: var(--font-body); font-size: 13px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--copper-text); margin: 0 0 16px; }
   .cover-name { font-size: clamp(30px,4.4vw,46px); margin: 0 0 10px; }
@@ -261,7 +262,7 @@
 <main id="main-content">
 
 <section class="cover" aria-label="Example tribute cover">
-  <div class="cover-portrait"><span>Portrait &middot; Families Add Their Own</span></div>
+  <div class="cover-portrait"><img src="images/thinkroot.io_Marine_Corps_John_Smith_Hispanic._Low-key_rim-li_6752eb46-4bf4-441d-965b-9d9ba257d532_3.png" alt="Illustrative example portrait, Marine Corps theme. Not a real person."></div>
   <div class="cover-plaque">
     <p class="cover-branch-line">United States Marine Corps &middot; [ Years of Service ]</p>
     <h1 class="cover-name">John Smith</h1>
