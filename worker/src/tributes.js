@@ -13,7 +13,26 @@ export class InvalidVisibilityError extends Error {}
 // persists it to D1. The privacy word, if given, is hashed before storage;
 // the plaintext is never written to the database or logged. One row
 // written per tribute created.
-export async function createTribute(db, { visibility, privacyWord = null, title = 'Untitled Tribute' }) {
+//
+// The content fields (subjectMode through honors) are the actual data the
+// 8-step guided flow collects (see start.html's serializeDraft()), added
+// in 0002_content.sql. All optional here, since createTribute is also used
+// by the older tribute-link tests that only care about visibility/title.
+export async function createTribute(db, {
+  visibility,
+  privacyWord = null,
+  title = 'Untitled Tribute',
+  subjectMode = null,
+  fullName = null,
+  branch = null,
+  serviceFromYear = null,
+  serviceToYear = null,
+  bornYear = null,
+  passedYear = null,
+  storyText = null,
+  honors = null,
+  photoKey = null,
+} = {}) {
   if (!VISIBILITY_TIERS.includes(visibility)) {
     throw new InvalidVisibilityError(`Invalid visibility tier: ${visibility}`);
   }
@@ -21,15 +40,31 @@ export async function createTribute(db, { visibility, privacyWord = null, title 
   const token = generateTributeToken();
   const createdAt = new Date().toISOString();
   const privacyWordHash = privacyWord ? await hashPrivacyWord(privacyWord) : null;
+  // Stored as a JSON string (a plain array of honor names); D1 has no
+  // native array/JSON column type, and Step 5 doesn't collect anything
+  // richer than a name per honor yet.
+  const honorsJson = honors ? JSON.stringify(honors) : null;
 
   await db
     .prepare(
-      'INSERT INTO tributes (token, visibility, title, privacy_word_hash, created_at) VALUES (?, ?, ?, ?, ?)'
+      `INSERT INTO tributes (
+        token, visibility, title, privacy_word_hash, created_at,
+        subject_mode, full_name, branch, service_from_year, service_to_year,
+        born_year, passed_year, story_text, honors, photo_key
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
     )
-    .bind(token, visibility, title, privacyWordHash, createdAt)
+    .bind(
+      token, visibility, title, privacyWordHash, createdAt,
+      subjectMode, fullName, branch, serviceFromYear, serviceToYear,
+      bornYear, passedYear, storyText, honorsJson, photoKey
+    )
     .run();
 
-  return { token, visibility, title, privacyWordHash, createdAt };
+  return {
+    token, visibility, title, privacyWordHash, createdAt,
+    subjectMode, fullName, branch, serviceFromYear, serviceToYear,
+    bornYear, passedYear, storyText, honors: honors || null, photoKey,
+  };
 }
 
 // One row read per tribute view. This is the only query a page view
@@ -38,12 +73,20 @@ export async function createTribute(db, { visibility, privacyWord = null, title 
 export async function getTribute(db, token) {
   const row = await db
     .prepare(
-      'SELECT token, visibility, title, privacy_word_hash, created_at FROM tributes WHERE token = ?'
+      `SELECT token, visibility, title, privacy_word_hash, created_at,
+        subject_mode, full_name, branch, service_from_year, service_to_year,
+        born_year, passed_year, story_text, honors, photo_key
+      FROM tributes WHERE token = ?`
     )
     .bind(token)
     .first();
 
   if (!row) return null;
+
+  let honors = null;
+  if (row.honors) {
+    try { honors = JSON.parse(row.honors); } catch { honors = null; }
+  }
 
   return {
     token: row.token,
@@ -51,6 +94,16 @@ export async function getTribute(db, token) {
     title: row.title,
     privacyWordHash: row.privacy_word_hash,
     createdAt: row.created_at,
+    subjectMode: row.subject_mode,
+    fullName: row.full_name,
+    branch: row.branch,
+    serviceFromYear: row.service_from_year,
+    serviceToYear: row.service_to_year,
+    bornYear: row.born_year,
+    passedYear: row.passed_year,
+    storyText: row.story_text,
+    honors,
+    photoKey: row.photo_key,
   };
 }
 

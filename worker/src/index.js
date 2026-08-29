@@ -19,12 +19,13 @@ import {
   PhotoTooLargeError,
   UnsupportedPhotoTypeError,
 } from './photos.js';
+import { renderTributePage } from './renderer.js';
 
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
 
-    if (request.method === 'OPTIONS' && (url.pathname === '/photo' || url.pathname.startsWith('/photo/'))) {
+    if (request.method === 'OPTIONS' && (url.pathname === '/photo' || url.pathname.startsWith('/photo/') || url.pathname === '/tribute')) {
       return corsPreflightResponse(request);
     }
 
@@ -98,22 +99,59 @@ function corsPreflightResponse(request) {
 }
 
 async function handleCreate(request, env) {
+  const cors = corsHeaders(request);
+  if (!cors['Access-Control-Allow-Origin']) {
+    return jsonResponse({ error: 'Origin not allowed' }, 403);
+  }
+
   let body;
   try {
     body = await request.json();
   } catch {
-    return jsonResponse({ error: 'Invalid JSON body' }, 400);
+    return jsonResponse({ error: 'Invalid JSON body' }, 400, cors);
   }
 
-  const { visibility, privacyWord, title } = body || {};
+  // Every field here is real content the 8-step flow already collects
+  // (see start.html's serializeDraft()), passed straight through from the
+  // browser's draft state at Step 8. No tier-selection UI exists yet, so
+  // visibility always defaults to 'private' here, per this build's scope:
+  // token-required access, not publicly listed or indexed.
+  const {
+    title,
+    privacyWord,
+    subjectMode,
+    fullName,
+    branch,
+    serviceFromYear,
+    serviceToYear,
+    bornYear,
+    passedYear,
+    storyText,
+    honors,
+    photoKey,
+  } = body || {};
 
   try {
-    const record = await createTribute(env.DB, { visibility, privacyWord, title });
+    const record = await createTribute(env.DB, {
+      visibility: 'private',
+      privacyWord,
+      title: fullName || title || 'Untitled Tribute',
+      subjectMode,
+      fullName,
+      branch,
+      serviceFromYear,
+      serviceToYear,
+      bornYear,
+      passedYear,
+      storyText,
+      honors,
+      photoKey,
+    });
     // Never echo the privacy word or its hash back to the client.
-    return jsonResponse({ token: record.token, visibility: record.visibility }, 201);
+    return jsonResponse({ token: record.token, visibility: record.visibility }, 201, cors);
   } catch (err) {
     if (err instanceof InvalidVisibilityError) {
-      return jsonResponse({ error: err.message }, 400);
+      return jsonResponse({ error: err.message }, 400, cors);
     }
     throw err;
   }
@@ -135,7 +173,13 @@ async function handleGet(request, env, token) {
     }
   }
 
-  return htmlResponse(renderTributePage(record), 200, { noindex });
+  // The photo itself isn't fetched here; the rendered page just points its
+  // <img> at this same Worker's GET /photo/:key (already real, already
+  // tested), and the visitor's browser fetches the bytes when it loads
+  // the page, the same way any ordinary <img src> works.
+  const photoUrl = record.photoKey ? `/photo/${record.photoKey}` : null;
+
+  return htmlResponse(renderTributePage({ ...record, noindex }, photoUrl), 200, { noindex });
 }
 
 function extractPrivacyWord(request) {
@@ -231,29 +275,6 @@ function htmlResponse(body, status, { noindex }) {
   return new Response(body, { status, headers });
 }
 
-function renderTributePage(record) {
-  const noindexMeta = isNoindexTier(record.visibility)
-    ? '<meta name="robots" content="noindex, nofollow">'
-    : '';
-  return `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-${noindexMeta}
-<title>${escapeHtml(record.title)}</title>
-</head>
-<body>
-<a href="#main-content" class="skip-link">Skip to content</a>
-<main id="main-content">
-<h1>${escapeHtml(record.title)}</h1>
-<p>Placeholder tribute render. The actual tribute page, built from the
-8-step flow, is out of scope for this piece of work.</p>
-</main>
-</body>
-</html>`;
-}
-
 // The screen a family sees at tribute setup, when Private is chosen. Wording
 // is exact, per spec: never call this a passphrase, a password, or a
 // security setting anywhere in the interface.
@@ -333,10 +354,4 @@ function renderNotFoundPage() {
 </main>
 </body>
 </html>`;
-}
-
-function escapeHtml(str) {
-  return String(str).replace(/[&<>"']/g, (c) => (
-    { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]
-  ));
 }

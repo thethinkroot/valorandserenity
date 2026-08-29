@@ -899,6 +899,19 @@
   <div class="screen hidden" id="screen-finalreveal">
     <h2 class="question" style="text-align:center;">Check your email</h2>
     <p class="helper" style="text-align:center;">We've sent a link to <strong id="confirm-email-display">you</strong>. Click it to publish this tribute, and use that same link anytime to come back and make changes.</p>
+
+    <!-- TEMPORARY TESTING BRIDGE: see submitEmailConfirmation()'s comment.
+         Real email sending doesn't exist yet, so the real published URL is
+         shown here directly instead of waiting on an email click. This
+         must not ship to real families before real email confirmation
+         gates publishing for real. -->
+    <div class="hidden" id="temp-real-link-bridge" style="margin-top:28px; padding:20px 24px; border:2px dashed var(--copper); border-radius:8px; text-align:center;">
+      <p style="font-weight:700; font-size:13px; letter-spacing:0.05em; text-transform:uppercase; color:var(--copper); margin:0 0 10px;">Temporary testing link, not the real flow</p>
+      <p style="font-size:14px; margin:0 0 14px;">Real email confirmation isn't built yet. For testing only, here's the real, live page that was just created:</p>
+      <a id="temp-real-link" href="#" target="_blank" rel="noopener" style="font-weight:700; word-break:break-all;"></a>
+    </div>
+    <p class="gentle-note" id="temp-publish-error-note" style="text-align:center; margin-top:20px;" hidden>That didn't publish. The Worker may be unreachable right now. Your answers are still saved on this device, so it's safe to try again.</p>
+
     <details class="resource-card tip-callout hidden" id="resource-card-passed" style="text-align:left; margin-top:32px;">
       <summary>While you're here, a few practical things that might help</summary>
       <p>If you haven't already: locate their DD-214, order a few extra certified copies of the death certificate, and know that a Veteran Service Officer can help you navigate benefits at no cost. We've put together a fuller guide if it helps.</p>
@@ -932,7 +945,12 @@
   // Worker, never in localStorage (too large, wrong tool). Null until a
   // real upload actually succeeds. See worker/src/photos.js.
   let photoKey = null;
-  const PHOTO_API_BASE = (location.hostname === 'localhost' || location.hostname === '127.0.0.1')
+  // Real, shareable URL from a real Step 8 publish. Null until that
+  // succeeds. See the temporary-bridge note on submitEmailConfirmation().
+  let publishedTributeUrl = null;
+  // Same real Worker backs photo storage, tribute creation, and tribute
+  // rendering (worker/src/index.js), so one base URL covers all of it.
+  const WORKER_API_BASE = (location.hostname === 'localhost' || location.hostname === '127.0.0.1')
     ? 'http://localhost:8787' // wrangler dev's default port, for local testing only
     : 'https://valor-and-serenity-tribute-links.thethinkroot.workers.dev';
 
@@ -1059,12 +1077,72 @@
     if (id === 'finalreveal') {
       const email = document.getElementById('input-confirm-email').value.trim();
       document.getElementById('confirm-email-display').textContent = email;
+      const bridge = document.getElementById('temp-real-link-bridge');
+      const linkEl = document.getElementById('temp-real-link');
+      const errorNote = document.getElementById('temp-publish-error-note');
+      if (publishedTributeUrl) {
+        linkEl.href = publishedTributeUrl;
+        linkEl.textContent = publishedTributeUrl;
+        bridge.classList.remove('hidden');
+        errorNote.hidden = true;
+      } else {
+        bridge.classList.add('hidden');
+        errorNote.hidden = false;
+      }
     }
 
     saveDraft();
   }
 
-  function submitEmailConfirmation() {
+  // Composes the real story text from whichever Step 4 path the family
+  // actually used. "Write it yourself" fills write-textarea; "Get some
+  // help" fills the Story Assist sa1/sa2 answers instead, never both in a
+  // normal pass through the flow. Concatenating whichever are non-empty
+  // preserves exactly what was typed, verbatim, regardless of path.
+  function composeStoryText() {
+    const parts = [];
+    const write = document.getElementById('write-textarea').value.trim();
+    const sa1 = document.getElementById('input-sa1-answer').value.trim();
+    const sa2 = document.getElementById('input-sa2-answer').value.trim();
+    if (write) parts.push(write);
+    if (sa1) parts.push(sa1);
+    if (sa2) parts.push(sa2);
+    return parts.join('\n\n');
+  }
+
+  // Maps the same draft state serializeDraft() already tracks onto the
+  // real /tribute POST body. Every field here has a real column in
+  // worker/migrations/0002_content.sql.
+  function buildTributePayload() {
+    return {
+      subjectMode: subjectMode,
+      fullName: document.getElementById('input-name').value.trim() || null,
+      branch: selectedBranch,
+      serviceFromYear: document.getElementById('input-svc-from').value.trim() || null,
+      serviceToYear: document.getElementById('input-svc-to').value.trim() || null,
+      bornYear: document.getElementById('input-birth').value.trim() || null,
+      passedYear: document.getElementById('input-passing').value.trim() || null,
+      storyText: composeStoryText() || null,
+      honors: Array.from(document.querySelectorAll('#honors-list input')).map(function(i) { return i.value.trim(); }).filter(Boolean),
+      photoKey: photoKey,
+    };
+  }
+
+  // TEMPORARY TESTING BRIDGE, NOT THE FINAL DESIGN.
+  //
+  // Real email sending doesn't exist yet (see the spec-vs-reality
+  // inventory), so there is no real "click the link in your email" step to
+  // gate on. Until that's built, this publishes for real immediately after
+  // a syntactically valid email is typed, and shows the real published URL
+  // directly on this screen so the flow can be tested end to end.
+  //
+  // This is explicitly NOT acceptable once real families use this: right
+  // now, typing any email address at all, real or not, immediately
+  // produces a real, live, shareable page. Before this is user-facing,
+  // Step 8 must send a real confirmation email and hold publishing until
+  // that link is actually clicked, the same way the copy on this screen
+  // already (currently inaccurately) claims it does.
+  async function submitEmailConfirmation() {
     const input = document.getElementById('input-confirm-email');
     const note = document.getElementById('confirm-email-note');
     const val = input.value.trim();
@@ -1075,6 +1153,27 @@
       return;
     }
     note.classList.add('hidden');
+
+    const btn = document.querySelector('#screen-step8 .btn-primary');
+    const originalLabel = btn.textContent;
+    btn.disabled = true;
+    btn.textContent = 'Publishing...';
+
+    try {
+      const response = await fetch(WORKER_API_BASE + '/tribute', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(buildTributePayload()),
+      });
+      if (!response.ok) throw new Error('publish failed: ' + response.status);
+      const { token } = await response.json();
+      publishedTributeUrl = WORKER_API_BASE + '/tribute/' + token;
+    } catch (err) {
+      publishedTributeUrl = null;
+    }
+
+    btn.disabled = false;
+    btn.textContent = originalLabel;
     goTo('finalreveal');
   }
 
@@ -1161,7 +1260,7 @@
     setPhotoBoxState('uploading');
     const localPreviewUrl = URL.createObjectURL(file);
     try {
-      const response = await fetch(PHOTO_API_BASE + '/photo', {
+      const response = await fetch(WORKER_API_BASE + '/photo', {
         method: 'POST',
         headers: { 'Content-Type': file.type },
         body: file,
@@ -1188,7 +1287,7 @@
   async function loadPhotoFromKey(key) {
     setPhotoBoxState('uploading');
     try {
-      const response = await fetch(PHOTO_API_BASE + '/photo/' + key);
+      const response = await fetch(WORKER_API_BASE + '/photo/' + key);
       if (!response.ok) {
         setPhotoUploadNote("We couldn't find that photo just now. You're welcome to add it again.");
         setPhotoBoxState('empty');
@@ -1378,6 +1477,7 @@
       fields: fields,
       honors: honors,
       photoKey: photoKey,
+      publishedTributeUrl: publishedTributeUrl,
       inviteShown: !document.getElementById('invite-field-row').classList.contains('hidden')
     };
   }
@@ -1409,6 +1509,7 @@
       photoKey = state.photoKey;
       loadPhotoFromKey(photoKey);
     }
+    if (state.publishedTributeUrl) publishedTributeUrl = state.publishedTributeUrl;
     if (state.inviteShown) showInviteField();
 
     (state.honors || []).forEach(function() { addHonor(); });

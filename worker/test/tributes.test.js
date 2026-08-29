@@ -46,6 +46,44 @@ describe('createTribute / getTribute', () => {
     expect(row.privacy_word_hash).not.toContain('his favorite fishing spot');
     expect(row.privacy_word_hash).toMatch(/^[0-9a-f]{64}$/); // SHA-256 hex
   });
+
+  it('round-trips every real content field the 8-step flow collects (0002_content.sql)', async () => {
+    const created = await createTribute(env.DB, {
+      visibility: 'private',
+      title: 'Jane Smith',
+      subjectMode: 'passed',
+      fullName: 'Jane Smith',
+      branch: 'Navy',
+      serviceFromYear: '1990',
+      serviceToYear: '2010',
+      bornYear: '1968',
+      passedYear: '2023',
+      storyText: 'She loved the sea long before she ever served on it.',
+      honors: ['Navy Achievement Medal', 'Good Conduct Medal'],
+      photoKey: 'somePhotoKey123',
+    });
+
+    const fetched = await getTribute(env.DB, created.token);
+    expect(fetched.subjectMode).toBe('passed');
+    expect(fetched.fullName).toBe('Jane Smith');
+    expect(fetched.branch).toBe('Navy');
+    expect(fetched.serviceFromYear).toBe('1990');
+    expect(fetched.serviceToYear).toBe('2010');
+    expect(fetched.bornYear).toBe('1968');
+    expect(fetched.passedYear).toBe('2023');
+    expect(fetched.storyText).toBe('She loved the sea long before she ever served on it.');
+    expect(fetched.honors).toEqual(['Navy Achievement Medal', 'Good Conduct Medal']);
+    expect(fetched.photoKey).toBe('somePhotoKey123');
+  });
+
+  it('leaves every new content field null when a caller (e.g. the older tribute-link flow) never sets them', async () => {
+    const created = await createTribute(env.DB, { visibility: 'community', title: 'Untouched Fields' });
+    const fetched = await getTribute(env.DB, created.token);
+    expect(fetched.fullName).toBeNull();
+    expect(fetched.branch).toBeNull();
+    expect(fetched.honors).toBeNull();
+    expect(fetched.photoKey).toBeNull();
+  });
 });
 
 describe('D1 read/write volume, per the free-tier check', () => {
@@ -129,6 +167,7 @@ describe('HTTP behavior end to end', () => {
     const created = await createTribute(env.DB, {
       visibility: 'community',
       title: 'A Public Tribute',
+      fullName: 'A Public Tribute',
     });
 
     const response = await worker.fetch(
@@ -148,6 +187,7 @@ describe('HTTP behavior end to end', () => {
       visibility: 'private',
       privacyWord: 'his favorite fishing spot',
       title: 'A Very Private Tribute',
+      fullName: 'A Very Private Tribute',
     });
 
     const noWord = await worker.fetch(
@@ -172,6 +212,7 @@ describe('HTTP behavior end to end', () => {
       visibility: 'private',
       privacyWord: 'his favorite fishing spot',
       title: 'A Very Private Tribute',
+      fullName: 'A Very Private Tribute',
     });
 
     const response = await worker.fetch(
@@ -192,6 +233,7 @@ describe('HTTP behavior end to end', () => {
     const created = await createTribute(env.DB, {
       visibility: 'family',
       title: 'A Family Tribute',
+      fullName: 'A Family Tribute',
     });
 
     const response = await worker.fetch(
@@ -209,7 +251,7 @@ describe('HTTP behavior end to end', () => {
     const response = await worker.fetch(
       new Request('https://example.com/tribute', {
         method: 'POST',
-        headers: { 'content-type': 'application/json' },
+        headers: { 'content-type': 'application/json', Origin: 'http://localhost:8935' },
         body: JSON.stringify({
           visibility: 'private',
           privacyWord: 'super secret',
