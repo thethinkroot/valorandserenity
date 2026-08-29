@@ -982,6 +982,11 @@
   // Real, shareable URL from a real Step 8 publish. Null until that
   // succeeds. See the temporary-bridge note on submitEmailConfirmation().
   let publishedTributeUrl = null;
+  // The specific, real reason the server gave for the most recent failed
+  // publish attempt, when it gave one (e.g. a missing-consent 400).
+  // Null for a genuine network/unknown failure, where no specific reason
+  // exists to show.
+  let lastPublishErrorDetail = null;
   // Same real Worker backs photo storage, tribute creation, and tribute
   // rendering (worker/src/index.js), so one base URL covers all of it.
   const WORKER_API_BASE = (location.hostname === 'localhost' || location.hostname === '127.0.0.1')
@@ -1126,6 +1131,12 @@
       } else {
         bridge.classList.add('hidden');
         errorBlock.hidden = false;
+        // Show the server's own specific, actionable reason when there
+        // is one (e.g. missing consent), instead of always falling back
+        // to a generic message that hides a fixable problem.
+        const errorText = document.getElementById('temp-publish-error-note');
+        errorText.textContent = (lastPublishErrorDetail || "That didn't publish. Something went wrong before a real page could be created.")
+          + " Your answers are still saved on this device, so it's safe to try again.";
       }
     }
 
@@ -1190,6 +1201,19 @@
   // that link is actually clicked, the same way the copy on this screen
   // already (currently inaccurately) claims it does.
   async function submitEmailConfirmation() {
+    // Both early-return checks below can now be reached from the
+    // finalreveal screen too (via Try Again on a restored draft), not
+    // just from Step 8 directly. Their notes live inside screen-step8,
+    // so if we're not already looking at it, jump there first, so the
+    // specific reason is actually visible instead of silently updating
+    // a hidden screen while nothing on screen changes. Skipped when
+    // already on Step 8, the normal case, so this doesn't add a
+    // redundant re-navigation to the everyday "Send the confirmation"
+    // click.
+    if (currentScreenId() !== 'step8') {
+      goTo('step8');
+    }
+
     const input = document.getElementById('input-confirm-email');
     const note = document.getElementById('confirm-email-note');
     const val = input.value.trim();
@@ -1204,7 +1228,10 @@
     // Hard gate, not a soft warning: all three must be checked, every
     // time, no bypass. This is a real requirement, not a kindness that
     // can be skipped the way the gentler prompts elsewhere in this flow
-    // can be.
+    // can be. Consent is deliberately never restored from a saved draft
+    // (it has to be re-affirmed, not assumed), so this is the expected,
+    // correct outcome for a draft restored straight to this point, not
+    // a bug in itself, unlike the invisible dead-end it used to cause.
     const consentNote = document.getElementById('consent-gate-note');
     const allConsentChecked = document.getElementById('consent-photo-rights').checked
       && document.getElementById('consent-authorized').checked
@@ -1221,6 +1248,7 @@
     btn.disabled = true;
     btn.textContent = 'Publishing...';
 
+    lastPublishErrorDetail = null;
     try {
       const response = await fetch(WORKER_API_BASE + '/tribute', {
         method: 'POST',
@@ -1229,11 +1257,13 @@
       });
       if (!response.ok) {
         // Surface whatever detail the server actually gave, rather than
-        // discarding it: a 400 with a real reason (e.g. missing consent)
-        // is a different failure than the Worker genuinely being down,
-        // and only the console log below can tell them apart later.
+        // discarding it: a 400 with a real, specific, actionable reason
+        // (e.g. missing consent) is a different failure than the Worker
+        // genuinely being down, and the family should see that specific
+        // reason, not just a generic "something went wrong."
         let detail = '';
         try { detail = (await response.json()).error || ''; } catch (e) {}
+        lastPublishErrorDetail = detail || null;
         throw new Error('Publish request failed (' + response.status + ')' + (detail ? ': ' + detail : ''));
       }
       const { token } = await response.json();
@@ -1615,7 +1645,22 @@
     });
 
     applySubjectCopy();
-    goTo(state.screenId || 'opening');
+
+    // A draft can only legitimately land on finalreveal if it actually
+    // has a real publishedTributeUrl already. Consent is never persisted
+    // (it must be re-affirmed, not assumed from a stale save, the same
+    // way a checkbox should work), so any restored draft sitting on
+    // finalreveal without a real success is really just a Step 8 draft
+    // whose consent boxes are legitimately empty. Sending it to
+    // finalreveal anyway used to mean "Try Again" tried to publish
+    // against a guaranteed-to-fail consent gate, with no visible
+    // explanation, since the note that would explain it lives on the
+    // Step 8 screen this never actually showed.
+    let targetScreenId = state.screenId || 'opening';
+    if (targetScreenId === 'finalreveal' && !publishedTributeUrl) {
+      targetScreenId = 'step8';
+    }
+    goTo(targetScreenId);
     return true;
   }
 
