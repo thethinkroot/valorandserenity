@@ -941,7 +941,10 @@
       <p style="font-size:14px; margin:0 0 14px;">Real email confirmation isn't built yet. For testing only, here's the real, live page that was just created:</p>
       <a id="temp-real-link" href="#" target="_blank" rel="noopener" style="font-weight:700; word-break:break-all;"></a>
     </div>
-    <p class="gentle-note" id="temp-publish-error-note" style="text-align:center; margin-top:20px;" hidden>That didn't publish. The Worker may be unreachable right now. Your answers are still saved on this device, so it's safe to try again.</p>
+    <div id="publish-error-block" style="text-align:center; margin-top:20px;" hidden>
+      <p class="gentle-note" id="temp-publish-error-note" style="margin:0 0 16px;">That didn't publish. Something went wrong before a real page could be created. Your answers are still saved on this device, so it's safe to try again.</p>
+      <button class="btn-primary" data-action="retry-publish" id="retry-publish-btn">Try Again</button>
+    </div>
 
     <details class="resource-card tip-callout hidden" id="resource-card-passed" style="text-align:left; margin-top:32px;">
       <summary>While you're here, a few practical things that might help</summary>
@@ -1114,15 +1117,15 @@
       document.getElementById('confirm-email-display').textContent = email;
       const bridge = document.getElementById('temp-real-link-bridge');
       const linkEl = document.getElementById('temp-real-link');
-      const errorNote = document.getElementById('temp-publish-error-note');
+      const errorBlock = document.getElementById('publish-error-block');
       if (publishedTributeUrl) {
         linkEl.href = publishedTributeUrl;
         linkEl.textContent = publishedTributeUrl;
         bridge.classList.remove('hidden');
-        errorNote.hidden = true;
+        errorBlock.hidden = true;
       } else {
         bridge.classList.add('hidden');
-        errorNote.hidden = false;
+        errorBlock.hidden = false;
       }
     }
 
@@ -1224,16 +1227,43 @@
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(buildTributePayload()),
       });
-      if (!response.ok) throw new Error('publish failed: ' + response.status);
+      if (!response.ok) {
+        // Surface whatever detail the server actually gave, rather than
+        // discarding it: a 400 with a real reason (e.g. missing consent)
+        // is a different failure than the Worker genuinely being down,
+        // and only the console log below can tell them apart later.
+        let detail = '';
+        try { detail = (await response.json()).error || ''; } catch (e) {}
+        throw new Error('Publish request failed (' + response.status + ')' + (detail ? ': ' + detail : ''));
+      }
       const { token } = await response.json();
       publishedTributeUrl = WORKER_API_BASE + '/tribute/' + token;
     } catch (err) {
+      // Never swallow this silently: without a real log, a real failure
+      // here is undiagnosable after the fact, which is exactly what
+      // happened before this line existed.
+      console.error('Tribute publish failed:', err);
       publishedTributeUrl = null;
     }
 
     btn.disabled = false;
     btn.textContent = originalLabel;
     goTo('finalreveal');
+  }
+
+  // A real retry, not a rebuild: everything already typed (name, dates,
+  // story, honors, photo, email, the three consent checkboxes) is still
+  // sitting in the live DOM and in localStorage, untouched. Re-running
+  // submitEmailConfirmation() re-reads all of it fresh and re-attempts
+  // the same publish; nothing here clears anything, unlike "Start over."
+  async function retryPublish() {
+    const btn = document.getElementById('retry-publish-btn');
+    const originalLabel = btn.textContent;
+    btn.disabled = true;
+    btn.textContent = 'Trying again...';
+    await submitEmailConfirmation();
+    btn.disabled = false;
+    btn.textContent = originalLabel;
   }
 
   function selectBranch(btn) {
@@ -1429,14 +1459,21 @@
   let previewTheme = null;
 
   function applyPreviewTheme(themeName) {
+    // A restored draft can carry a selectedBranch that predates this
+    // theme table, or one that was never set at all (found live: a null
+    // selectedBranch throws here and takes Step 7's preview down with
+    // it). Falling back to Default keeps the preview rendering instead
+    // of crashing, the same way an unrecognized theme name should be
+    // handled anywhere else in this flow.
+    const t = branchThemes[themeName] || branchThemes['Default'];
+    themeName = branchThemes[themeName] ? themeName : 'Default';
     previewTheme = themeName;
-    const t = branchThemes[themeName];
     const card = document.getElementById('preview-card');
     card.style.background = t.bg;
     card.style.setProperty('--accent', t.accent);
     document.getElementById('preview-branch').style.color = t.accent;
     document.getElementById('preview-dates').style.color = t.accent;
-    const label = t.label || ('United States ' + selectedBranch);
+    const label = t.label || (selectedBranch ? 'United States ' + selectedBranch : 'United States Armed Forces');
     document.getElementById('preview-branch').textContent = label;
 
     const otherOptions = ['Default', 'American Flag', selectedBranch].filter((v,i,a) => a.indexOf(v)===i && v !== themeName);
@@ -1618,6 +1655,7 @@
       case 'show-invite-field': showInviteField(); break;
       case 'apply-preview-theme': applyPreviewTheme(arg); break;
       case 'submit-email': submitEmailConfirmation(); break;
+      case 'retry-publish': retryPublish(); break;
       case 'start-over': startOver(); break;
     }
   });
