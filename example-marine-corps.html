@@ -113,8 +113,9 @@
   .section-lede { font-size: 16px; color: var(--aubergine); text-align: center; max-width: 540px; margin: 0 auto; line-height: 1.65; }
 
   #example-about { background: var(--bone-warm); }
-  .placeholder-photo { width: 100%; max-width: 320px; aspect-ratio: 4/5; margin: 44px auto 0; border-radius: var(--radius-base, 4px); background-image: repeating-linear-gradient(45deg, var(--bone), var(--bone) 10px, var(--bone-deep) 10px, var(--bone-deep) 20px); display: flex; align-items: center; justify-content: center; }
+  .placeholder-photo { width: 100%; max-width: 320px; aspect-ratio: 4/5; margin: 44px auto 0; border-radius: var(--radius-base, 4px); background-image: repeating-linear-gradient(45deg, var(--bone), var(--bone) 10px, var(--bone-deep) 10px, var(--bone-deep) 20px); display: flex; align-items: center; justify-content: center; overflow: hidden; }
   .placeholder-photo span { font-family: var(--font-body); font-size: 12.5px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--aubergine); background: var(--bone-warm); padding: 8px 14px; border-radius: 3px; }
+  .placeholder-photo img { width: 100%; height: 100%; object-fit: cover; }
   .placeholder-note { font-style: italic; font-size: 14px; color: var(--aubergine); margin: 40px auto 0; max-width: 520px; line-height: 1.7; }
 
   /* Story Assist with/without toggle: big, plain buttons, no hover-dependent controls */
@@ -280,7 +281,7 @@
     <p class="eyebrow">Their Story</p>
     <h2>This Is Where Their Story Would Go</h2>
     <p class="section-lede">A family's own words about their life, their service, and the people who loved them. Guided, one prompt at a time.</p>
-    <div class="placeholder-photo" data-reveal><span>Family Photo. Add Your Own.</span></div>
+    <div class="placeholder-photo" data-reveal><img src="images/marine-corps-family-photo-example.webp" alt="Illustrative example of a family photo moment, Marine Corps theme. Not real people."></div>
     <p class="placeholder-note">No official crests or seals are used in this theme. Families add their own photos and keepsakes, the same way Mike's family did.</p>
 
     <div class="sa-toggle-demo" data-reveal>

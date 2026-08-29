@@ -8,10 +8,16 @@ file whenever a new image is generated, placed, renamed, or found to be
 wrong, rather than treating it as a one-time snapshot.
 
 Last verified: 2026-08-29 (updated same day: Army placed, Air Force
-replaced, gendered taglines fixed on Air Force/Space Force/Navy, then
-five of seven secondary "family photo" slots filled), against the live
-local build, by looking directly at each rendered page and each image
-file, not by reading code alone.
+replaced, gendered taglines fixed on Air Force/Space Force/Navy, five of
+seven secondary "family photo" slots filled, all 12 placed images
+compressed to WebP, then the final two secondary slots filled), against
+the live local build, by looking directly at each rendered page and
+each image file, not by reading code alone.
+
+All twelve placed images (hero + secondary, across all seven pages) are
+WebP, quality 85, not the original raw PNGs. File paths below reflect
+this; if you're looking for a `.png` under `images/`, it won't be there
+for any of these twelve, that's expected.
 
 ## How to use this file
 
@@ -33,19 +39,19 @@ in the detail sections. This divergence hasn't been fixed and isn't being
 glossed over; it's tracked here for whoever does a future consistency
 pass.
 
-Five of the seven secondary "family photo" slots are also now filled
-with real images (Army, American Flag, Coast Guard, Air Force, Navy).
-Marine Corps and Space Force remain on their placeholder, deliberately:
-their replacement images haven't been generated yet, not an oversight.
+All seven secondary "family photo" slots are now also filled with real
+images. This closes the photo-placement effort: every one of the
+fourteen hero + secondary slots across all seven pages now shows a real
+image, none left on the diagonal-stripe placeholder.
 
 | Branch | Assigned name | Hero image | Secondary "family photo" slot |
 |---|---|---|---|
 | Army | John Smith | Filled, verified correct (different style, see note) | Filled, verified correct |
 | American Flag | John Smith | Filled, verified correct | Filled, verified correct |
-| Space Force | Jane Smith | Filled, verified correct | Placeholder (pending, image not generated yet) |
+| Space Force | Jane Smith | Filled, verified correct | Filled, verified correct |
 | Coast Guard | John Smith | Filled, verified correct | Filled, verified correct |
 | Air Force | Jane Smith | Filled, verified correct (different style, see note) | Filled, verified correct |
-| Marine Corps | John Smith | Filled, verified correct | Placeholder (pending, image not generated yet) |
+| Marine Corps | John Smith | Filled, verified correct | Filled, verified correct |
 | Navy | Jane Smith | Filled, verified correct (see note) | Filled, verified correct |
 
 ## Detail by page
@@ -53,7 +59,7 @@ their replacement images haven't been generated yet, not an oversight.
 ### Army: `example-army.html`
 - **Hero image.** Branch: Army. Assigned gender: John Smith (male).
   Status: **filled and verified correct**.
-  `images/army-veteran-tribute-example.png`: an older man, weathered
+  `images/army-veteran-tribute-example.webp`: an older man, weathered
   profile, smoking, seated on a farmhouse porch overlooking water at
   golden hour, with a younger woman beside him. Visually confirmed male.
   This closes the last open hero-image gap; all seven example pages now
@@ -68,7 +74,7 @@ their replacement images haven't been generated yet, not an oversight.
 - **Secondary slot.** Type: "family photo" demonstration slot inside the
   Their Story section (`.placeholder-photo`, previously "Family Photo.
   Add Your Own."). Status: **filled and verified correct**.
-  `images/army-family-photo-example.png`: two figures, one older and one
+  `images/army-family-photo-example.webp`: two figures, one older and one
   younger, leaning over a photo album together at a window, warm sepia
   tone. A real fit for the "family photo moment" the slot demonstrates.
   The surrounding "No official crests or seals..." note was left
@@ -79,21 +85,21 @@ their replacement images haven't been generated yet, not an oversight.
 ### American Flag: `example-flag.html`
 - **Hero image.** Branch: American Flag (any branch of service). Assigned
   gender: John Smith (male). Status: **filled and verified correct**.
-  `images/american-flag-veteran-tribute-example.png`: elderly man, white
+  `images/american-flag-veteran-tribute-example.webp`: elderly man, white
   beard, sitting with a child on a porch, American flag in frame. Visually
   confirmed male. The page's `<h1 class="cover-name">` previously read
   "Jamie Smith," a gender-neutral name chosen before this real image
   existed; it has been corrected to "John Smith" to match the now-real
   photo. See the root-cause note below.
 - **Secondary slot.** Status: **filled and verified correct**.
-  `images/american-flag-family-photo-example.png`: two figures examining
+  `images/american-flag-family-photo-example.webp`: two figures examining
   a small framed photograph together, warm low light. Fits the slot's
   purpose; surrounding note text left unchanged.
 
 ### Space Force: `example-space-force.html`
 - **Hero image.** Branch: Space Force. Assigned gender: Jane Smith
   (female). Status: **filled and verified correct**.
-  `images/space-force-veteran-tribute-example.png`: adult with hair in an
+  `images/space-force-veteran-tribute-example.webp`: adult with hair in an
   updo, softer profile, holding a child, looking up at a starfield.
   Visually confirmed female.
 - **Tagline mismatch found and fixed.** The page's `.cover-sentence`
@@ -104,25 +110,27 @@ their replacement images haven't been generated yet, not an oversight.
   gender words. Fixed to "Beloved wife, mother, and Guardian." Found
   while auditing all seven pages for the same bug class as Air Force's,
   not previously flagged anywhere.
-- **Secondary slot.** Status: **placeholder still showing, pending**.
-  Deliberately left untouched this round; the replacement image for this
-  slot hasn't been generated yet. Not forgotten, just not ready.
+- **Secondary slot.** Status: **filled and verified correct**.
+  `images/space-force-family-photo-example.webp`: two figures at a table,
+  one holding up a small old photograph or letter for the other to read,
+  warm low light. Fits the slot's purpose; surrounding note text left
+  unchanged.
 
 ### Coast Guard: `example-coast-guard.html`
 - **Hero image.** Branch: Coast Guard. Assigned gender: John Smith (male).
   Status: **filled and verified correct**.
-  `images/coast-guard-veteran-tribute-example.png`: elderly man, weathered
+  `images/coast-guard-veteran-tribute-example.webp`: elderly man, weathered
   profile, dockside at dusk with a lighthouse in the background. Visually
   confirmed male.
 - **Secondary slot.** Status: **filled and verified correct**.
-  `images/coast-guard-family-photo-example.png`: two figures leaning
+  `images/coast-guard-family-photo-example.webp`: two figures leaning
   together, one holding a small photograph up to the light, warm sepia
   tone. Fits the slot's purpose; surrounding note text left unchanged.
 
 ### Air Force: `example-air-force.html`
 - **Hero image.** Branch: Air Force. Assigned gender: Jane Smith (female).
   Status: **filled and verified correct**.
-  `images/air-force-veteran-tribute-example.png`: a young airman in
+  `images/air-force-veteran-tribute-example.webp`: a young airman in
   service uniform and cap, aviator sunglasses, earring, aircraft blurred
   on a tarmac in the background, well-lit. Visually confirmed female
   (earring, facial structure), confirmed Black ethnicity assignment in
@@ -145,28 +153,29 @@ their replacement images haven't been generated yet, not an oversight.
   since this page's fix genuinely needed the age/relationship judgment
   call the other two below didn't.
 - **Secondary slot.** Status: **filled and verified correct**.
-  `images/air-force-family-photo-example.png`: two figures leaning over
+  `images/air-force-family-photo-example.webp`: two figures leaning over
   a table spread with printed photographs, warm low light. Fits the
   slot's purpose; surrounding note text left unchanged.
 
 ### Marine Corps: `example-marine-corps.html`
 - **Hero image.** Branch: Marine Corps. Assigned gender: John Smith (male).
   Status: **filled and verified correct**.
-  `images/marine-corps-veteran-tribute-example.png`: bearded man in the
+  `images/marine-corps-veteran-tribute-example.webp`: bearded man in the
   foreground, a second figure with long hair (read as female, likely a
   spouse, not the tribute subject) beside him, tall grass at golden hour.
   The foreground/primary figure is visually confirmed male.
-- **Secondary slot.** Status: **placeholder still showing, pending**. This
-  is the slot named explicitly in the brief that prompted the original
+- **Secondary slot.** Status: **filled and verified correct**. This is
+  the slot named explicitly in the brief that prompted the original
   audit; it is not unique to this page, all seven pages have the
-  identical slot. Deliberately left untouched in the five-image
-  placement round; the replacement image for this slot hasn't been
-  generated yet. Not forgotten, just not ready.
+  identical slot, and as of this update all seven are filled.
+  `images/marine-corps-family-photo-example.webp`: two figures, one
+  leaning down toward the other over a small box or container, warm low
+  light. Fits the slot's purpose; surrounding note text left unchanged.
 
 ### Navy: `example-navy.html`
 - **Hero image.** Branch: Navy. Assigned gender: Jane Smith (female).
   Status: **filled and verified correct, with a note**.
-  `images/navy-veteran-tribute-example.png`: very low-key, backlit
+  `images/navy-veteran-tribute-example.webp`: very low-key, backlit
   silhouette at a dusk dock scene, an adult figure with a younger person.
   This is the hardest of the six to read confidently from silhouette
   alone; a brightened, cropped inspection of the face and hairline leaned
@@ -181,7 +190,7 @@ their replacement images haven't been generated yet, not an oversight.
   a straightforward gender-word fix, not an age/relationship judgment
   call. Fixed to "Beloved wife, mother, grandmother, and Sailor."
 - **Secondary slot.** Status: **filled and verified correct**.
-  `images/navy-family-photo-example.png`: two figures, one holding an
+  `images/navy-family-photo-example.webp`: two figures, one holding an
   open photo album for the other to read, backlit near a window. Fits
   the slot's purpose; surrounding note text left unchanged.
 
@@ -205,6 +214,20 @@ session's closing report to Chad, correctly left as a suggestion rather
 than a code change, per that session's own explicit instruction to flag
 rather than silently decide. There was no failed fix to explain, only an
 unactioned observation waiting for the judgment call it needed.
+
+## Image compression: WebP, quality 85
+
+All 12 images placed through the effort documented above (23.3MB total)
+were converted from raw PNG to WebP at quality 85 in a single pass, then
+the final two secondary-slot images (Marine Corps, Space Force) were
+saved directly as WebP rather than added as new uncompressed PNGs.
+Result: roughly 23.3MB down to about 1.9MB across all 14 placed images
+(92%+ reduction), no visible quality loss at normal viewing size,
+confirmed by direct visual inspection of the highest-risk regions
+(smooth sky gradients, near-black shadow detail) both as 1:1 crops and
+in the live rendered page. WebP was chosen without a fallback format;
+it's had universal support across actively used browsers since Safari
+14 (2020), which is well within this project's era.
 
 ## Root cause: the "Jamie Smith" mismatch
 
