@@ -173,6 +173,24 @@
   .mike-cta { text-align: center; margin-top: 80px; }
   .mike-cta p { font-size: 16px; color: var(--aubergine); margin: 0 0 24px; }
 
+  /* ---- Video memory, honest placeholder: no capture exists in the app yet ---- */
+  #mike-video { background: var(--bone-warm); text-align: center; }
+  .video-frame { width: 100%; max-width: 640px; margin: 44px auto 0; border-radius: var(--radius-base, 4px); display: block; background: var(--ink); }
+  .video-caption { font-family: var(--font-body); font-size: 16px; color: var(--aubergine); line-height: 1.75; margin: 20px auto 0; max-width: 480px; }
+
+  /* ---- Service Song, ported from the branch example pages ---- */
+  #mike-audio { background: var(--bone-warm); text-align: center; }
+  .audio-dropdown-wrap { max-width: 480px; margin: 40px auto 0; text-align: left; }
+  .audio-select { width: 100%; padding: 13px 16px; border: 1px solid var(--bone-deep); border-radius: 6px; background: var(--bone); font-family: var(--font-body); font-size: 14.5px; color: var(--ink); margin-bottom: 18px; }
+  .audio-player-row { display: flex; align-items: center; gap: 16px; background: var(--bone); border: 1px solid var(--bone-deep); border-radius: var(--radius-base, 6px); padding: 18px 22px; }
+  .audio-play-btn { width: 46px; height: 46px; border-radius: 50%; border: none; background: var(--copper); color: var(--bone); flex-shrink: 0; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+  .audio-play-btn svg { width: 18px; height: 18px; }
+  .audio-play-btn:hover:not([disabled]) { background: var(--copper-deep); }
+  .audio-play-btn[disabled] { background: var(--bone-deep); color: var(--tan-muted); cursor: not-allowed; }
+  .audio-meta-title { font-family: var(--font-body); font-weight: 700; font-size: 14.5px; color: var(--ink); margin: 0 0 4px; }
+  .audio-meta-note { font-family: var(--font-body); font-style: italic; font-size: 12px; color: var(--tan-muted); margin: 0; }
+  .audio-opt-in-note { font-size: 12.5px; color: var(--tan-muted); text-align: center; margin: 16px 0 0; }
+
   footer { background: var(--aubergine); padding: 96px clamp(24px,5vw,64px) 0; }
   .footer-quote-wrap { max-width: 760px; margin: 0 auto; text-align: center; padding: 0 24px 72px; }
   .footer-quote {
@@ -222,7 +240,9 @@
   .own-words-quote p { font-family: var(--font-display); font-style: italic; font-size: clamp(19px,2.4vw,24px); color: var(--ink); line-height: 1.65; margin: 0 0 22px; }
   .own-words-quote cite { font-family: var(--font-body); font-style: normal; font-size: 13.5px; font-weight: 700; color: var(--copper-text); letter-spacing: 0.02em; }
   .legacy-statement { max-width: 560px; margin: 32px auto 0; font-family: var(--font-display); font-size: clamp(19px,2.4vw,23px); font-weight: 400; color: var(--ink); line-height: 1.65; text-align: center; }
-  #mike-story, #mike-service, #mike-person, #mike-legacy { background: var(--bone); }
+  #mike-story, #mike-service, #mike-person, #mike-legacy, #mike-unit-history { background: var(--bone); }
+  .unit-history-body { font-size: 16.5px; color: var(--ink); line-height: 1.8; max-width: 640px; margin: 0 auto 20px; }
+  .unit-history-body:last-child { margin-bottom: 0; }
   #theme-invitation, #mike-own-words, #mike-honors { background: var(--bone-warm); }
   #mike-keepsakes { background: var(--bone); }
 
@@ -554,15 +574,10 @@
           <p>Mike enlists in the United States Army.</p>
         </div>
       </div>
-      <div class="timeline-context" data-reveal>
-        <p class="timeline-context-label">The Wider World</p>
-        <p>That same year, the Army Reserve's 187th Infantry relocated its headquarters to Wollaston, Massachusetts. It was one of only a handful of combat infantry brigades left in the entire Army Reserve.</p>
-      </div>
-
       <div class="story-assist-callout" id="story-assist-demo" data-reveal>
         <p class="story-assist-tag">Story Assist</p>
         <h4 class="story-assist-heading">Shaped From Real Military History, Not Guesswork</h4>
-        <p class="story-assist-body">When Mike enlisted, he joined one of only a handful of combat infantry brigades left in the entire Army Reserve. That same year, its headquarters moved to Wollaston, Massachusetts.</p>
+        <p class="story-assist-body">Mike's unit and its place in Army Reserve history are covered in full under Unit History below. What Story Assist adds here is more personal: gentle questions built from that same real context, aimed at the details only his family would know.</p>
         <p class="story-assist-disclaimer">We don't know what his day-to-day service looked like inside that story. We only know this is the world he stepped into.</p>
 
         <p class="story-assist-questions-label">Questions Story Assist Might Ask</p>
@@ -597,14 +612,19 @@
           <p>Serves with the 187th Infantry, retiring a Major after twenty years of service.</p>
         </div>
       </div>
-      <div class="story-assist-callout" data-reveal>
-        <p class="story-assist-tag">Story Assist</p>
-        <h4 class="story-assist-heading">Ready for a War That Never Came</h4>
-        <p class="story-assist-body">Under Cold War planning, the 187th stood ready to deploy to Iceland if war with the Soviet Union ever came. It never did. The brigade trained for two decades for a mission that stayed hypothetical, until it was inactivated in 1994. That was the same year Mike's own service came to a close.</p>
-        <p class="story-assist-disclaimer">We don't know how often Iceland came up at drill. We only know the possibility was always there, year after year.</p>
-        <a class="story-assist-cta" href="mailto:hello@valorandserenity.com?subject=Story%20detail%20for%20Mike%20Mesarch%20-%20187th">Know more? Add it here &rarr;</a>
-      </div>
     </div>
+  </div>
+</section>
+
+<section id="mike-unit-history">
+  <div class="section-inner">
+    <div class="rule"></div>
+    <p class="eyebrow">Unit History</p>
+    <h2>The 187th Infantry Brigade</h2>
+    <p class="section-lede">The unit itself, apart from any one soldier's time in it.</p>
+
+    <p class="unit-history-body">The 187th Infantry Brigade was reactivated in the Army Reserve in 1963, headquartered in Boston. In 1971, the same year Mike enlisted, its headquarters moved to Wollaston, Massachusetts, and in 1976, three years before Mike was commissioned, moved again to Fort Devens. By the years Mike served, the brigade was built around three infantry battalions plus artillery, armor, engineer, and support units, one of only a handful of combat infantry brigades still standing in the entire Army Reserve.</p>
+    <p class="unit-history-body">Its Cold War mission, if a confrontation between NATO and the Soviet Union ever came, was to reinforce Iceland as part of the Iceland Defense Force. That call never came. On April 14, 1994, as part of the Army-wide drawdown that followed the Cold War's end, the 187th was inactivated. It was the same year Mike's own service came to a close.</p>
   </div>
 </section>
 
@@ -713,7 +733,31 @@
           <p>His cap and his flag, folded and kept close.</p>
         </div>
       </div>
+
+      <div class="gallery-item" data-reveal>
+        <div class="gallery-photo-wrap" data-lightbox data-caption="The folded flag, up close.">
+          <div class="gallery-photo"><img src="images/flag.png" alt="Close-up of a folded American burial flag" loading="lazy"></div>
+        </div>
+        <div class="gallery-caption-wrap">
+          <p class="gallery-index">05</p>
+          <h3>Folded With Care</h3>
+          <p>The same flag, closer: every fold deliberate, the way it's handed to a family.</p>
+        </div>
+      </div>
     </div>
+  </div>
+</section>
+
+<section id="mike-video">
+  <div class="section-inner">
+    <div class="rule"></div>
+    <p class="eyebrow">A Life in Motion</p>
+    <h2>Video Memories</h2>
+    <p class="section-lede">A real moment, uploaded by his family exactly as it was recorded.</p>
+    <video class="video-frame" controls preload="metadata" playsinline data-reveal>
+      <source src="videos/mike-on-deck.mp4" type="video/mp4">
+    </video>
+    <p class="video-caption">Mike, out on the deck, raising a glass. An ordinary afternoon, caught on someone's phone and kept.</p>
   </div>
 </section>
 
@@ -861,6 +905,33 @@
     <p class="eyebrow">Their Legacy</p>
     <h2>What He Left Behind</h2>
     <p class="legacy-statement" data-reveal>Twenty years in the Army Reserve. Twenty more helping young people find their footing at Job Corps. However you measure a life, Mike's was full. It continues now in every story his family tells.</p>
+  </div>
+</section>
+
+<section id="mike-audio">
+  <div class="section-inner">
+    <div class="rule"></div>
+    <p class="eyebrow">Optional, Opt-In</p>
+    <h2>Service Song</h2>
+    <p class="section-lede">A family can choose to add a recording to their page. Nothing plays automatically. A visitor always chooses to press play.</p>
+
+    <div class="audio-dropdown-wrap" data-reveal>
+      <select class="audio-select" id="audioSelect">
+        <option value="https://commons.wikimedia.org/wiki/Special:FilePath/Army_goes_rolling_along.ogg" data-title="The Army Goes Rolling Along" data-attrib="U.S. Army Band &middot; Public Domain &middot; via Wikimedia Commons">The Army Goes Rolling Along: U.S. Army Band</option>
+        <option value="https://commons.wikimedia.org/wiki/Special:FilePath/Taps.ogg" data-title="Taps" data-attrib="Traditional bugle call &middot; Public Domain">Taps</option>
+      </select>
+      <div class="audio-player-row">
+        <button class="audio-play-btn" id="audioPlayBtn" type="button" aria-label="Play">
+          <svg id="audioPlayIcon" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"></path></svg>
+        </button>
+        <div>
+          <p class="audio-meta-title" id="audioMetaTitle">The Army Goes Rolling Along</p>
+          <p class="audio-meta-note" id="audioMetaNote">U.S. Army Band &middot; Public Domain &middot; via Wikimedia Commons</p>
+        </div>
+      </div>
+      <audio id="audioEl" preload="none"></audio>
+      <p class="audio-opt-in-note">Sourced from verified public-domain collections (U.S. military bands, Library of Congress, Wikimedia Commons). Never autoplays.</p>
+    </div>
   </div>
 </section>
 
@@ -1171,6 +1242,46 @@
     var saved = null;
     try { saved = sessionStorage.getItem(THEME_KEY); } catch (e) {}
     if (saved) { applyTheme(saved); }
+  } catch (e) {}
+
+  try {
+    var sel = document.getElementById('audioSelect');
+    var btn = document.getElementById('audioPlayBtn');
+    var icon = document.getElementById('audioPlayIcon');
+    var audioEl = document.getElementById('audioEl');
+    var titleEl = document.getElementById('audioMetaTitle');
+    var noteEl = document.getElementById('audioMetaNote');
+    var playing = false;
+    var PLAY_PATH = 'M8 5v14l11-7z';
+    var PAUSE_PATH = '<rect x="6" y="5" width="4" height="14"></rect><rect x="14" y="5" width="4" height="14"></rect>';
+    function loadSelected(){
+      var opt = sel.options[sel.selectedIndex];
+      titleEl.textContent = opt.getAttribute('data-title');
+      noteEl.textContent = opt.getAttribute('data-attrib');
+      audioEl.src = opt.value;
+      playing = false;
+      icon.innerHTML = '<path d="' + PLAY_PATH + '"></path>';
+      btn.disabled = false;
+    }
+    if (sel && btn && audioEl) {
+      sel.addEventListener('change', loadSelected);
+      audioEl.addEventListener('error', function(){
+        noteEl.textContent = 'Recording unavailable right now. The source link may need to be verified.';
+        btn.disabled = true;
+      });
+      audioEl.addEventListener('ended', function(){ playing = false; icon.innerHTML = '<path d="' + PLAY_PATH + '"></path>'; });
+      btn.addEventListener('click', function(){
+        if (!playing) {
+          audioEl.play().then(function(){ playing = true; icon.innerHTML = PAUSE_PATH; }).catch(function(){
+            noteEl.textContent = 'Recording unavailable right now. The source link may need to be verified.';
+            btn.disabled = true;
+          });
+        } else {
+          audioEl.pause(); playing = false; icon.innerHTML = '<path d="' + PLAY_PATH + '"></path>';
+        }
+      });
+      loadSelected();
+    }
   } catch (e) {}
 
     try {
