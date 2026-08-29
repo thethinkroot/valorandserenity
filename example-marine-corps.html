@@ -116,6 +116,22 @@
   .placeholder-photo span { font-family: var(--font-body); font-size: 12.5px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--aubergine); background: var(--bone-warm); padding: 8px 14px; border-radius: 3px; }
   .placeholder-note { font-style: italic; font-size: 14px; color: var(--aubergine); margin: 40px auto 0; max-width: 520px; line-height: 1.7; }
 
+  /* Story Assist with/without toggle: big, plain buttons, no hover-dependent controls */
+  .sa-toggle-demo { max-width: 620px; margin: 48px auto 0; text-align: left; }
+  .sa-toggle-explainer { font-family: var(--font-body); font-size: 15.5px; color: var(--aubergine); line-height: 1.7; margin: 0 0 20px; text-align: center; }
+  .sa-toggle-buttons { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-bottom: 32px; }
+  .sa-toggle-btn { font-family: var(--font-body); font-weight: 700; font-size: 16px; padding: 16px 26px; min-height: 56px; min-width: 200px; border-radius: 8px; border: 2px solid var(--copper); background: var(--bone); color: var(--copper-text); cursor: pointer; }
+  .sa-toggle-btn:hover, .sa-toggle-btn:focus-visible { background: var(--bone-deep); }
+  .sa-toggle-btn[aria-pressed="true"] { background: var(--copper); color: var(--bone); }
+  .sa-toggle-btn[aria-pressed="true"]:hover, .sa-toggle-btn[aria-pressed="true"]:focus-visible { background: var(--copper-deep); }
+  .sa-toggle-typed { font-family: var(--font-body); font-style: italic; font-size: 16px; color: var(--ink); line-height: 1.8; margin: 0; padding: 22px 26px; background: var(--bone); border-radius: var(--radius-base, 4px); }
+  .story-assist-note { max-width: 620px; margin: 20px auto 0; padding: 4px 0 4px 20px; border-left: 2px solid var(--copper); }
+  .story-assist-note-body { font-family: var(--font-body); font-size: 15px; color: var(--ink); line-height: 1.8; margin: 0; }
+  .story-assist-attribution { display: block; font-family: var(--font-body); font-style: italic; font-size: 13px; color: var(--tan-muted); margin: 14px 0 0; }
+  [data-story-assist-highlight] { animation: storyAssistHighlight 1.6s ease; }
+  @keyframes storyAssistHighlight { 0% { background: rgba(182,111,74,0.16); } 100% { background: transparent; } }
+  @media (max-width: 520px) { .sa-toggle-btn { min-width: 0; flex: 1 1 auto; } }
+
   .readings-search-input { width: 100%; padding: 14px 18px; border: 1px solid var(--bone-deep); border-radius: 24px; background: var(--bone); font-family: var(--font-body); font-size: 15px; color: var(--ink); margin: 40px 0 24px; }
   .readings-search-input::placeholder { color: var(--tan-muted); }
   .readings-results { display: flex; flex-direction: column; gap: 16px; text-align: left; }
@@ -265,6 +281,21 @@
     <p class="section-lede">A family's own words about their life, their service, and the people who loved them. Guided, one prompt at a time.</p>
     <div class="placeholder-photo" data-reveal><span>Family Photo. Add Your Own.</span></div>
     <p class="placeholder-note">No official crests or seals are used in this theme. Families add their own photos and keepsakes, the same way Mike's family did.</p>
+
+    <div class="sa-toggle-demo" data-reveal>
+      <p class="sa-toggle-explainer">Here's a real example of what Story Assist adds to a family's own words. Press a button to see it for yourself.</p>
+      <div class="sa-toggle-buttons" role="group" aria-label="Show this example with or without Story Assist">
+        <button type="button" class="sa-toggle-btn" data-sa-toggle="plain" aria-pressed="true">Plain Story</button>
+        <button type="button" class="sa-toggle-btn" data-sa-toggle="enhanced" aria-pressed="false">With Story Assist Added</button>
+      </div>
+      <div class="sa-toggle-sample">
+        <p class="sa-toggle-typed">"He joined the Marine Corps right out of high school, in the fall of 1968. We didn't know much about what was happening in the world back then, just that he wanted to serve."</p>
+        <div class="story-assist-note" data-story-assist hidden>
+          <p class="story-assist-note-body">1968 was one of the most turbulent years of the Vietnam War: the Tet Offensive that January reshaped American opinion of the war, and Martin Luther King Jr. and Robert F. Kennedy were both assassinated within two months of each other that spring. By then, more than half a million Americans were already serving in Vietnam. It was the world they stepped into.</p>
+          <p class="story-assist-attribution" data-story-assist-attribution>Researched by Story Assist, from verified public record.</p>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -274,32 +305,6 @@
   <div class="example-inner theme-invite-inner" id="themeToggleRow">
     <p class="theme-invite-text">This example is shown here in <button type="button" class="theme-pill" data-theme-value="marine-corps" aria-pressed="true">Marine Corps</button> colors. It can also be viewed in <button type="button" class="theme-pill" data-theme-value="default" aria-pressed="false">Default</button>, <button type="button" class="theme-pill" data-theme-value="navy" aria-pressed="false">Navy</button>, <button type="button" class="theme-pill" data-theme-value="army" aria-pressed="false">Army</button>, <button type="button" class="theme-pill" data-theme-value="air-force" aria-pressed="false">Air Force</button>, <button type="button" class="theme-pill" data-theme-value="coast-guard" aria-pressed="false">Coast Guard</button>, or <button type="button" class="theme-pill" data-theme-value="space-force" aria-pressed="false">Space Force</button>, or <button type="button" class="theme-pill" data-theme-value="flag" aria-pressed="false">American Flag</button>.</p>
     <p class="theme-invite-note">Illustrative Example. Not a Real Person.</p>
-  </div>
-</section>
-
-<section id="example-readings">
-  <div class="example-inner">
-    <div class="rule"></div>
-    <p class="eyebrow">In Their Own Words</p>
-    <h2>Readings</h2>
-    <p class="section-lede">Add a poem, a passage, or your own words. Looking for scripture? Search public-domain translations built right in. Free, and never required.</p>
-
-    <input type="text" class="readings-search-input" placeholder="Search readings by title, theme, or a few words..." aria-label="Search readings" data-reveal>
-    <div class="readings-results" data-reveal>
-      <div class="reading-result">
-        <p class="reading-result-source">Psalm 23:1&ndash;4 &middot; King James Version &middot; Public Domain</p>
-        <p class="reading-result-text">"The Lord is my shepherd; I shall not want. He maketh me to lie down in green pastures... Yea, though I walk through the valley of the shadow of death, I will fear no evil: for thou art with me."</p>
-      </div>
-      <div class="reading-result">
-        <p class="reading-result-source">Ecclesiastes 3:1&ndash;2 &middot; Douay-Rheims &middot; Public Domain</p>
-        <p class="reading-result-text">"All things have their season, and in their times all things pass under heaven. A time to be born, and a time to die."</p>
-      </div>
-    </div>
-
-    <div class="own-words-block" data-reveal>
-      <p class="own-words-label">Or Add Your Own Words</p>
-      <textarea class="own-words-textarea" placeholder="A favorite quote, a line from a letter, or something only your family would recognize..." aria-label="Add your own words"></textarea>
-    </div>
   </div>
 </section>
 
@@ -326,6 +331,32 @@
       </div>
       <audio id="audioEl" preload="none"></audio>
       <p class="audio-opt-in-note">Sourced from verified public-domain collections (U.S. military bands, Library of Congress, Wikimedia Commons). Never autoplays.</p>
+    </div>
+  </div>
+</section>
+
+<section id="example-readings">
+  <div class="example-inner">
+    <div class="rule"></div>
+    <p class="eyebrow">In Their Own Words</p>
+    <h2>Readings</h2>
+    <p class="section-lede">Add a poem, a passage, or your own words. Looking for scripture? Search public-domain translations built right in. Free, and never required.</p>
+
+    <input type="text" class="readings-search-input" placeholder="Search readings by title, theme, or a few words..." aria-label="Search readings" data-reveal>
+    <div class="readings-results" data-reveal>
+      <div class="reading-result">
+        <p class="reading-result-source">Psalm 23:1&ndash;4 &middot; King James Version &middot; Public Domain</p>
+        <p class="reading-result-text">"The Lord is my shepherd; I shall not want. He maketh me to lie down in green pastures... Yea, though I walk through the valley of the shadow of death, I will fear no evil: for thou art with me."</p>
+      </div>
+      <div class="reading-result">
+        <p class="reading-result-source">Ecclesiastes 3:1&ndash;2 &middot; Douay-Rheims &middot; Public Domain</p>
+        <p class="reading-result-text">"All things have their season, and in their times all things pass under heaven. A time to be born, and a time to die."</p>
+      </div>
+    </div>
+
+    <div class="own-words-block" data-reveal>
+      <p class="own-words-label">Or Add Your Own Words</p>
+      <textarea class="own-words-textarea" placeholder="A favorite quote, a line from a letter, or something only your family would recognize..." aria-label="Add your own words"></textarea>
     </div>
   </div>
 </section>
@@ -442,6 +473,22 @@
       });
       loadSelected();
     }
+  } catch (e) {}
+
+  try {
+    var saButtons = document.querySelectorAll('.sa-toggle-btn');
+    var saNote = document.querySelector('.sa-toggle-sample [data-story-assist]');
+    saButtons.forEach(function(saBtn){
+      saBtn.addEventListener('click', function(){
+        saButtons.forEach(function(b){ b.setAttribute('aria-pressed', b === saBtn ? 'true' : 'false'); });
+        var enhanced = saBtn.getAttribute('data-sa-toggle') === 'enhanced';
+        saNote.hidden = !enhanced;
+        if (enhanced) {
+          saNote.setAttribute('data-story-assist-highlight', '');
+          setTimeout(function(){ saNote.removeAttribute('data-story-assist-highlight'); }, 1600);
+        }
+      });
+    });
   } catch (e) {}
 
   try {
