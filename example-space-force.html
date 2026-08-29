@@ -248,7 +248,7 @@
   <div class="cover-portrait"><span>Portrait &middot; Families Add Their Own</span></div>
   <div class="cover-plaque">
     <p class="cover-branch-line">United States Space Force &middot; [ Years of Service ]</p>
-    <h1 class="cover-name">Jane Doe</h1>
+    <h1 class="cover-name">Jane Smith</h1>
     <p class="cover-dates">[ Birth Year ] &ndash; [ Passing Year ]</p>
     <div class="cover-motif"></div>
     <p class="cover-sentence">Beloved husband, father, and Guardian.</p>
@@ -409,14 +409,14 @@
     if (sel && btn && audioEl) {
       sel.addEventListener('change', loadSelected);
       audioEl.addEventListener('error', function(){
-        noteEl.textContent = 'Recording unavailable right now \u2014 source link may need to be verified.';
+        noteEl.textContent = 'Recording unavailable right now. The source link may need to be verified.';
         btn.disabled = true;
       });
       audioEl.addEventListener('ended', function(){ playing = false; icon.innerHTML = '<path d="' + PLAY_PATH + '"></path>'; });
       btn.addEventListener('click', function(){
         if (!playing) {
           audioEl.play().then(function(){ playing = true; icon.innerHTML = PAUSE_PATH; }).catch(function(){
-            noteEl.textContent = 'Recording unavailable right now \u2014 source link may need to be verified.';
+            noteEl.textContent = 'Recording unavailable right now. The source link may need to be verified.';
             btn.disabled = true;
           });
         } else {

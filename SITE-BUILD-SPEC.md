@@ -96,7 +96,7 @@ Valor & Serenity is not affiliated with, endorsed by, or connected to the Depart
 Before any page or fix is considered complete:
 
 1. Check the actual rendered code directly, grep for the specific claim, don't accept a description of what changed.
-2. Check for em dashes with a direct search, including HTML entity forms (`&mdash;`), which a literal character search can miss.
+2. Check for em dashes with `python3 scripts/check-em-dash.py`, which covers the literal character, HTML entity forms (`&mdash;`, `&#8212;`, `&#x2014;`), and the backslash-u-2014 JS string escape (case-insensitive). A literal-character search alone misses all three of the others; the escape form shipped undetected in the audio player's error message across all seven example pages until this script existed.
 3. Confirm cross-links actually resolve to files that exist.
 4. When a color palette combines two contrasting hues (currently only American Flag), confirm no gradient blends them.
 5. State plainly what was and wasn't independently re-verified in this session versus carried forward from an earlier report. The "Status" column above must stay honest about this distinction.
