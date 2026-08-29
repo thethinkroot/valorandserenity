@@ -9,6 +9,13 @@ export const VISIBILITY_TIERS = ['private', 'family', 'community'];
 
 export class InvalidVisibilityError extends Error {}
 
+// Real, hard gate: no tribute can be created without all three consent
+// attestations, at this layer, not just in the UI. Whatever calls
+// createTribute (the real POST /tribute handler, a future admin tool,
+// a test) cannot accidentally create a published tribute without a
+// real consent record behind it.
+export class MissingConsentError extends Error {}
+
 // Creates a tribute record with a freshly generated, unguessable token and
 // persists it to D1. The privacy word, if given, is hashed before storage;
 // the plaintext is never written to the database or logged. One row
@@ -18,6 +25,12 @@ export class InvalidVisibilityError extends Error {}
 // 8-step guided flow collects (see start.html's serializeDraft()), added
 // in 0002_content.sql. All optional here, since createTribute is also used
 // by the older tribute-link tests that only care about visibility/title.
+//
+// The consent fields (added in 0003_consent.sql) are NOT optional the same
+// way: consent must be explicitly passed as true for all three, every
+// time. This is the actual legal record Step 8's checkboxes exist to
+// produce; skipConsentCheck exists only for the pre-consent tribute-link
+// tests that predate this feature and don't exercise Step 8 at all.
 export async function createTribute(db, {
   visibility,
   privacyWord = null,
@@ -32,9 +45,23 @@ export async function createTribute(db, {
   storyText = null,
   honors = null,
   photoKey = null,
+  consentPhotoRights = null,
+  consentAuthorized = null,
+  consentStoryReviewed = null,
+  consentVersion = null,
+  skipConsentCheck = false,
 } = {}) {
   if (!VISIBILITY_TIERS.includes(visibility)) {
     throw new InvalidVisibilityError(`Invalid visibility tier: ${visibility}`);
+  }
+
+  if (!skipConsentCheck) {
+    if (consentPhotoRights !== true || consentAuthorized !== true || consentStoryReviewed !== true) {
+      throw new MissingConsentError('All three consent attestations must be true to create a tribute');
+    }
+    if (!consentVersion) {
+      throw new MissingConsentError('A consent wording version is required alongside the attestations');
+    }
   }
 
   const token = generateTributeToken();
@@ -44,19 +71,26 @@ export async function createTribute(db, {
   // native array/JSON column type, and Step 5 doesn't collect anything
   // richer than a name per honor yet.
   const honorsJson = honors ? JSON.stringify(honors) : null;
+  const consentRecordedAt = skipConsentCheck ? null : createdAt;
 
   await db
     .prepare(
       `INSERT INTO tributes (
         token, visibility, title, privacy_word_hash, created_at,
         subject_mode, full_name, branch, service_from_year, service_to_year,
-        born_year, passed_year, story_text, honors, photo_key
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+        born_year, passed_year, story_text, honors, photo_key,
+        consent_photo_rights, consent_authorized, consent_story_reviewed,
+        consent_version, consent_recorded_at
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
     )
     .bind(
       token, visibility, title, privacyWordHash, createdAt,
       subjectMode, fullName, branch, serviceFromYear, serviceToYear,
-      bornYear, passedYear, storyText, honorsJson, photoKey
+      bornYear, passedYear, storyText, honorsJson, photoKey,
+      consentPhotoRights === true ? 1 : null,
+      consentAuthorized === true ? 1 : null,
+      consentStoryReviewed === true ? 1 : null,
+      consentVersion, consentRecordedAt
     )
     .run();
 
@@ -64,6 +98,10 @@ export async function createTribute(db, {
     token, visibility, title, privacyWordHash, createdAt,
     subjectMode, fullName, branch, serviceFromYear, serviceToYear,
     bornYear, passedYear, storyText, honors: honors || null, photoKey,
+    consentPhotoRights: consentPhotoRights === true,
+    consentAuthorized: consentAuthorized === true,
+    consentStoryReviewed: consentStoryReviewed === true,
+    consentVersion, consentRecordedAt,
   };
 }
 
@@ -75,7 +113,9 @@ export async function getTribute(db, token) {
     .prepare(
       `SELECT token, visibility, title, privacy_word_hash, created_at,
         subject_mode, full_name, branch, service_from_year, service_to_year,
-        born_year, passed_year, story_text, honors, photo_key
+        born_year, passed_year, story_text, honors, photo_key,
+        consent_photo_rights, consent_authorized, consent_story_reviewed,
+        consent_version, consent_recorded_at
       FROM tributes WHERE token = ?`
     )
     .bind(token)
@@ -104,6 +144,11 @@ export async function getTribute(db, token) {
     storyText: row.story_text,
     honors,
     photoKey: row.photo_key,
+    consentPhotoRights: row.consent_photo_rights === 1,
+    consentAuthorized: row.consent_authorized === 1,
+    consentStoryReviewed: row.consent_story_reviewed === 1,
+    consentVersion: row.consent_version,
+    consentRecordedAt: row.consent_recorded_at,
   };
 }
 

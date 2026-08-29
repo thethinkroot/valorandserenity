@@ -559,6 +559,18 @@
     margin: -10px 0 20px;
   }
 
+  /* Consent gate: deliberately not the gentle-note style. This is a
+     hard requirement, not a skippable suggestion, and needs to read
+     that way at a glance. */
+  .consent-gate { border: 2px solid var(--aubergine-deep); border-radius: 8px; padding: 22px 24px; margin: 0 0 20px; }
+  .consent-gate-title { font-weight: 700; font-size: 14px; letter-spacing: 0.03em; color: var(--aubergine-deep); margin: 0 0 16px; }
+  .consent-item { display: flex; align-items: flex-start; gap: 12px; cursor: pointer; margin-bottom: 16px; }
+  .consent-item:last-of-type { margin-bottom: 0; }
+  .consent-item input[type="checkbox"] { width: 22px; height: 22px; min-width: 22px; margin: 1px 0 0; accent-color: var(--copper); cursor: pointer; }
+  .consent-item span { font-size: 15px; color: var(--ink); line-height: 1.5; }
+  .consent-gate-links { font-size: 13px; color: var(--aubergine); margin: 18px 0 0; }
+  .consent-gate-note { color: var(--copper-deep); font-weight: 700; font-size: 14px; margin: 16px 0 0; }
+
   .hidden { display: none !important; }
 
   .required-star { color: var(--copper); }
@@ -891,6 +903,25 @@
       <input type="email" id="input-confirm-email" placeholder="Your email address" required>
     </div>
     <p class="gentle-note hidden" id="confirm-email-note">Please add your email so we can send the link.</p>
+
+    <div class="consent-gate">
+      <p class="consent-gate-title">Before this publishes, please confirm:</p>
+      <label class="consent-item">
+        <input type="checkbox" id="consent-photo-rights">
+        <span>I have the right to use the photos and materials I've added here.</span>
+      </label>
+      <label class="consent-item">
+        <input type="checkbox" id="consent-authorized">
+        <span>I'm authorized to create this tribute, as the veteran themselves, a family member, or someone entrusted by the family.</span>
+      </label>
+      <label class="consent-item">
+        <input type="checkbox" id="consent-story-reviewed">
+        <span id="consent-story-text">I've reviewed anything Story Assist added, and it reflects them accurately.</span>
+      </label>
+      <p class="consent-gate-links">Read the <a href="terms.html" target="_blank" rel="noopener">Terms of Service</a> and <a href="privacy.html" target="_blank" rel="noopener">Privacy Policy</a>.</p>
+      <p class="consent-gate-note hidden" id="consent-gate-note">Please check all three before publishing.</p>
+    </div>
+
     <button class="btn-primary" data-action="submit-email">Send the confirmation</button>
     <button class="back-link" data-action="goto" data-arg="step7">Go back</button>
   </div>
@@ -975,7 +1006,8 @@
         prompt3: "What did he care about most?",
         sa1Message: "What's one thing you remember him teaching you, that you can still hear him saying?",
         step5Question: "Did they receive any medals or honors?",
-        saExampleTip: "If you shared 1969, Story Assist might ask: \"That was the year of the moon landing. Does that ring a bell for him?\""
+        saExampleTip: "If you shared 1969, Story Assist might ask: \"That was the year of the moon landing. Does that ring a bell for him?\"",
+        consentStoryText: "I've reviewed anything Story Assist added, and it reflects them accurately."
       },
       living: {
         step1Question: "What is their name?",
@@ -990,7 +1022,8 @@
         prompt3: "What did he care about most?",
         sa1Message: "What's one thing you remember him teaching you, that you can still hear him saying?",
         step5Question: "Did they receive any medals or honors?",
-        saExampleTip: "If you shared 1969, Story Assist might ask: \"That was the year of the moon landing. Does that ring a bell for him?\""
+        saExampleTip: "If you shared 1969, Story Assist might ask: \"That was the year of the moon landing. Does that ring a bell for him?\"",
+        consentStoryText: "I've reviewed anything Story Assist added, and it reflects them accurately."
       },
       self: {
         step1Question: "What's your name?",
@@ -1005,7 +1038,8 @@
         prompt3: "What do you care about most?",
         sa1Message: "What's one thing someone taught you, that you can still hear them saying?",
         step5Question: "Did you receive any medals or honors?",
-        saExampleTip: "If you shared 1969, Story Assist might ask: \"That was the year of the moon landing. Does that ring a bell for you?\""
+        saExampleTip: "If you shared 1969, Story Assist might ask: \"That was the year of the moon landing. Does that ring a bell for you?\"",
+        consentStoryText: "I've reviewed anything Story Assist added, and it reflects me accurately."
       }
     };
     var c = copy[subjectMode] || copy.passed;
@@ -1022,6 +1056,7 @@
     document.getElementById('sa1-message').textContent = c.sa1Message;
     document.getElementById('step5-question').textContent = c.step5Question;
     document.getElementById('sa-example-tip').textContent = c.saExampleTip;
+    document.getElementById('consent-story-text').textContent = c.consentStoryText;
 
     document.getElementById('resource-card-passed').classList.toggle('hidden', subjectMode !== 'passed');
     document.getElementById('resource-card-living').classList.toggle('hidden', subjectMode !== 'living');
@@ -1110,9 +1145,14 @@
     return parts.join('\n\n');
   }
 
+  // Bump this whenever the wording of the three consent checkboxes
+  // changes, so a stored consent record always says exactly which
+  // version of the text someone actually agreed to.
+  const CONSENT_VERSION = '1';
+
   // Maps the same draft state serializeDraft() already tracks onto the
   // real /tribute POST body. Every field here has a real column in
-  // worker/migrations/0002_content.sql.
+  // worker/migrations/0002_content.sql or 0003_consent.sql.
   function buildTributePayload() {
     return {
       subjectMode: subjectMode,
@@ -1125,6 +1165,10 @@
       storyText: composeStoryText() || null,
       honors: Array.from(document.querySelectorAll('#honors-list input')).map(function(i) { return i.value.trim(); }).filter(Boolean),
       photoKey: photoKey,
+      consentPhotoRights: document.getElementById('consent-photo-rights').checked,
+      consentAuthorized: document.getElementById('consent-authorized').checked,
+      consentStoryReviewed: document.getElementById('consent-story-reviewed').checked,
+      consentVersion: CONSENT_VERSION,
     };
   }
 
@@ -1153,6 +1197,21 @@
       return;
     }
     note.classList.add('hidden');
+
+    // Hard gate, not a soft warning: all three must be checked, every
+    // time, no bypass. This is a real requirement, not a kindness that
+    // can be skipped the way the gentler prompts elsewhere in this flow
+    // can be.
+    const consentNote = document.getElementById('consent-gate-note');
+    const allConsentChecked = document.getElementById('consent-photo-rights').checked
+      && document.getElementById('consent-authorized').checked
+      && document.getElementById('consent-story-reviewed').checked;
+    if (!allConsentChecked) {
+      consentNote.classList.remove('hidden');
+      document.querySelector('.consent-gate').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+    consentNote.classList.add('hidden');
 
     const btn = document.querySelector('#screen-step8 .btn-primary');
     const originalLabel = btn.textContent;
@@ -1606,7 +1665,11 @@
   <div class="footer-quote-wrap">
     <div class="rule"></div>
     <p class="footer-quote">No veteran's story should be lost to time, and no family should have to preserve it alone.</p>
-    <p style="font-size:13px; color:var(--bone-warm); line-height:1.6; margin:14px 0 0;">This is an early preview of the guided tribute experience. Nothing you enter here is saved.</p>
+    <p style="font-size:13px; color:var(--bone-warm); line-height:1.6; margin:14px 0 0;">Your progress is saved on this device as you go. Publishing creates a real, live tribute page.</p>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2026 Valor &amp; Serenity.</span>
+    <span><a href="terms.html" style="color:inherit; text-decoration:underline;">Terms</a> &middot; <a href="privacy.html" style="color:inherit; text-decoration:underline;">Privacy</a></span>
   </div>
 </footer>
 

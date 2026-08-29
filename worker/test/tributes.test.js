@@ -17,7 +17,7 @@ beforeEach(async () => {
 
 describe('createTribute / getTribute', () => {
   it('round-trips a tribute record through D1', async () => {
-    const created = await createTribute(env.DB, {
+    const created = await createTribute(env.DB, { skipConsentCheck: true,
       visibility: 'community',
       title: "Major Mike Mesarch's Tribute",
     });
@@ -30,12 +30,12 @@ describe('createTribute / getTribute', () => {
 
   it('rejects an invalid visibility tier', async () => {
     await expect(
-      createTribute(env.DB, { visibility: 'public-to-everyone' })
+      createTribute(env.DB, { skipConsentCheck: true, visibility: 'public-to-everyone' })
     ).rejects.toThrow(InvalidVisibilityError);
   });
 
   it('never stores the privacy word in plaintext', async () => {
-    const created = await createTribute(env.DB, {
+    const created = await createTribute(env.DB, { skipConsentCheck: true,
       visibility: 'private',
       privacyWord: 'his favorite fishing spot',
     });
@@ -48,7 +48,7 @@ describe('createTribute / getTribute', () => {
   });
 
   it('round-trips every real content field the 8-step flow collects (0002_content.sql)', async () => {
-    const created = await createTribute(env.DB, {
+    const created = await createTribute(env.DB, { skipConsentCheck: true,
       visibility: 'private',
       title: 'Jane Smith',
       subjectMode: 'passed',
@@ -77,7 +77,7 @@ describe('createTribute / getTribute', () => {
   });
 
   it('leaves every new content field null when a caller (e.g. the older tribute-link flow) never sets them', async () => {
-    const created = await createTribute(env.DB, { visibility: 'community', title: 'Untouched Fields' });
+    const created = await createTribute(env.DB, { skipConsentCheck: true, visibility: 'community', title: 'Untouched Fields' });
     const fetched = await getTribute(env.DB, created.token);
     expect(fetched.fullName).toBeNull();
     expect(fetched.branch).toBeNull();
@@ -93,13 +93,13 @@ describe('D1 read/write volume, per the free-tier check', () => {
   // assuming it from reading the code.
   it('creates a tribute with exactly one D1 statement', async () => {
     const prepareSpy = vi.spyOn(env.DB, 'prepare');
-    await createTribute(env.DB, { visibility: 'community', title: 'Spy Test' });
+    await createTribute(env.DB, { skipConsentCheck: true, visibility: 'community', title: 'Spy Test' });
     expect(prepareSpy).toHaveBeenCalledTimes(1);
     prepareSpy.mockRestore();
   });
 
   it('reads a tribute with exactly one D1 statement', async () => {
-    const created = await createTribute(env.DB, { visibility: 'community', title: 'Spy Test 2' });
+    const created = await createTribute(env.DB, { skipConsentCheck: true, visibility: 'community', title: 'Spy Test 2' });
     const prepareSpy = vi.spyOn(env.DB, 'prepare');
     await getTribute(env.DB, created.token);
     expect(prepareSpy).toHaveBeenCalledTimes(1);
@@ -115,7 +115,7 @@ describe('visibility rules', () => {
   });
 
   it('a Community tribute has no privacy-word gate at all', async () => {
-    const record = await createTribute(env.DB, { visibility: 'community' });
+    const record = await createTribute(env.DB, { skipConsentCheck: true, visibility: 'community' });
     expect(requiresPrivacyWordGate(record)).toBe(false);
 
     // Even if somehow asked to verify a word against a Community record
@@ -125,17 +125,17 @@ describe('visibility rules', () => {
   });
 
   it('a Family and Friends tribute never gates on a word either', async () => {
-    const record = await createTribute(env.DB, { visibility: 'family' });
+    const record = await createTribute(env.DB, { skipConsentCheck: true, visibility: 'family' });
     expect(requiresPrivacyWordGate(record)).toBe(false);
   });
 
   it('a Private tribute that skipped the word has no gate', async () => {
-    const record = await createTribute(env.DB, { visibility: 'private' });
+    const record = await createTribute(env.DB, { skipConsentCheck: true, visibility: 'private' });
     expect(requiresPrivacyWordGate(record)).toBe(false);
   });
 
   it('a Private tribute with a word set requires it, and rejects the wrong one', async () => {
-    const record = await createTribute(env.DB, {
+    const record = await createTribute(env.DB, { skipConsentCheck: true,
       visibility: 'private',
       privacyWord: 'correct horse battery staple',
     });
@@ -148,10 +148,10 @@ describe('visibility rules', () => {
 
 describe('listSitemapEligibleTributes', () => {
   it('only ever returns Community tributes, never Private or Family and Friends', async () => {
-    await createTribute(env.DB, { visibility: 'private', title: 'Private One' });
-    await createTribute(env.DB, { visibility: 'family', title: 'Family One' });
-    const communityA = await createTribute(env.DB, { visibility: 'community', title: 'Community A' });
-    const communityB = await createTribute(env.DB, { visibility: 'community', title: 'Community B' });
+    await createTribute(env.DB, { skipConsentCheck: true, visibility: 'private', title: 'Private One' });
+    await createTribute(env.DB, { skipConsentCheck: true, visibility: 'family', title: 'Family One' });
+    const communityA = await createTribute(env.DB, { skipConsentCheck: true, visibility: 'community', title: 'Community A' });
+    const communityB = await createTribute(env.DB, { skipConsentCheck: true, visibility: 'community', title: 'Community B' });
 
     const eligible = await listSitemapEligibleTributes(env.DB);
     const titles = eligible.map((r) => r.title).sort();
@@ -164,7 +164,7 @@ describe('listSitemapEligibleTributes', () => {
 
 describe('HTTP behavior end to end', () => {
   it('serves a Community tribute directly, with no privacy-word gate and no noindex', async () => {
-    const created = await createTribute(env.DB, {
+    const created = await createTribute(env.DB, { skipConsentCheck: true,
       visibility: 'community',
       title: 'A Public Tribute',
       fullName: 'A Public Tribute',
@@ -183,7 +183,7 @@ describe('HTTP behavior end to end', () => {
   });
 
   it("does not render a Private tribute's content without the correct word", async () => {
-    const created = await createTribute(env.DB, {
+    const created = await createTribute(env.DB, { skipConsentCheck: true,
       visibility: 'private',
       privacyWord: 'his favorite fishing spot',
       title: 'A Very Private Tribute',
@@ -208,7 +208,7 @@ describe('HTTP behavior end to end', () => {
   });
 
   it('renders a Private tribute once the correct word is supplied, marked noindex', async () => {
-    const created = await createTribute(env.DB, {
+    const created = await createTribute(env.DB, { skipConsentCheck: true,
       visibility: 'private',
       privacyWord: 'his favorite fishing spot',
       title: 'A Very Private Tribute',
@@ -230,7 +230,7 @@ describe('HTTP behavior end to end', () => {
   });
 
   it('marks a Family and Friends tribute noindex even though it has no privacy-word gate', async () => {
-    const created = await createTribute(env.DB, {
+    const created = await createTribute(env.DB, { skipConsentCheck: true,
       visibility: 'family',
       title: 'A Family Tribute',
       fullName: 'A Family Tribute',
@@ -256,6 +256,10 @@ describe('HTTP behavior end to end', () => {
           visibility: 'private',
           privacyWord: 'super secret',
           title: 'Created Through the API',
+          consentPhotoRights: true,
+          consentAuthorized: true,
+          consentStoryReviewed: true,
+          consentVersion: '1',
         }),
       }),
       env
@@ -314,7 +318,7 @@ describe('the privacy-word screen', () => {
 
 describe('the gate page shown for a Private tribute', () => {
   it('never uses the words passphrase, password, or security either', async () => {
-    const created = await createTribute(env.DB, {
+    const created = await createTribute(env.DB, { skipConsentCheck: true,
       visibility: 'private',
       privacyWord: 'his favorite fishing spot',
       title: 'A Very Private Tribute',

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Terms of Service: Valor &amp; Serenity</title>
+<meta name="description" content="Valor & Serenity's Terms of Service are being formally drafted. What's here now, honestly, and how to reach us with questions in the meantime.">
+<link rel="canonical" href="https://valorandserenity.com/terms.html">
+<meta name="robots" content="noindex">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Lato:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+<style>
+  .skip-link { position: absolute; left: -9999px; top: 0; z-index: 100; background: var(--copper); color: var(--bone); padding: 12px 20px; font-family: var(--font-body); font-weight: 700; font-size: 14px; border-radius: 0 0 3px 0; }
+  .skip-link:focus { left: 0; }
+  :root {
+    --bone: #FAF8F3; --bone-warm: #F0E9DC; --bone-deep: #E1D5C0; --ink: #1D1C1B;
+    --aubergine: #69545F; --aubergine-deep: #29212B; --copper: #B66F4A; --copper-deep: #8B4E30; --copper-text: #9C5C3A;
+    --font-display: 'Cinzel', serif; --font-body: 'Lato', sans-serif;
+  }
+  * { box-sizing: border-box; }
+  * { transition: background-color .25s ease, color .25s ease, border-color .25s ease, box-shadow .25s ease; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--bone); color: var(--ink); font-family: var(--font-body); -webkit-font-smoothing: antialiased; }
+  a { color: var(--copper-text); text-decoration: none; }
+  a:hover { color: var(--aubergine-deep); text-decoration: underline; }
+  .top-bar { height: 4px; width: 100%; background: var(--copper); }
+  .site-header { position: sticky; top: 0; z-index: 50; background: var(--bone); border-bottom: 1px solid rgba(29,28,27,0.09); display: flex; align-items: center; justify-content: space-between; padding: 20px clamp(24px,5vw,64px); gap: 28px; }
+  .wordmark { font-family: var(--font-display); font-size: 19px; font-weight: 600; letter-spacing: 0.1em; color: var(--ink); display: flex; align-items: baseline; gap: 7px; white-space: nowrap; }
+  .wordmark .amp { color: var(--copper); }
+  .primary-nav { display: flex; align-items: center; gap: 30px; }
+  .primary-nav a { color: var(--ink); font-weight: 600; font-size: 15px; }
+  .btn { display: inline-block; font-family: var(--font-body); font-weight: 700; font-size: 15px; padding: 15px 30px; border-radius: 2px; border: none; cursor: pointer; }
+  .btn-primary { background: var(--copper); color: var(--bone); }
+  .btn-primary:hover { background: var(--copper-deep); color: var(--bone); text-decoration: none; }
+  .nav-toggle { display: none; align-items: center; gap: 8px; background: none; border: 1px solid var(--bone-deep); border-radius: 4px; padding: 9px 14px; font-family: var(--font-body); font-weight: 700; font-size: 13px; color: var(--ink); cursor: pointer; }
+  .nav-toggle-bars { display: flex; flex-direction: column; gap: 3px; width: 18px; }
+  .nav-toggle-bars span { display: block; height: 2px; background: var(--ink); border-radius: 1px; }
+  @media (max-width: 900px) {
+    .primary-nav { display: none; position: absolute; top: 100%; left: 0; right: 0; background: var(--bone); flex-direction: column; align-items: flex-start; gap: 0; padding: 4px clamp(20px,5vw,48px) 20px; border-bottom: 1px solid rgba(29,28,27,0.09); box-shadow: 0 16px 28px -16px rgba(29,20,15,0.25); }
+    .primary-nav.is-open { display: flex; }
+    .primary-nav a { width: 100%; padding: 14px 0; border-top: 1px solid rgba(29,28,27,0.07); }
+    .primary-nav a:first-child { border-top: none; }
+    .nav-toggle { display: inline-flex; padding: 7px 10px; gap: 6px; }
+    .site-header { padding: 12px 12px; gap: 6px; flex-wrap: wrap; }
+    .site-header .btn { padding: 10px 12px; font-size: 12.5px; white-space: nowrap; }
+    .wordmark { font-size: 13.5px; letter-spacing: 0.06em; }
+  }
+  section { padding: 90px clamp(24px,5vw,64px); }
+  .inner { max-width: 680px; margin: 0 auto; }
+  .rule { width: 32px; height: 2px; background: var(--copper); margin: 0 auto 20px; }
+  .eyebrow { font-size: 13px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--copper-text); margin: 0 0 18px; text-align: center; }
+  h1 { font-family: var(--font-display); font-size: clamp(30px,4vw,42px); font-weight: 500; color: var(--ink); margin: 0 0 22px; line-height: 1.2; text-align: center; }
+  .body-copy { font-size: 16.5px; color: var(--ink); line-height: 1.8; margin: 0 0 24px; }
+  .body-copy:last-child { margin-bottom: 0; }
+  .placeholder-notice { background: var(--aubergine-deep); border-radius: 10px; padding: 32px 36px; margin: 0 0 40px; }
+  .placeholder-notice p { color: var(--bone-warm); font-size: 15px; line-height: 1.75; margin: 0; }
+  .placeholder-notice strong { color: var(--copper); }
+  .contact-box { background: var(--bone-warm); border: 1.5px solid var(--bone-deep); border-radius: 8px; padding: 26px 28px; margin-top: 8px; }
+  .contact-box p { font-size: 15px; color: var(--aubergine); line-height: 1.7; margin: 0 0 10px; }
+  .contact-box p:last-child { margin-bottom: 0; }
+  footer { background: var(--aubergine); padding: 96px clamp(24px,5vw,64px) 0; margin-top: 40px; }
+  .footer-quote-wrap { max-width: 760px; margin: 0 auto; text-align: center; padding: 0 24px 72px; }
+  .footer-quote { font-family: var(--font-display); font-size: clamp(20px,2.2vw,26px); font-weight: 500; color: var(--bone); line-height: 1.55; margin: 0; }
+  .footer-cols { max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 64px; justify-content: space-between; padding-bottom: 64px; }
+  .footer-brand { flex: 1 1 280px; max-width: 340px; }
+  .footer-brand .wordmark { color: var(--bone); font-size: 18px; margin-bottom: 14px; }
+  .footer-brand .tagline { font-style: italic; font-size: 15px; color: var(--bone-warm); margin: 0; line-height: 1.6; }
+  .footer-groups { display: flex; gap: 64px; flex-wrap: wrap; }
+  .footer-group-title { font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--copper); margin-bottom: 18px; }
+  .footer-links { display: flex; flex-direction: column; gap: 12px; list-style: none; margin: 0; padding: 0; }
+  .footer-links a { color: var(--bone-warm); font-size: 15px; }
+  .footer-links a:hover { color: var(--bone); }
+  .footer-bottom { max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between; padding: 24px 0; border-top: 1px solid rgba(250,248,243,0.15); }
+  .footer-bottom span { font-size: 13px; color: rgba(240,233,220,0.7); }
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to main content</a>
+<div class="top-bar"></div>
+
+<header class="site-header">
+  <a href="index.html" class="wordmark"><span>VALOR</span><span class="amp">&amp;</span><span>SERENITY</span></a>
+  <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="primaryNav"><span class="nav-toggle-bars"><span></span><span></span><span></span></span>Menu</button>
+  <nav class="primary-nav" id="primaryNav" aria-label="Primary">
+    <a href="about.html">Our Story</a>
+    <a href="index.html#how-it-works">How It Works</a>
+    <a href="story-assist.html">Story Assist</a>
+    <a href="pricing.html">Pricing</a>
+    <a href="index.html#preview">Examples</a>
+    <a href="partners.html">For Partners</a>
+  </nav>
+  <a href="start.html" class="btn btn-primary">Start a Tribute</a>
+</header>
+
+<main id="main-content">
+<section>
+  <div class="inner">
+    <div class="rule"></div>
+    <p class="eyebrow">Terms of Service</p>
+    <h1>The Real Version Is Still Being Written</h1>
+
+    <div class="placeholder-notice">
+      <p><strong>This page is a stopgap, not the real thing.</strong> Formal Terms of Service, reviewed by an attorney, haven't been finished yet. Until they are, this page exists so nothing is silently missing while you use the site. It will be replaced by the real document, not quietly left as-is.</p>
+    </div>
+
+    <p class="body-copy">In the meantime, here's the plain version of what's true today: Valor &amp; Serenity is a service for building and hosting memorial tribute pages for veterans. By using it, you're agreeing to use it honestly and respectfully, the way you'd want your own family's tribute treated by anyone else. The formal terms, once finished, will cover this properly: acceptable use, ownership of what a family adds, how disputes get handled, and everything else a real Terms of Service needs to say.</p>
+
+    <p class="body-copy">If you have a question about how the site works, what you're agreeing to, or anything else covered here, the honest answer is: ask directly, and you'll get a real answer from a real person.</p>
+
+    <div class="contact-box">
+      <p><strong>Questions in the meantime</strong></p>
+      <p>Email <a href="mailto:hello@valorandserenity.com">hello@valorandserenity.com</a> or call <a href="tel:+17603004555">760-300-4555</a>. Chad reads and answers these directly.</p>
+    </div>
+
+    <p class="body-copy" style="margin-top:32px;">See also the <a href="privacy.html">Privacy Policy</a>, which covers what happens to the photos, names, and stories a family adds.</p>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="footer-quote-wrap">
+    <div class="rule"></div>
+    <p class="footer-quote">No veteran's story should be lost to time, and no family should have to preserve it alone.</p>
+  </div>
+  <div class="footer-cols">
+    <div class="footer-brand">
+      <div class="wordmark"><span>VALOR</span><span class="amp">&amp;</span><span>SERENITY</span></div>
+      <p class="tagline">Built to honor. Built to last.</p>
+      <p style="font-size:13px; color:var(--bone-warm); line-height:1.6; margin:14px 0 0;">Chad Corriveau<br>1835 S Centre City Pkwy, Ste A #5026<br>Escondido, CA 92025<br>Based in San Diego County</p>
+    </div>
+    <div class="footer-groups">
+      <div>
+        <div class="footer-group-title">For Families</div>
+        <ul class="footer-links">
+          <li><a href="start.html">Start a Tribute</a></li>
+          <li><a href="index.html#how-it-works">How It Works</a></li>
+          <li><a href="about.html">Our Story</a></li>
+          <li><a href="story-assist.html">Story Assist</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="help-for-families.html">Help for Families</a></li>
+          <li><a href="mike-mesarch.html">Example Page</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-group-title">Partners &amp; Contact</div>
+        <ul class="footer-links">
+          <li><a href="partners.html">Partner Info</a></li>
+          <li><a href="mailto:hello@valorandserenity.com">Contact Us</a></li>
+          <li><a href="tel:+17603004555">760-300-4555</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2026 Valor &amp; Serenity.</span>
+    <span><a href="terms.html" style="color:inherit; text-decoration:underline;">Terms</a> &middot; <a href="privacy.html" style="color:inherit; text-decoration:underline;">Privacy</a></span>
+    <span>Built by <a href="https://thinkroot.io" style="color:inherit;">ThinkRoot</a></span>
+  </div>
+</footer>
+
+<script src="js/nav-toggle.js" defer></script>
+<script src="js/anchor-fix.js" defer></script>
+</body>
+</html>

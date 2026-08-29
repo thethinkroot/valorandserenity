@@ -13,7 +13,13 @@ async function createViaApi(fields) {
     new Request('https://example.com/tribute', {
       method: 'POST',
       headers: { 'content-type': 'application/json', Origin: ORIGIN },
-      body: JSON.stringify(fields),
+      body: JSON.stringify({
+        consentPhotoRights: true,
+        consentAuthorized: true,
+        consentStoryReviewed: true,
+        consentVersion: '1',
+        ...fields,
+      }),
     }),
     env
   );
@@ -52,6 +58,10 @@ describe('the real tribute renderer, end to end', () => {
     expect(body).toContain('src="/photo/test-photo-key-army"');
     // Real theme color, not the default fallback.
     expect(body).toContain('--copper: #A8842A');
+    // "Something not right" link: a real, working contact method, not a dead end.
+    expect(body).toContain('Something not right on this page? Let us know');
+    expect(body).toContain('mailto:hello@valorandserenity.com?subject=');
+    expect(body).toContain(encodeURIComponent(token));
   });
 
   it('renders a Navy, living-mode tribute differently, to confirm this is not hardcoded to one case', async () => {

@@ -114,6 +114,9 @@ ${record.noindex ? '<meta name="robots" content="noindex, nofollow">' : ''}
   .honors-list li { font-size: 17px; color: var(--ink); background: var(--bone); border-radius: 4px; padding: 14px 20px; }
   footer { background: var(--aubergine-deep); padding: 48px clamp(24px,5vw,64px); text-align: center; }
   footer p { font-family: var(--font-display); font-style: italic; font-size: 14px; color: var(--bone-warm); margin: 0; }
+  .report-link { font-family: var(--font-body); font-style: normal; font-size: 12.5px; color: rgba(240,233,220,0.55); margin: 20px 0 0; }
+  .report-link a { color: rgba(240,233,220,0.75); text-decoration: underline; }
+  .report-link a:hover { color: var(--bone); }
 </style>
 </head>
 <body data-theme="${theme.slug}">
@@ -147,7 +150,10 @@ ${honors ? `<section id="honors">
 </section>` : ''}
 
 </main>
-<footer><p>Valor &amp; Serenity</p></footer>
+<footer>
+  <p>Valor &amp; Serenity</p>
+  <p class="report-link"><a href="mailto:hello@valorandserenity.com?subject=${encodeURIComponent('Something not right on a tribute page (' + record.token + ')')}">Something not right on this page? Let us know</a></p>
+</footer>
 </body>
 </html>`;
 }

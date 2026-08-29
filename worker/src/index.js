@@ -11,6 +11,7 @@ import {
   requiresPrivacyWordGate,
   verifyPrivacyWord,
   InvalidVisibilityError,
+  MissingConsentError,
 } from './tributes.js';
 import {
   storePhoto,
@@ -129,9 +130,17 @@ async function handleCreate(request, env) {
     storyText,
     honors,
     photoKey,
+    consentPhotoRights,
+    consentAuthorized,
+    consentStoryReviewed,
+    consentVersion,
   } = body || {};
 
   try {
+    // skipConsentCheck is never passed here, on purpose: this is the
+    // real publish path, and createTribute enforces the hard consent
+    // gate itself, not just this HTTP layer, so no future code path
+    // that also calls createTribute can accidentally skip it either.
     const record = await createTribute(env.DB, {
       visibility: 'private',
       privacyWord,
@@ -146,12 +155,23 @@ async function handleCreate(request, env) {
       storyText,
       honors,
       photoKey,
+      consentPhotoRights,
+      consentAuthorized,
+      consentStoryReviewed,
+      consentVersion,
     });
     // Never echo the privacy word or its hash back to the client.
     return jsonResponse({ token: record.token, visibility: record.visibility }, 201, cors);
   } catch (err) {
     if (err instanceof InvalidVisibilityError) {
       return jsonResponse({ error: err.message }, 400, cors);
+    }
+    if (err instanceof MissingConsentError) {
+      return jsonResponse(
+        { error: 'All three consent checkboxes must be checked before publishing.' },
+        400,
+        cors
+      );
     }
     throw err;
   }
